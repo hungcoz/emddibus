@@ -1,3 +1,4 @@
+import 'package:emddibus/pages/Map/fmap.dart';
 import 'package:flutter/material.dart';
 
 class Loading extends StatefulWidget {
@@ -7,7 +8,8 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
   void getData() async {
-    Navigator.pushReplacementNamed(context, '/map');
+    // Navigator.pushReplacementNamed(context, '/map');
+    Navigator.push(context, MaterialPageRoute(builder: (context) => FMap()));
   }
 
   @override

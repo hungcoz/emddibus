@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(primaryColor: Color(0xffeeac24)),
-    home: Loading(),
-    routes: {
-      '/map': (context) => FMap(),
-    },
+    home: FMap(),
+    // routes: {
+    //   '/map': (context) => FMap(),
+    // },
   ));
 }
