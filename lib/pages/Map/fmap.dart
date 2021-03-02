@@ -13,6 +13,7 @@ class _FMapState extends State<FMap> {
   List<Marker> markers = [];
 
   TextEditingController _txtSearchController = new TextEditingController();
+  FocusNode _textSearchFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,7 @@ class _FMapState extends State<FMap> {
           ),
           child: TextField(
             controller: _txtSearchController,
+            focusNode: _textSearchFocusNode,
             onChanged: (String value){},
             decoration: InputDecoration(
                 hintText: "Tìm kiếm điểm dừng",
@@ -60,7 +62,7 @@ class _FMapState extends State<FMap> {
       body: Stack(children: [
         FlutterMap(
           mapController: mapController,
-          options: MapOptions(
+          options: MapOptions(onTap: (_) => _textSearchFocusNode.unfocus(),
             plugins: [
               LocationPlugin(),
             ],
