@@ -1,4 +1,4 @@
-import 'package:emddibus/pages/Map/fmap.dart';
+import 'package:emddibus/pages/Home/fmap.dart';
 import 'package:flutter/material.dart';
 
 class Loading extends StatefulWidget {
@@ -8,8 +8,10 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
   void getData() async {
+    Duration(seconds: 5);
     // Navigator.pushReplacementNamed(context, '/map');
-    Navigator.push(context, MaterialPageRoute(builder: (context) => FMap()));
+    //Navigator.push(context, MaterialPageRoute(builder: (context) => FMap()));
+    WidgetsBinding.instance.addPostFrameCallback((_) {Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => FMap()), (route) => false);});
   }
 
   @override

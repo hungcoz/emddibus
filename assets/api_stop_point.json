@@ -1,0 +1,562 @@
+{
+  "list_stop_point": [
+    {
+      "stop_id": "1",
+      "name": "Bến xe Yên Nghĩa",
+      "latitude": "20.94969",
+      "longitude": "105.74763"
+    },
+    {
+      "stop_id": "2",
+      "name": "Quốc lộ 6",
+      "latitude": "20.95122",
+      "longitude": "105.75022"
+    },
+    {
+      "stop_id": "3",
+      "name": "Nissan Hà Đông",
+      "latitude": "20.95538",
+      "longitude": "105.75575"
+    },
+    {
+      "stop_id": "4",
+      "name": "678 Quang Trung - Hà Đông",
+      "latitude": "20.95944",
+      "longitude": "105.76107"
+    },
+    {
+      "stop_id": "5",
+      "name": "254 Quang Trung",
+      "latitude": "20.96396",
+      "longitude": "105.76687"
+    },
+    {
+      "stop_id": "6",
+      "name": "8 Quang Trung",
+      "latitude": "20.97227",
+      "longitude": "105.77732"
+    },
+    {
+      "stop_id": "7",
+      "name": "148 Trần Phú Hà Đông",
+      "latitude": "20.97544",
+      "longitude": "105.78159"
+    },
+    {
+      "stop_id": "8",
+      "name": "Học viện Bưu chính Viễn thông",
+      "latitude": "20.98052",
+      "longitude": "105.788"
+    },
+    {
+      "stop_id": "9",
+      "name": "Số 10 Trần Phú",
+      "latitude": "20.98345",
+      "longitude": "105.79176"
+    },
+    {
+      "stop_id": "10",
+      "name": "873 Nguyễn Trãi",
+      "latitude": "20.98655",
+      "longitude": "105.79605"
+    },
+    {
+      "stop_id": "11",
+      "name": "Bách hoá Thanh Xuân, đường Nguyễn Trãi",
+      "latitude": "20.99044",
+      "longitude": "105.80152"
+    },
+    {
+      "stop_id": "12",
+      "name": "386 Nguyễn Trãi",
+      "latitude": "20.99348",
+      "longitude": "105.80582"
+    },
+    {
+      "stop_id": "13",
+      "name": "94 Nguyễn Trãi",
+      "latitude": "20.99985",
+      "longitude": "105.81529"
+    },
+    {
+      "stop_id": "14",
+      "name": "290 Tây Sơn",
+      "latitude": "21.00738",
+      "longitude": "105.82335"
+    },
+    {
+      "stop_id": "15",
+      "name": "Gò Đống Đa",
+      "latitude": "21.01126",
+      "longitude": "105.82543"
+    },
+    {
+      "stop_id": "16",
+      "name": "142 Nguyễn Lương Bằng",
+      "latitude": "21.01591",
+      "longitude": "105.82832"
+    },
+    {
+      "stop_id": "17",
+      "name": "274-276 Khâm Thiên",
+      "latitude": "21.01927",
+      "longitude": "105.83427"
+    },
+    {
+      "stop_id": "18",
+      "name": "78-80A Khâm Thiên",
+      "latitude": "21.01902",
+      "longitude": "105.83807"
+    },
+    {
+      "stop_id": "19",
+      "name": "Ga Hà Nội - 120 Lê Duẩn",
+      "latitude": "21.0199",
+      "longitude": "105.84139"
+    },
+    {
+      "stop_id": "20",
+      "name": "Tổng Công ty Đường sắt Việt Nam - 116 Lê Duẩn",
+      "latitude": "21.02138",
+      "longitude": "105.84141"
+    },
+    {
+      "stop_id": "21",
+      "name": "Đối diện tháp Hà Nội - Hai Bà Trưng (cạnh 56 Hai Bà Trưng)",
+      "latitude": "21.0261",
+      "longitude": "105.84663"
+    },
+    {
+      "stop_id": "22",
+      "name": "Bệnh viện Phụ sản Trung ương",
+      "latitude": "21.02662",
+      "longitude": "105.84765"
+    },
+    {
+      "stop_id": "23",
+      "name": "28 Đường Thành",
+      "latitude": "21.03107",
+      "longitude": "105.8471"
+    },
+    {
+      "stop_id": "24",
+      "name": "50 Hàng Cót",
+      "latitude": "21.03728",
+      "longitude": "105.84711"
+    },
+    {
+      "stop_id": "25",
+      "name": "135 Nguyễn Văn Cừ",
+      "latitude": "21.04228",
+      "longitude": "105.8705"
+    },
+    {
+      "stop_id": "26",
+      "name": "549 Nguyễn Văn Cừ (cột sau)",
+      "latitude": "21.04972",
+      "longitude": "105.88358"
+    },
+    {
+      "stop_id": "27",
+      "name": "Bến xe Gia Lâm",
+      "latitude": "21.04812",
+      "longitude": "105.87831"
+    },
+    {
+      "stop_id": "28",
+      "name": "Trường Trung cấp Kinh tế - Tài chính Hà Nội",
+      "latitude": "20.95143",
+      "longitude": "105.75055"
+    },
+    {
+      "stop_id": "29",
+      "name": "807 Quang Trung",
+      "latitude": "20.95835",
+      "longitude": "105.75992"
+    },
+    {
+      "stop_id": "30",
+      "name": "521 Quang Trung",
+      "latitude": "20.96305",
+      "longitude": "105.76598"
+    },
+    {
+      "stop_id": "31",
+      "name": "85 Quang Trung",
+      "latitude": "20.97104",
+      "longitude": "105.77613"
+    },
+    {
+      "stop_id": "32",
+      "name": "Số 1 Trần Phú",
+      "latitude": "20.9758",
+      "longitude": "105.78247"
+    },
+    {
+      "stop_id": "33",
+      "name": "Học Viện An Ninh",
+      "latitude": "20.98306",
+      "longitude": "105.79169"
+    },
+    {
+      "stop_id": "34",
+      "name": "477 Nguyễn Trãi",
+      "latitude": "20.99022",
+      "longitude": "105.80176"
+    },
+    {
+      "stop_id": "35",
+      "name": "Công ty Thuốc lá Thăng Long - 235 Nguyễn Trãi",
+      "latitude": "20.99541",
+      "longitude": "105.80917"
+    },
+    {
+      "stop_id": "36",
+      "name": "Đại Học Thuỷ lợi - 175 Tây Sơn",
+      "latitude": "21.00762",
+      "longitude": "105.82364"
+    },
+    {
+      "stop_id": "37",
+      "name": "83 Nguyễn Lương Bằng",
+      "latitude": "21.01653",
+      "longitude": "105.82884"
+    },
+    {
+      "stop_id": "38",
+      "name": "221 Khâm Thiên",
+      "latitude": "21.01932",
+      "longitude": "105.83295"
+    },
+    {
+      "stop_id": "39",
+      "name": "Đài tưởng niệm Khâm Thiên - 45 Khâm Thiên",
+      "latitude": "21.01892",
+      "longitude": "105.83895"
+    },
+    {
+      "stop_id": "40",
+      "name": "17 Yết Kiêu",
+      "latitude": "21.01972",
+      "longitude": "105.84248"
+    },
+    {
+      "stop_id": "41",
+      "name": "91 Trần Hưng Đạo",
+      "latitude": "21.02331",
+      "longitude": "105.84413"
+    },
+    {
+      "stop_id": "42",
+      "name": "65 Quán Sứ",
+      "latitude": "21.02383",
+      "longitude": "105.84478"
+    },
+    {
+      "stop_id": "43",
+      "name": "115 Phùng Hưng",
+      "latitude": "21.03542",
+      "longitude": "105.84588"
+    },
+    {
+      "stop_id": "44",
+      "name": "16 Phùng Hưng",
+      "latitude": "21.03939",
+      "longitude": "105.84664"
+    },
+    {
+      "stop_id": "45",
+      "name": "80 Trần Nhật Duật",
+      "latitude": "21.03775",
+      "longitude": "105.85263"
+    },
+    {
+      "stop_id": "46",
+      "name": "Tổng cục Hải Quan - 162 Nguyễn Văn Cừ (cột sau)",
+      "latitude": "21.04264",
+      "longitude": "105.87106"
+    },
+    {
+      "stop_id": "47",
+      "name": "Đối diện 447 Ngọc Lâm - Vườn hoa Gia Lâm",
+      "latitude": "21.04903",
+      "longitude": "105.87587"
+    },
+    {
+      "stop_id": "48",
+      "name": "276 Tôn Đức Thắng",
+      "latitude": "21.02005",
+      "longitude": "105.83054"
+    },
+    {
+      "stop_id": "49",
+      "name": "92-94 Tôn Đức Thắng",
+      "latitude": "21.02717",
+      "longitude": "105.83384"
+    },
+    {
+      "stop_id": "50",
+      "name": "Công viên Lê nin - Đối diện 35 Trần Phú",
+      "latitude": "21.03105",
+      "longitude": "105.83917"
+    },
+    {
+      "stop_id": "51",
+      "name": "Bệnh viện Việt Đức - 40 Tràng Thi",
+      "latitude": "21.02742",
+      "longitude": "105.84652"
+    },
+    {
+      "stop_id": "52",
+      "name": "22B Hai Bà Trưng - Cạnh Tràng Tiền Plaza",
+      "latitude": "21.02401",
+      "longitude": "105.85365"
+    },
+    {
+      "stop_id": "53",
+      "name": "Đối diện 6C Phan Chu Trinh",
+      "latitude": "21.02374",
+      "longitude": "105.85681"
+    },
+    {
+      "stop_id": "54",
+      "name": "Bác Cổ",
+      "latitude": "21.0236",
+      "longitude": "105.86065"
+    },
+    {
+      "stop_id": "55",
+      "name": "283 Tôn Đức Thắng",
+      "latitude": "21.02007",
+      "longitude": "105.83072"
+    },
+    {
+      "stop_id": "56",
+      "name": "Đối diện số 40 Tôn Đức Thắng (Văn Miếu)",
+      "latitude": "21.02857",
+      "longitude": "105.83484"
+    },
+    {
+      "stop_id": "57",
+      "name": "85 Nguyễn Thái Học - Trường TH Lý Thường Kiệt",
+      "latitude": "21.02953",
+      "longitude": "105.83896"
+    },
+    {
+      "stop_id": "58",
+      "name": "49 Hai Bà Trưng - Tháp Hà Nội",
+      "latitude": "21.0267",
+      "longitude": "105.84455"
+    },
+    {
+      "stop_id": "59",
+      "name": "Đối diện 16 Hai Bà Trưng (Ngã 4 Hai Bà Trưng- Ngô Quyền)",
+      "latitude": "21.0239",
+      "longitude": "105.85383"
+    },
+    {
+      "stop_id": "60",
+      "name": "Hè cạnh vườn hoa 19-8, đường Hai Bà Trưng",
+      "latitude": "21.02302",
+      "longitude": "105.85698"
+    },
+    {
+      "stop_id": "61",
+      "name": "Đối diện Bệnh Viện Trung ương Quân đội 108 - Trần Hưng Đạo",
+      "latitude": "21.01849",
+      "longitude": "105.86072"
+    },
+    {
+      "stop_id": "62",
+      "name": "BX Mỹ Đình",
+      "latitude": "21.02788",
+      "longitude": "105.7785"
+    },
+    {
+      "stop_id": "63",
+      "name": "Bệnh viện đa khoa y học cổ truyền - 6 Phạm Hùng",
+      "latitude": "21.0344",
+      "longitude": "105.78004"
+    },
+    {
+      "stop_id": "64",
+      "name": "Số 197-199 Xuân Thủy (Đối diện Đại học Sư phạm Hà Nội)",
+      "latitude": "21.03658",
+      "longitude": "105.78277"
+    },
+    {
+      "stop_id": "65",
+      "name": "331 Cầu Giấy",
+      "latitude": "21.03561",
+      "longitude": "105.79205"
+    },
+    {
+      "stop_id": "66",
+      "name": "165 Cầu Giấy - Bưu điện Cầu Giấy",
+      "latitude": "21.03263",
+      "longitude": "105.79858"
+    },
+    {
+      "stop_id": "67",
+      "name": "Điểm trung chuyển Cầu Giấy - GTVT 02",
+      "latitude": "21.02897",
+      "longitude": "105.80307"
+    },
+    {
+      "stop_id": "68",
+      "name": "593 - 595 Kim Mã",
+      "latitude": "21.02947",
+      "longitude": "105.80884"
+    },
+    {
+      "stop_id": "69",
+      "name": "116 A5 Tập thể Giảng Võ - Kim Mã",
+      "latitude": "21.03068",
+      "longitude": "105.81874"
+    },
+    {
+      "stop_id": "70",
+      "name": "Hè trước tòa nhà PTA - Số 1 Kim Mã",
+      "latitude": "21.03223",
+      "longitude": "105.8295"
+    },
+    {
+      "stop_id": "71",
+      "name": "59 Lý Thường Kiệt - Viện Năng Lương Nguyên Tử",
+      "latitude": "21.024019",
+      "longitude": "105.847918"
+    },
+    {
+      "stop_id": "72",
+      "name": "37 Hai Bà Trưng - Bệnh viện Việt Nam Cu Ba",
+      "latitude": "21.02496",
+      "longitude": "105.85022"
+    },
+    {
+      "stop_id": "73",
+      "name": "Đối diện 6C Phan Chu Trinh",
+      "latitude": "21.02364",
+      "longitude": "105.85683"
+    },
+    {
+      "stop_id": "74",
+      "name": "51 Lý Thái Tổ - Ngân hàng Nhà nước Việt Nam",
+      "latitude": "21.026688",
+      "longitude": "105.856238"
+    },
+    {
+      "stop_id": "75",
+      "name": "23 Hàng Tre",
+      "latitude": "21.03193",
+      "longitude": "105.855685"
+    },
+    {
+      "stop_id": "76",
+      "name": "80 Trần Nhật Duật",
+      "latitude": "21.03758",
+      "longitude": "105.85275"
+    },
+    {
+      "stop_id": "77",
+      "name": "Trần Nhật Duật (373 Hồng Hà) - Gần Hàm Tử Quan",
+      "latitude": "21.0377",
+      "longitude": "105.85302"
+    },
+    {
+      "stop_id": "78",
+      "name": "162 Trần Quang Khải - Viện Quy hoạch Thủy Lợi",
+      "latitude": "21.03197",
+      "longitude": "105.85622"
+    },
+    {
+      "stop_id": "79",
+      "name": "1A Tràng tiền - Tập đoàn hóa chất Việt Nam",
+      "latitude": "21.024794",
+      "longitude": "105.858515"
+    },
+    {
+      "stop_id": "80",
+      "name": "30-32 Tràng Tiền",
+      "latitude": "21.024775",
+      "longitude": "105.855621"
+    },
+    {
+      "stop_id": "81",
+      "name": "48 Hai Bà Trưng - Viện Kiểm Nghiệm thuốc Trung ương",
+      "latitude": "21.02496",
+      "longitude": "105.85042"
+    },
+    {
+      "stop_id": "82",
+      "name": "Đối diện tháp Hà Nội - Hai Bà Trưng (cạnh 56 Hai Bà Trưng)",
+      "latitude": "21.02617",
+      "longitude": "105.84645"
+    },
+    {
+      "stop_id": "83",
+      "name": "Công viên Lê nin - Đối diện 35 Trần Phú",
+      "latitude": "21.03103",
+      "longitude": "105.83934"
+    },
+    {
+      "stop_id": "84",
+      "name": "140 Sơn Tây",
+      "latitude": "21.03265",
+      "longitude": "105.8295"
+    },
+    {
+      "stop_id": "85",
+      "name": "Số nhà 2/2C khu Ngoại Giao Đoàn, phố Kim Mã đường dưới",
+      "latitude": "21.03083",
+      "longitude": "105.81687"
+    },
+    {
+      "stop_id": "86",
+      "name": "10 Đào Tấn - Viện Vật lý",
+      "latitude": "21.03222",
+      "longitude": "105.81021"
+    },
+    {
+      "stop_id": "87",
+      "name": "Đối diện Công viên Thủ Lệ - Đường Bưởi dưới",
+      "latitude": "21.03131",
+      "longitude": "105.80259"
+    },
+    {
+      "stop_id": "88",
+      "name": "Điểm trung chuyển Cầu Giấy - Thủ Lệ 02",
+      "latitude": "21.02942",
+      "longitude": "105.80328"
+    },
+    {
+      "stop_id": "89",
+      "name": "Số 148-150 Cầu Giấy",
+      "latitude": "21.03291",
+      "longitude": "105.79854"
+    },
+    {
+      "stop_id": "90",
+      "name": "370 Cầu Giấy",
+      "latitude": "21.03583",
+      "longitude": "105.79194"
+    },
+    {
+      "stop_id": "91",
+      "name": "Gần nhà sách Sư phạm (Đại học Sư phạm Hà Nội) - 136 Xuân Thủy",
+      "latitude": "21.03673",
+      "longitude": "105.78272"
+    },
+    {
+      "stop_id": "92",
+      "name": "Đối diện Bệnh viện đa khoa y học cổ truyền - Phạm Hùng",
+      "latitude": "21.03441",
+      "longitude": "105.78046"
+    },
+    {
+      "stop_id": "93",
+      "name": "Đối diện Bến xe khách Mỹ Đình - Phạm Hùng (cột trước)",
+      "latitude": "21.02756",
+      "longitude": "105.77927"
+    }
+  ]
+}
