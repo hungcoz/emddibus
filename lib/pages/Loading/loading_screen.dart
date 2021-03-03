@@ -9,8 +9,6 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
   void getData() async {
-    Duration(seconds: 5);
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => FMap()), (route) => false);
