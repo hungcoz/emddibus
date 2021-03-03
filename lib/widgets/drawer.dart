@@ -1,11 +1,8 @@
-<<<<<<< HEAD:lib/menu.dart
 import 'dart:io';
 
 // import 'package:emddi_bus/info_user.dart';
 // import 'package:emddi_bus/search.dart';
 import 'package:emddibus/constants.dart';
-=======
->>>>>>> 705f77bdcb41d011f523d3ec5adf94d93fe0e1e2:lib/widgets/drawer.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -15,18 +12,7 @@ class Menu extends StatefulWidget {
   State<StatefulWidget> createState() => _MenuState();
 }
 
-<<<<<<< HEAD:lib/menu.dart
-  // File file;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-=======
 class _MenuState extends State<Menu> {
->>>>>>> 705f77bdcb41d011f523d3ec5adf94d93fe0e1e2:lib/widgets/drawer.dart
   //link to phone
   _launchCaller() async {
     const url = "tel:1800 8888";

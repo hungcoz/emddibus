@@ -38,11 +38,10 @@ class _FMapState extends State<FMap> {
                 width: 0.5,
               ),
             ),
-<<<<<<< HEAD
             child: TextField(
               controller: _txtSearchController,
               focusNode: _textSearchFocusNode,
-              onChanged: (String value){},
+              onChanged: (String value) {},
               decoration: InputDecoration(
                   hintText: "Tìm kiếm điểm dừng",
                   border: InputBorder.none,
@@ -53,39 +52,14 @@ class _FMapState extends State<FMap> {
                     size: 25,
                   ),
                   suffixIcon: IconButton(
-                    onPressed: (){
+                    onPressed: () {
                       _txtSearchController.clear();
                     },
                     icon: Icon(Icons.cancel),
                     iconSize: 20,
                     color: Colors.grey[400],
-                  )
-              ),
+                  )),
             ),
-=======
-          ),
-          child: TextField(
-            controller: _txtSearchController,
-            focusNode: _textSearchFocusNode,
-            onChanged: (String value) {},
-            decoration: InputDecoration(
-                hintText: "Tìm kiếm điểm dừng",
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15, top: 15),
-                isDense: false,
-                prefixIcon: Icon(
-                  Icons.search,
-                  size: 25,
-                ),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    _txtSearchController.clear();
-                  },
-                  icon: Icon(Icons.cancel),
-                  iconSize: 20,
-                  color: Colors.grey[400],
-                )),
->>>>>>> 705f77bdcb41d011f523d3ec5adf94d93fe0e1e2
           ),
         ),
       ),
