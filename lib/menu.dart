@@ -1,5 +1,7 @@
 import 'dart:io';
 
+// import 'package:emddi_bus/info_user.dart';
+// import 'package:emddi_bus/search.dart';
 import 'package:emddibus/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,14 @@ class Menu extends StatefulWidget{
   State<StatefulWidget> createState() => _MenuState();
 }
 class _MenuState extends State<Menu> {
+
+  // File file;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   //link to phone
   _launchCaller() async {
@@ -23,9 +33,10 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
     return Drawer(
       child: Container(
-        color: Colors.black54,
+        color: Colors.black38,
         child: Column(
           children: [
             Expanded(
@@ -37,6 +48,94 @@ class _MenuState extends State<Menu> {
                     decoration: BoxDecoration(
                       color: Colors.amber,
                     ),
+                    //padding: EdgeInsets.only(left: 10, right: 10, bottom: 5, top: 10),
+                    // child: Column(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     // user
+                    //     Row(
+                    //       children: [
+                    //         GestureDetector(
+                    //           onTap: ()async{
+                    //             // final result = await Navigator.push(
+                    //             //     context,
+                    //             //     MaterialPageRoute(builder: (context) => InfoUser()));
+                    //             // setState(() {
+                    //             //   FILE_AVATAR = result;
+                    //             // });
+                    //           },
+                    //           // child: _getWidgetImage(),
+                    //           child: CircleAvatar(
+                    //                   radius: 40,
+                    //                   backgroundImage: AssetImage(PATH_AVATAR),
+                    //           )
+                    //         ),
+                    //         Container(
+                    //           margin: EdgeInsets.only(left: 15),
+                    //           child: Text(PHONE),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //     //language
+                    //     Container(
+                    //       margin: EdgeInsets.only(top: 15),
+                    //       child: Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //         children: [
+                    //           //vietnamese
+                    //           FlatButton(
+                    //             padding: EdgeInsets.only(left: 0),
+                    //             child: Row(
+                    //               mainAxisAlignment: MainAxisAlignment.start,
+                    //               children: [
+                    //                 ClipRRect(
+                    //                   borderRadius: BorderRadius.circular(5.0),
+                    //                   child: Image(
+                    //                     fit: BoxFit.cover,
+                    //                     image: AssetImage('images/vietnam.png'),
+                    //                     width: 40,
+                    //                     height: 30,
+                    //                   ),
+                    //                 ),
+                    //                 Container(
+                    //                   margin: EdgeInsets.only(left: 5),
+                    //                   child: Text(
+                    //                     "Tiếng Việt",
+                    //                     style: TextStyle(color: Colors.black),
+                    //                   ),
+                    //                 ),
+                    //               ],
+                    //             ),
+                    //           ),
+                    //           //english
+                    //           FlatButton(
+                    //             child: Row(
+                    //               children: [
+                    //                 ClipRRect(
+                    //                   borderRadius: BorderRadius.circular(5.0),
+                    //                   child: Image(
+                    //                     fit: BoxFit.cover,
+                    //                     image: AssetImage(
+                    //                       'images/UK.png',
+                    //                     ),
+                    //                     width: 40,
+                    //                     height: 30,
+                    //                   ),
+                    //                 ),
+                    //                 Container(
+                    //                     margin: EdgeInsets.only(left: 5),
+                    //                     child: Text(
+                    //                       "Tiếng Anh",
+                    //                       style: TextStyle(color: Colors.black),
+                    //                     ))
+                    //               ],
+                    //             ),
+                    //           )
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                   ),
                   ListTile(
                     onTap: () {
