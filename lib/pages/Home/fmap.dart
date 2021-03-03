@@ -1,7 +1,9 @@
-import 'package:emddibus/menu.dart';
+import 'package:emddibus/constants.dart';
+import 'package:emddibus/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location/flutter_map_location.dart';
+import 'package:latlong/latlong.dart';
 
 class FMap extends StatefulWidget {
   @override
@@ -36,6 +38,7 @@ class _FMapState extends State<FMap> {
                 width: 0.5,
               ),
             ),
+<<<<<<< HEAD
             child: TextField(
               controller: _txtSearchController,
               focusNode: _textSearchFocusNode,
@@ -59,13 +62,40 @@ class _FMapState extends State<FMap> {
                   )
               ),
             ),
+=======
+          ),
+          child: TextField(
+            controller: _txtSearchController,
+            focusNode: _textSearchFocusNode,
+            onChanged: (String value) {},
+            decoration: InputDecoration(
+                hintText: "Tìm kiếm điểm dừng",
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15, top: 15),
+                isDense: false,
+                prefixIcon: Icon(
+                  Icons.search,
+                  size: 25,
+                ),
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    _txtSearchController.clear();
+                  },
+                  icon: Icon(Icons.cancel),
+                  iconSize: 20,
+                  color: Colors.grey[400],
+                )),
+>>>>>>> 705f77bdcb41d011f523d3ec5adf94d93fe0e1e2
           ),
         ),
       ),
       body: Stack(children: [
         FlutterMap(
           mapController: mapController,
-          options: MapOptions(onTap: (_) => _textSearchFocusNode.unfocus(),
+          options: MapOptions(
+            center: LatLng(15.594016, 110.450604),
+            zoom: 5,
+            onTap: (_) => _textSearchFocusNode.unfocus(),
             plugins: [
               LocationPlugin(),
             ],
@@ -78,7 +108,11 @@ class _FMapState extends State<FMap> {
             MarkerLayerOptions(markers: markers),
             LocationOptions(
                 markers: markers,
-                onLocationUpdate: (LatLngData ld){},
+                onLocationUpdate: (LatLngData ld) {
+                  setState(() {
+                    currentPosition = ld.location;
+                  });
+                },
                 onLocationRequested: (LatLngData ld) {
                   if (ld == null || ld.location == null) {
                     return;
@@ -90,49 +124,32 @@ class _FMapState extends State<FMap> {
                     Function onPressed) {
                   return Positioned(
                     bottom: 20,
-                    left: 20,
                     right: 20,
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          FloatingActionButton(
-                            heroTag: "bus",
-                            onPressed: () {
-                              //Navigator.pushNamed(context, '/bus');
-                            },
-                            child:
-                                Icon(Icons.directions_bus, color: Colors.black),
-                            backgroundColor: Color(0xffeeac24),
-                          ),
-                          FloatingActionButton(
-                            heroTag: "my location",
-                            child:
-                                ValueListenableBuilder<LocationServiceStatus>(
-                              valueListenable: status,
-                              builder: (context, LocationServiceStatus value,
-                                  child) {
-                                switch (value) {
-                                  case LocationServiceStatus.disabled:
-                                  case LocationServiceStatus.permissionDenied:
-                                  case LocationServiceStatus.unsubscribed:
-                                    return Icon(
-                                      Icons.location_disabled,
-                                      color: Colors.black,
-                                    );
-                                    break;
-                                  default:
-                                    return Icon(
-                                      Icons.my_location,
-                                      color: Colors.black,
-                                    );
-                                    break;
-                                }
-                              },
-                            ),
-                            onPressed: () => onPressed(),
-                            backgroundColor: Colors.white,
-                          ),
-                        ]),
+                    child: FloatingActionButton(
+                      child: ValueListenableBuilder<LocationServiceStatus>(
+                        valueListenable: status,
+                        builder: (context, LocationServiceStatus value, child) {
+                          switch (value) {
+                            case LocationServiceStatus.disabled:
+                            case LocationServiceStatus.permissionDenied:
+                            case LocationServiceStatus.unsubscribed:
+                              return Icon(
+                                Icons.location_disabled,
+                                color: Colors.black,
+                              );
+                              break;
+                            default:
+                              return Icon(
+                                Icons.my_location,
+                                color: Colors.black,
+                              );
+                              break;
+                          }
+                        },
+                      ),
+                      onPressed: () => onPressed(),
+                      backgroundColor: Colors.white,
+                    ),
                   );
                 })
           ],

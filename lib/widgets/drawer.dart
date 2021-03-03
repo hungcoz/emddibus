@@ -1,18 +1,21 @@
+<<<<<<< HEAD:lib/menu.dart
 import 'dart:io';
 
 // import 'package:emddi_bus/info_user.dart';
 // import 'package:emddi_bus/search.dart';
 import 'package:emddibus/constants.dart';
+=======
+>>>>>>> 705f77bdcb41d011f523d3ec5adf94d93fe0e1e2:lib/widgets/drawer.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Menu extends StatefulWidget{
+class Menu extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _MenuState();
 }
-class _MenuState extends State<Menu> {
 
+<<<<<<< HEAD:lib/menu.dart
   // File file;
 
   @override
@@ -21,6 +24,9 @@ class _MenuState extends State<Menu> {
     super.initState();
   }
 
+=======
+class _MenuState extends State<Menu> {
+>>>>>>> 705f77bdcb41d011f523d3ec5adf94d93fe0e1e2:lib/widgets/drawer.dart
   //link to phone
   _launchCaller() async {
     const url = "tel:1800 8888";
@@ -44,6 +50,7 @@ class _MenuState extends State<Menu> {
                 padding: EdgeInsets.only(top: 0),
                 children: [
                   DrawerHeader(
+                    child: Image.asset('assets/EMDDI_2.png'),
                     margin: EdgeInsets.only(bottom: 0),
                     decoration: BoxDecoration(
                       color: Colors.amber,
@@ -159,7 +166,7 @@ class _MenuState extends State<Menu> {
                       "Tra cứu các tuyến bus",
                       style: TextStyle(color: Colors.white),
                     ),
-                    onTap: (){
+                    onTap: () {
                       // Navigator.push(context, MaterialPageRoute(builder: (context) => Search()));
                     },
                   ),
