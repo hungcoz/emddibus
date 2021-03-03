@@ -1,9 +1,10 @@
 import 'package:emddibus/constants.dart';
-import 'package:emddibus/pages/Home/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location/flutter_map_location.dart';
 import 'package:latlong/latlong.dart';
+
+import 'drawer.dart';
 
 class FMap extends StatefulWidget {
   @override
@@ -23,45 +24,8 @@ class _FMapState extends State<FMap> {
       extendBodyBehindAppBar: true,
       drawer: Menu(),
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        //iconTheme: IconThemeData(color: Colors.black),
-        // title: Transform.translate(
-        //   offset: Offset(-20, 0),
-        //   child: 
-          title: Container(
-            margin: EdgeInsets.only(top: 10, right: 0, left: 0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              color: Colors.white,
-              border: Border.all(
-                color: Colors.grey[300],
-                width: 0.5,
-              ),
-            ),
-            child: TextField(
-              controller: _txtSearchController,
-              focusNode: _textSearchFocusNode,
-              onChanged: (String value) {},
-              decoration: InputDecoration(
-                  hintText: "Tìm kiếm điểm dừng",
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(left: 15, top: 15),
-                  isDense: false,
-                  prefixIcon: Icon(
-                    Icons.search,
-                    size: 25,
-                  ),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      _txtSearchController.clear();
-                    },
-                    icon: Icon(Icons.cancel),
-                    iconSize: 20,
-                    color: Colors.grey[400],
-                  )),
-            ),
-          ),
+        backgroundColor: Colors.amber,
+        title: Text("EMDDIBUS"),
         ),
       body: Stack(children: [
         FlutterMap(
