@@ -67,6 +67,7 @@ class _FMapState extends State<FMap> {
         FlutterMap(
           mapController: mapController,
           options: MapOptions(
+            maxZoom: 18,
             center: LatLng(15.594016, 110.450604),
             zoom: 5,
             onTap: (_) => _textSearchFocusNode.unfocus(),
@@ -128,47 +129,6 @@ class _FMapState extends State<FMap> {
                 })
           ],
         ),
-        // Container(
-        //   color: Colors.amber,
-        //   child: AppBar(
-        //     elevation: 0,
-        //     backgroundColor: Colors.transparent,
-        //     iconTheme: IconThemeData(color: Colors.black),
-        //     title: Container(
-        //       margin: EdgeInsets.only(left: 15, top: 10, right: 15),
-        //       decoration: BoxDecoration(
-        //         borderRadius: BorderRadius.circular(40),
-        //         color: Colors.white,
-        //         border: Border.all(
-        //           color: Colors.grey[300],
-        //           width: 0.5,
-        //         ),
-        //       ),
-        //       child: TextField(
-        //         controller: _txtSearchController,
-        //         onChanged: (String value){},
-        //         decoration: InputDecoration(
-        //             hintText: "Tìm kiếm điểm dừng",
-        //             border: InputBorder.none,
-        //             contentPadding: EdgeInsets.only(left: 15, top: 15),
-        //             isDense: false,
-        //             prefixIcon: Icon(
-        //               Icons.search,
-        //               size: 25,
-        //             ),
-        //             suffixIcon: IconButton(
-        //               onPressed: (){
-        //                 _txtSearchController.clear();
-        //               },
-        //               icon: Icon(Icons.cancel),
-        //               iconSize: 20,
-        //               color: Colors.grey[400],
-        //             )
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
       ]),
     );
   }
