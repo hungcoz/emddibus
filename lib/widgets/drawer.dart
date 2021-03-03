@@ -1,16 +1,13 @@
-import 'dart:io';
-
-import 'package:emddibus/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Menu extends StatefulWidget{
+class Menu extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _MenuState();
 }
-class _MenuState extends State<Menu> {
 
+class _MenuState extends State<Menu> {
   //link to phone
   _launchCaller() async {
     const url = "tel:1800 8888";
@@ -33,6 +30,7 @@ class _MenuState extends State<Menu> {
                 padding: EdgeInsets.only(top: 0),
                 children: [
                   DrawerHeader(
+                    child: Image.asset('assets/EMDDI_2.png'),
                     margin: EdgeInsets.only(bottom: 0),
                     decoration: BoxDecoration(
                       color: Colors.amber,
@@ -60,7 +58,7 @@ class _MenuState extends State<Menu> {
                       "Tra cứu các tuyến bus",
                       style: TextStyle(color: Colors.white),
                     ),
-                    onTap: (){
+                    onTap: () {
                       // Navigator.push(context, MaterialPageRoute(builder: (context) => Search()));
                     },
                   ),
