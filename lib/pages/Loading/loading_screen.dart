@@ -1,4 +1,5 @@
 import 'package:emddibus/pages/Home/fmap_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_location/flutter_map_location.dart';
 
@@ -8,12 +9,11 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  void getData() async {
-    Duration(seconds: 5);
 
+  void getData() async {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => FMap()), (route) => false);
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => FMap()));
     });
   }
 
