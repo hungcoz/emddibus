@@ -1,4 +1,6 @@
 {
+  "code" : 0,
+  "message" : "Thành công",
   "list_stop_point": [
     {
       "stop_id": "1",
