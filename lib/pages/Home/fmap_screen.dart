@@ -1,6 +1,6 @@
 import 'package:emddibus/constants.dart';
-import 'package:emddibus/models/stop_point_model.dart';
 import 'package:emddibus/pages/Home/search_field.dart';
+import 'package:emddibus/pages/Home/stop_point_marker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location/flutter_map_location.dart';
@@ -16,8 +16,24 @@ class FMap extends StatefulWidget {
 class _FMapState extends State<FMap> {
   MapController mapController = MapController();
   List<Marker> markers = [];
+  void setStopPointMarker() {
+    STOP_POINT.forEach((point) {
+      markers.add(Marker(
+        width: 50,
+        height: 50,
+        point: LatLng(point.latitude, point.longitude),
+        builder: (context) => StopPointMarker(stopPoint: point, mapController: mapController)
+      ));
+    });
+  }
 
   FocusNode _textSearchFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    setStopPointMarker();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +74,7 @@ class _FMapState extends State<FMap> {
                     if (ld == null || ld.location == null) {
                       return;
                     }
-                    mapController?.move(ld.location, 14.0);
+                    mapController?.move(ld.location, 16);
                   },
                   buttonBuilder: (BuildContext context,
                       ValueNotifier<LocationServiceStatus> status,

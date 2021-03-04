@@ -62,9 +62,12 @@ class _SearchFieldState extends State<SearchField> {
       ),
       ListTile(
         onTap: () {
+          StopPoint tmp = listStopPoint[index];
           widget.mapController.move(
               LatLng(listStopPoint[index].latitude, listStopPoint[index].longitude),
-              15);
+              16);
+          listStopPoint.clear();
+          listStopPoint.add(tmp);
           setState(() {
             _isSearching = false;
             searchController.text = busStop.name;
@@ -77,7 +80,7 @@ class _SearchFieldState extends State<SearchField> {
           '${busStop.name}',
           style: TextStyle(fontSize: 18),
         ),
-        subtitle: Text('Tuyến chạy qua: '),
+        //subtitle: Text('Tuyến chạy qua: '),
       ),
     ]);
   }
