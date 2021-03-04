@@ -14,9 +14,9 @@ class FMap extends StatefulWidget {
 }
 
 class _FMapState extends State<FMap> {
+  MapController mapController = MapController();
   List<Marker> markers = [];
 
-  TextEditingController _txtSearchController = new TextEditingController();
   FocusNode _textSearchFocusNode = FocusNode();
 
   @override
@@ -96,7 +96,7 @@ class _FMapState extends State<FMap> {
                   }),
             ],
           ),
-          SearchField()
+          SearchField(txtSearchFocusNode: _textSearchFocusNode, mapController:mapController,)
         ]),
       ),
     );

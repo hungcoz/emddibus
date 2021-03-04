@@ -1,10 +1,15 @@
 import 'package:emddibus/models/stop_point_model.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong/latlong.dart';
+import 'package:flutter_map/flutter_map.dart';
 
 import '../../constants.dart';
 
 class SearchField extends StatefulWidget {
+  final FocusNode txtSearchFocusNode;
+  final MapController mapController;
+  SearchField({Key key, this.txtSearchFocusNode, this.mapController}) : super(key: key);
+
   @override
   _SearchFieldState createState() => _SearchFieldState();
 }
@@ -12,7 +17,7 @@ class SearchField extends StatefulWidget {
 class _SearchFieldState extends State<SearchField> {
   bool _isSearching = false;
 
-  List<StopPoint> listBusStop = [];
+  List<StopPoint> listStopPoint = [];
 
   TextEditingController searchController = TextEditingController();
 
@@ -20,13 +25,13 @@ class _SearchFieldState extends State<SearchField> {
     return _isSearching
         ? Container(
             constraints: BoxConstraints(maxHeight: 200),
-            child: listBusStop.length > 0
+            child: listStopPoint.length > 0
                 ? Scrollbar(
                     child: ListView.builder(
                       padding: EdgeInsets.only(top: 0),
-                      itemCount: listBusStop.length,
+                      itemCount: listStopPoint.length,
                       itemBuilder: (context, index) =>
-                          buildBusStopCard(context, index),
+                          buildStopPointCard(context, index),
                       shrinkWrap: true,
                     ),
                   )
@@ -48,8 +53,8 @@ class _SearchFieldState extends State<SearchField> {
         : null;
   }
 
-  Widget buildBusStopCard(BuildContext context, int index) {
-    StopPoint busStop = listBusStop[index];
+  Widget buildStopPointCard(BuildContext context, int index) {
+    StopPoint busStop = listStopPoint[index];
     return Column(children: [
       Divider(
         color: Colors.grey,
@@ -57,8 +62,8 @@ class _SearchFieldState extends State<SearchField> {
       ),
       ListTile(
         onTap: () {
-          mapController.move(
-              LatLng(listBusStop[index].latitude, listBusStop[index].longitude),
+          widget.mapController.move(
+              LatLng(listStopPoint[index].latitude, listStopPoint[index].longitude),
               15);
           setState(() {
             _isSearching = false;
@@ -66,6 +71,7 @@ class _SearchFieldState extends State<SearchField> {
             searchController.selection = TextSelection.fromPosition(
                 TextPosition(offset: searchController.text.length));
           });
+          widget.txtSearchFocusNode.unfocus();
         },
         title: Text(
           '${busStop.name}',
@@ -85,13 +91,13 @@ class _SearchFieldState extends State<SearchField> {
         }
       });
       setState(() {
-        listBusStop.clear();
-        listBusStop.addAll(dummyData);
+        listStopPoint.clear();
+        listStopPoint.addAll(dummyData);
       });
       return;
     } else {
       setState(() {
-        listBusStop.clear();
+        listStopPoint.clear();
       });
     }
   }
@@ -112,6 +118,7 @@ class _SearchFieldState extends State<SearchField> {
           TextField(
             style: TextStyle(fontSize: 18),
             controller: searchController,
+            focusNode: widget.txtSearchFocusNode,
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding:
@@ -124,7 +131,7 @@ class _SearchFieldState extends State<SearchField> {
                       icon: Icon(Icons.clear),
                       onPressed: () {
                         searchController.text = '';
-                        listBusStop.clear();
+                        listStopPoint.clear();
                         setState(() {
                           _isSearching = false;
                         });
@@ -141,10 +148,10 @@ class _SearchFieldState extends State<SearchField> {
                 _isSearching = false;
               });
               if (value.isNotEmpty) {
-                mapController.move(
-                    LatLng(listBusStop[0].latitude, listBusStop[0].longitude),
+                widget.mapController.move(
+                    LatLng(listStopPoint[0].latitude, listStopPoint[0].longitude),
                     16);
-                searchController.text = listBusStop[0].name;
+                searchController.text = listStopPoint[0].name;
               }
             },
           ),

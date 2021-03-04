@@ -4,7 +4,9 @@ import 'package:flutter_map/flutter_map.dart';
 
 import 'models/stop_point_model.dart';
 
-MapController mapController = MapController();
+const String URL = 'api_url';
+
+
 
 LatLng currentPosition;
 

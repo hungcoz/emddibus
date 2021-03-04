@@ -1,6 +1,7 @@
+import 'package:emddibus/constants.dart';
 import 'package:emddibus/pages/Home/fmap_screen.dart';
+import 'package:emddibus/services/http_stop_point.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map_location/flutter_map_location.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -9,11 +10,10 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
   void getData() async {
-    await Future.delayed(Duration(seconds: 3));
-    //WidgetsBinding.instance.addPostFrameCallback((_) {
+    //await Future.delayed(Duration(seconds: 3));
+    await getStopPointData();
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => FMap()), (route) => false);
-    //});
   }
 
   @override
