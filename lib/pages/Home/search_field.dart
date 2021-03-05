@@ -54,7 +54,7 @@ class _SearchFieldState extends State<SearchField> {
   }
 
   Widget buildStopPointCard(BuildContext context, int index) {
-    StopPoint busStop = listStopPoint[index];
+    StopPoint point = listStopPoint[index];
     return Column(children: [
       Divider(
         color: Colors.grey,
@@ -70,14 +70,14 @@ class _SearchFieldState extends State<SearchField> {
           listStopPoint.add(tmp);
           setState(() {
             _isSearching = false;
-            searchController.text = busStop.name;
+            searchController.text = point.name;
             searchController.selection = TextSelection.fromPosition(
                 TextPosition(offset: searchController.text.length));
           });
           widget.txtSearchFocusNode.unfocus();
         },
         title: Text(
-          '${busStop.name}',
+          '${point.name}',
           style: TextStyle(fontSize: 18),
         ),
         //subtitle: Text('Tuyến chạy qua: '),
