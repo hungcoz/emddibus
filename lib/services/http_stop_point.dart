@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 const String path = '/api_stop_point.json';
 
-Future<void> getStopPointData() async{
+Future<void> getStopPointData() async {
   final response = await rootBundle.loadString(URL + path);
   var result = listStopPointFromJson(response);
   STOP_POINT = result.listStopPoint;

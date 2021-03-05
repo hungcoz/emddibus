@@ -9,7 +9,9 @@ class StopPointMarker extends StatelessWidget {
   final MapController mapController;
   final Uint8List stopPointIcon;
 
-  StopPointMarker({Key key, this.stopPoint, this.mapController, this.stopPointIcon}) : super(key: key);
+  StopPointMarker(
+      {Key key, this.stopPoint, this.mapController, this.stopPointIcon})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +19,10 @@ class StopPointMarker extends StatelessWidget {
       return Container(
         child: IconButton(
           icon: Image.asset('assets/stop_point.png'),
-          onPressed: () {
-
-          },
+          onPressed: () {},
         ),
       );
-    }
-    else return Container();
+    } else
+      return Container();
   }
 }
