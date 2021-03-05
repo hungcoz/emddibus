@@ -47,6 +47,71 @@ class _RouteSearchState extends State<RouteSearch> {
         title: Text('Danh sách các tuyến Bus'),
         centerTitle: true,
       ),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Container(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(8, 10, 8, 5),
+                  child: TextField(
+                    onChanged: (value) {
+                      searchRoute(value);
+                    },
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.fromLTRB(25, 10, 5, 5),
+                      hintText: 'Tìm kiếm...',
+                      hintStyle: TextStyle(
+                        fontSize: 20,
+                      ),
+                      suffixIcon: Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Scrollbar(
+                    isAlwaysShown: true,
+                    controller: _scrollController,
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      itemCount: _listBusRoutes.length,
+                      itemBuilder: (context, index) => _buildCard(context, index),
+                      shrinkWrap: true,
+                    ),
+                  ),
+                )
+              ],
+            )),
+      ),
+    );
+  }
+
+  Widget _buildCard(BuildContext context, int index) {
+    BusRoute busRoute = _listBusRoutes[index];
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
+      child: Card(
+        child: ListTile(
+          onTap: () {
+
+          },
+          title: Text(busRoute.name),
+          leading: CircleAvatar(
+            child: Text(
+              '${busRoute.routeId}',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20),
+            ),
+            backgroundColor: Color(0xffeeac24),
+          ),
+          //subtitle: Text('${busRoute.city}'),
+        ),
+      ),
     );
   }
 }
