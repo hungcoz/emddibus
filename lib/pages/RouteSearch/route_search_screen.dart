@@ -1,5 +1,7 @@
 import 'package:emddibus/constants.dart';
 import 'package:emddibus/models/bus_route_model.dart';
+import 'package:emddibus/pages/BusPath/show_bus_path_screen.dart';
+import 'package:emddibus/services/http_bus_path.dart';
 import 'package:flutter/material.dart';
 
 class RouteSearch extends StatefulWidget {
@@ -95,8 +97,9 @@ class _RouteSearchState extends State<RouteSearch> {
       padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
       child: Card(
         child: ListTile(
-          onTap: () {
-
+          onTap: () async {
+            await getBusPathData(busRoute.routeId);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ShowBusPath(routeId: '${busRoute.routeId}')));
           },
           title: Text(busRoute.name),
           leading: CircleAvatar(
