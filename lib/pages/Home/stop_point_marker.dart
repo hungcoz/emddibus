@@ -7,10 +7,9 @@ import 'package:flutter_map/flutter_map.dart';
 class StopPointMarker extends StatelessWidget {
   final StopPoint stopPoint;
   final MapController mapController;
-  final Uint8List stopPointIcon;
 
   StopPointMarker(
-      {Key key, this.stopPoint, this.mapController, this.stopPointIcon})
+      {Key key, this.stopPoint, this.mapController})
       : super(key: key);
 
   @override

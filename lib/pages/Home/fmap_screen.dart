@@ -25,6 +25,7 @@ class _FMapState extends State<FMap> {
         builder: (context) => StopPointMarker(stopPoint: point, mapController: mapController)
       ));
     });
+    markers.add(Marker());
   }
 
   FocusNode _textSearchFocusNode = FocusNode();
