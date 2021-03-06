@@ -27,8 +27,8 @@ class ShowBusPathState extends State<ShowBusPath> {
   List<LatLng> _listPointGo = [];
   List<LatLng> _listPointReturn = [];
 
-  List<int> listStopPoint0 = [];
-  List<int> listStopPoint1 = [];
+  List<dynamic> listStopPoint0 = [];
+  List<dynamic> listStopPoint1 = [];
 
   void getPointOfPath() {
     BUS_PATH_GO.forEach((element) {
@@ -42,19 +42,14 @@ class ShowBusPathState extends State<ShowBusPath> {
   @override
   void initState() {
     getPointOfPath();
+    getStopPointMarker();
+    getStopPointGo();
+    getStopPointReturn();
     // TODO: implement initState
     super.initState();
   }
 
   void getStopPointMarker() {
-    // BUS_PATH.forEach((point) {
-    //   markers.add(Marker(
-    //       width: 50,
-    //       height: 50,
-    //       point: LatLng(point.latitude, point.longitude),
-    //       builder: (context) => StopPointMarker(mapController: mapController)
-    //   ));
-    // });
     BUS_ROUTE.forEach((element) {
       if (element.routeId.toString() == routeId) {
         listStopPoint0 = element.listStopPointGo;
@@ -66,11 +61,30 @@ class ShowBusPathState extends State<ShowBusPath> {
     STOP_POINT.forEach((element) {
       listStopPoint0.forEach((point) {
         if (element.stopId == point) {
-          
+          markers.add(Marker(
+            width: 50,
+            height: 50,
+            point: LatLng(element.latitude, element.longitude),
+            builder: (context) => StopPointMarker(mapController: mapController,)
+          ));
         }
       });
     });
-}
+  }
+  void getStopPointReturn() {
+    STOP_POINT.forEach((element) {
+      listStopPoint1.forEach((point) {
+        if (element.stopId == point) {
+          markers.add(Marker(
+              width: 50,
+              height: 50,
+              point: LatLng(element.latitude, element.longitude),
+              builder: (context) => StopPointMarker(mapController: mapController,)
+          ));
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
