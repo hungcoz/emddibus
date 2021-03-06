@@ -12,16 +12,21 @@ class PointOfBusPath {
 }
 class ListPointOfBusPath {
   int routeId;
-  List<PointOfBusPath> listPoint;
+  List<PointOfBusPath> listPointOfDirectionFGo;
+  List<PointOfBusPath> listPointOfDirectionFReturn;
 
-  ListPointOfBusPath({this.routeId, this.listPoint});
+
+  ListPointOfBusPath({this.routeId, this.listPointOfDirectionFGo, this.listPointOfDirectionFReturn});
 
   factory ListPointOfBusPath.fromJson(Map<String, dynamic> json) {
-    var listPoint = json['direction_go'] as List;
-    List<PointOfBusPath>_listPoint = listPoint.map((e) => PointOfBusPath.fromJson(e)).toList();
+    var listPointOfDirectionFGo = json['direction_go'] as List;
+    var listPointOfDirectionFReturn = json['direction_return'] as List;
+    List<PointOfBusPath> _listPointOfDirectionFGo = listPointOfDirectionFGo.map((e) => PointOfBusPath.fromJson(e)).toList();
+    List<PointOfBusPath> _listPointOfDirectionFReturn = listPointOfDirectionFReturn.map((e) => PointOfBusPath.fromJson(e)).toList();
     return ListPointOfBusPath(
       routeId: int.parse(json['route_id']),
-        listPoint: _listPoint
+        listPointOfDirectionFGo: _listPointOfDirectionFGo,
+        listPointOfDirectionFReturn: _listPointOfDirectionFReturn
     );
   }
 }

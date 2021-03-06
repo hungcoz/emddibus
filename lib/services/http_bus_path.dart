@@ -7,5 +7,6 @@ Future<void> getBusPathData(int routeId) async {
   String id = routeId.toString();
   final response = await rootBundle.loadString(URL + '/polyline/route_' + id + '.json');
   var result = listPointOfPathFromJson(response);
-  BUS_PATH = result.listPoint;
+  BUS_PATH_GO = result.listPointOfDirectionFGo;
+  BUS_PATH_RETURN = result.listPointOfDirectionFReturn;
 }

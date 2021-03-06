@@ -10,4 +10,5 @@ LatLng currentPosition;
 
 List<StopPoint> STOP_POINT;
 List<BusRoute> BUS_ROUTE;
-List<PointOfBusPath> BUS_PATH;
+List<PointOfBusPath> BUS_PATH_GO;
+List<PointOfBusPath> BUS_PATH_RETURN;
