@@ -63,7 +63,7 @@ class ShowBusPathState extends State<ShowBusPath> {
             width: 50,
             height: 50,
             point: LatLng(element.latitude, element.longitude),
-            builder: (context) => StopPointMarker(mapController: mapController,)
+            builder: (context) => StopPointMarker(stopPoint: element, mapController: mapController,)
           ));
         }
       });
@@ -77,7 +77,7 @@ class ShowBusPathState extends State<ShowBusPath> {
               width: 50,
               height: 50,
               point: LatLng(element.latitude, element.longitude),
-              builder: (context) => StopPointMarker(mapController: mapController,)
+              builder: (context) => StopPointMarker(stopPoint: element, mapController: mapController,)
           ));
         }
       });

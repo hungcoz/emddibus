@@ -18,7 +18,7 @@ class StopPointMarker extends StatelessWidget {
       return Container(
         child: IconButton(
           icon: Image.asset('assets/stop_point.png'),
-          onPressed: () {},
+          onPressed: () {print(stopPoint.stopId);},
         ),
       );
     } else
