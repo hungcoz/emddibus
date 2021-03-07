@@ -117,12 +117,12 @@ class ShowBusPathState extends State<ShowBusPath> {
                 PolylineLayerOptions(
                     polylines: [
                       Polyline(
-                        strokeWidth: 4,
+                        strokeWidth: 5,
                         points: _listPointGo,
                       ),
                       Polyline(
                         color: Colors.deepOrangeAccent,
-                        strokeWidth: 4,
+                        strokeWidth: 5,
                         points: _listPointReturn,
                       )
                     ]
@@ -177,6 +177,147 @@ class ShowBusPathState extends State<ShowBusPath> {
                       );
                     }),
               ],
+            ),
+            DraggableScrollableSheet(
+              minChildSize: 0.05,
+                maxChildSize: 0.5,
+                builder: (context, controller) {
+                  return Container(
+                    color: Colors.white,
+                    child: ListView.builder(
+                      itemCount: 1,
+                        controller: controller,
+                        itemBuilder: (BuildContext context, index){
+                        return Column(
+                          children: [
+                            Container(
+                              child: Text(
+                                  "Bến xe Gia Lâm - Bến xe Yên Nghĩa",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ),
+                              padding: EdgeInsets.only(top: 10, bottom: 10),
+                            ),
+                            DefaultTabController(
+                              length: 3,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    color: Colors.amber,
+                                    child: TabBar(
+                                      tabs: [
+                                        Tab(text: "Giờ xuất bến",),
+                                        Tab(text: "Điểm dừng",),
+                                        Tab(text: "Thông tin",),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 300,
+                                    child: TabBarView(
+                                      children: [
+                                        Container(
+                                          color: Colors.blue,
+                                          child: ListView.builder(
+                                            itemCount: 10,
+                                              itemBuilder: (BuildContext context, index){
+                                                return ListTile(
+                                                  title: Text('Item ${index+1}'),
+                                                );
+                                              }
+                                          ),
+                                        ),
+                                        Container(
+                                          color: Colors.redAccent,
+                                          child: ListView.builder(
+                                              itemCount: 10,
+                                              itemBuilder: (BuildContext context, index){
+                                                return ListTile(
+                                                  title: Text('Item ${index+1}'),
+                                                );
+                                              }
+                                          ),
+                                        ),
+                                        Container(
+                                          color: Colors.green,
+                                          child: ListView.builder(
+                                              itemCount: 10,
+                                              itemBuilder: (BuildContext context, index){
+                                                return ListTile(
+                                                  title: Text('Item ${index+1}'),
+                                                );
+                                              }
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ]
+                              ),
+                            )
+                          ]
+                        );
+                        },
+                    ),
+                    // child: Column(
+                    //   children: [
+                    //     Container(
+                    //       child: Text(
+                    //         "Bến xe Gia Lâm - Bến xe Yên Nghĩa",
+                    //         style: TextStyle(
+                    //           fontSize: 18
+                    //         ),
+                    //       ),
+                    //       padding: EdgeInsets.only(top: 10, bottom: 10),
+                    //     ),
+                    //     Divider(
+                    //       height: 2,
+                    //       color: Colors.blue,
+                    //     ),
+                    //     DefaultTabController(
+                    //         length: 3,
+                    //         child: Column(
+                    //           children: [
+                    //             Container(
+                    //               child: TabBar(
+                    //                 tabs: [
+                    //                   Tab(text: "Giờ xuất bến"),
+                    //                   Tab(text: "Điểm dừng"),
+                    //                   Tab(text: "Thông tin"),
+                    //                 ],
+                    //               ),
+                    //             ),
+                    //             Divider(height: 2, color: Colors.blue,),
+                    //             Container(
+                    //               child:
+                    //                 TabBarView(
+                    //                   children: [
+                    //                     Container(
+                    //                       child: ListView.builder(
+                    //                       itemCount: 15,
+                    //                       controller: controller,
+                    //                       itemBuilder:
+                    //                           (BuildContext context, index) {
+                    //                         return ListTile(
+                    //                           title: Text('Item ${index + 1}'),
+                    //                         );
+                    //                       },
+                    //                     ),
+                    //                   ),
+                    //                     Container(color: Colors.amber,),
+                    //                     Container(color: Colors.red,)
+                    //                   ]
+                    //               ),
+                    //               height: 250,
+                    //             )
+                    //           ],
+                    //         )
+                    //     )
+                    //   ],
+                    // )
+                  );
+                }
             ),
           ],
         ),
