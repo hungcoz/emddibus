@@ -43,7 +43,8 @@ class _FMapState extends State<FMap> {
       drawer: Menu(),
       appBar: AppBar(
         backgroundColor: Colors.amber,
-        title: Text("EMDDIBUS"),
+        title: Image.asset('assets/EMDDI_2.png', scale: 2,),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: Stack(children: [

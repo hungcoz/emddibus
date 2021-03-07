@@ -1,4 +1,5 @@
 import 'package:emddibus/pages/RouteSearch/route_search_screen.dart';
+import 'package:emddibus/pages/StopPointSearch/stop_point_search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -72,7 +73,9 @@ class _MenuState extends State<Menu> {
                       "Tra cứu các điểm dừng",
                       style: TextStyle(color: Colors.white),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => StopPointSearch()));
+                    },
                   ),
                 ],
               ),
