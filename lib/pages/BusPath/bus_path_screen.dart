@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:emddibus/pages/Home/stop_point_marker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +63,7 @@ class ShowBusPathState extends State<ShowBusPath> {
             width: 50,
             height: 50,
             point: LatLng(element.latitude, element.longitude),
-            builder: (context) => StopPointMarker(mapController: mapController,)
+            builder: (context) => StopPointMarker(stopPoint: element, mapController: mapController,)
           ));
         }
       });
@@ -79,7 +77,7 @@ class ShowBusPathState extends State<ShowBusPath> {
               width: 50,
               height: 50,
               point: LatLng(element.latitude, element.longitude),
-              builder: (context) => StopPointMarker(mapController: mapController,)
+              builder: (context) => StopPointMarker(stopPoint: element, mapController: mapController,)
           ));
         }
       });
@@ -113,7 +111,6 @@ class ShowBusPathState extends State<ShowBusPath> {
                 TileLayerOptions(
                   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                 ),
-                MarkerLayerOptions(markers: markers),
                 PolylineLayerOptions(
                     polylines: [
                       Polyline(
@@ -127,6 +124,7 @@ class ShowBusPathState extends State<ShowBusPath> {
                       )
                     ]
                 ),
+                MarkerLayerOptions(markers: markers),
                 LocationOptions(
                     markers: markers,
                     onLocationUpdate: (LatLngData ld) {
@@ -170,6 +168,7 @@ class ShowBusPathState extends State<ShowBusPath> {
                             },
                           ),
                           onPressed:(){
+                            if(currentPosition == null) return;
                             mapController?.move(currentPosition, 16);
                         },
                           backgroundColor: Colors.white,

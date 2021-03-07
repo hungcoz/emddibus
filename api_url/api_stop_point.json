@@ -315,12 +315,6 @@
       "longitude": "105.85365"
     },
     {
-      "stop_id": "53",
-      "name": "Đối diện 6C Phan Chu Trinh",
-      "latitude": "21.02374",
-      "longitude": "105.85681"
-    },
-    {
       "stop_id": "54",
       "name": "Bác Cổ",
       "latitude": "21.0236",
@@ -370,7 +364,7 @@
     },
     {
       "stop_id": "62",
-      "name": "BX Mỹ Đình",
+      "name": "Bến xe Mỹ Đình",
       "latitude": "21.02788",
       "longitude": "105.7785"
     },
@@ -453,12 +447,6 @@
       "longitude": "105.855685"
     },
     {
-      "stop_id": "76",
-      "name": "80 Trần Nhật Duật",
-      "latitude": "21.03758",
-      "longitude": "105.85275"
-    },
-    {
       "stop_id": "77",
       "name": "Trần Nhật Duật (373 Hồng Hà) - Gần Hàm Tử Quan",
       "latitude": "21.0377",
@@ -487,18 +475,6 @@
       "name": "48 Hai Bà Trưng - Viện Kiểm Nghiệm thuốc Trung ương",
       "latitude": "21.02496",
       "longitude": "105.85042"
-    },
-    {
-      "stop_id": "82",
-      "name": "Đối diện tháp Hà Nội - Hai Bà Trưng (cạnh 56 Hai Bà Trưng)",
-      "latitude": "21.02617",
-      "longitude": "105.84645"
-    },
-    {
-      "stop_id": "83",
-      "name": "Công viên Lê nin - Đối diện 35 Trần Phú",
-      "latitude": "21.03103",
-      "longitude": "105.83934"
     },
     {
       "stop_id": "84",
