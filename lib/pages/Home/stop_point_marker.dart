@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:emddibus/models/stop_point_model.dart';
+import 'package:emddibus/pages/StopPointDetails/stop_point_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 
@@ -18,7 +19,9 @@ class StopPointMarker extends StatelessWidget {
       return Container(
         child: IconButton(
           icon: Image.asset('assets/stop_point.png'),
-          onPressed: () {print(stopPoint.stopId);},
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => StopPointDetail(stopPoint)));
+          },
         ),
       );
     } else
