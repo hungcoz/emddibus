@@ -5,8 +5,8 @@
     {
       "stop_id": "1",
       "name": "Bến xe Yên Nghĩa",
-      "latitude": "20.94969",
-      "longitude": "105.74763"
+      "latitude": "20.94983",
+      "longitude": "105.74743"
     },
     {
       "stop_id": "2",
@@ -161,8 +161,8 @@
     {
       "stop_id": "27",
       "name": "Bến xe Gia Lâm",
-      "latitude": "21.04812",
-      "longitude": "105.87831"
+      "latitude": "21.04824",
+      "longitude": "105.87851"
     },
     {
       "stop_id": "28",
@@ -366,7 +366,7 @@
       "stop_id": "62",
       "name": "Bến xe Mỹ Đình",
       "latitude": "21.02788",
-      "longitude": "105.7785"
+      "longitude": "105.77850"
     },
     {
       "stop_id": "63",

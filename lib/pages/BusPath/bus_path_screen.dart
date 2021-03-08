@@ -1,3 +1,5 @@
+import 'package:emddibus/models/stop_point_model.dart';
+import 'package:emddibus/pages/BusPath/bus_information.dart';
 import 'package:emddibus/pages/Home/stop_point_marker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,60 +22,62 @@ class ShowBusPathState extends State<ShowBusPath> {
   ShowBusPathState({this.routeId});
 
   MapController mapController = MapController();
+
+  List<Marker> markersDeparter = [];
+  List<Marker> markersReturn = [];
   List<Marker> markers = [];
 
-  List<LatLng> _listPointGo = [];
-  List<LatLng> _listPointReturn = [];
+  List<LatLng> listPointDeparter = [];
+  List<LatLng> listPointReturn = [];
+  List<LatLng> listPoint = [];
 
-  List<dynamic> listStopPoint0 = [];
-  List<dynamic> listStopPoint1 = [];
+  List<dynamic> listIdStopPointDeparter = [];
+  List<dynamic> listIdStopPointReturn = [];
+
+  List<StopPoint> listStopPointDeparter = [];
+  List<StopPoint> listStopPointReturn = [];
+  List<StopPoint> listStopPoint = [];
+
+  Color color = Colors.green;
 
   void getPointOfPath() {
     BUS_PATH_GO.forEach((element) {
-      _listPointGo.add(LatLng(element.latitude, element.longitude));
+      listPointDeparter.add(LatLng(element.latitude, element.longitude));
     });
     BUS_PATH_RETURN.forEach((element) {
-      _listPointReturn.add(LatLng(element.latitude, element.longitude));
+      listPointReturn.add(LatLng(element.latitude, element.longitude));
     });
   }
-
-  @override
-  void initState() {
-    getPointOfPath();
-    getStopPointMarker();
-    getStopPointGo();
-    getStopPointReturn();
-    // TODO: implement initState
-    super.initState();
-  }
-
-  void getStopPointMarker() {
+  void getIdStopPoint() {
     BUS_ROUTE.forEach((element) {
       if (element.routeId.toString() == routeId) {
-        listStopPoint0 = element.listStopPointGo;
-        listStopPoint1 = element.listStopPointReturn;
+        listIdStopPointDeparter = element.listStopPointGo;
+        listIdStopPointReturn = element.listStopPointReturn;
       }
     });
   }
   void getStopPointGo() {
-    STOP_POINT.forEach((element) {
-      listStopPoint0.forEach((point) {
+    listIdStopPointDeparter.forEach((point) {
+      STOP_POINT.forEach((element) {
         if (element.stopId == point) {
-          markers.add(Marker(
+          listStopPointDeparter.add(element);
+          markersDeparter.add(Marker(
             width: 50,
             height: 50,
             point: LatLng(element.latitude, element.longitude),
             builder: (context) => StopPointMarker(stopPoint: element, mapController: mapController,)
           ));
         }
+        markersDeparter.add(Marker());
       });
     });
   }
   void getStopPointReturn() {
-    STOP_POINT.forEach((element) {
-      listStopPoint1.forEach((point) {
+    listIdStopPointReturn.forEach((point) {
+      STOP_POINT.forEach((element) {
         if (element.stopId == point) {
-          markers.add(Marker(
+          listStopPointReturn.add(element);
+          markersReturn.add(Marker(
               width: 50,
               height: 50,
               point: LatLng(element.latitude, element.longitude),
@@ -81,7 +85,21 @@ class ShowBusPathState extends State<ShowBusPath> {
           ));
         }
       });
+      markersReturn.add(Marker());
     });
+  }
+
+  @override
+  void initState() {
+    getPointOfPath();
+    getIdStopPoint();
+    getStopPointGo();
+    getStopPointReturn();
+    listPoint = listPointDeparter;
+    markers = markersDeparter;
+    listStopPoint = listStopPointDeparter;
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
@@ -99,7 +117,7 @@ class ShowBusPathState extends State<ShowBusPath> {
               mapController: mapController,
               options: MapOptions(
                 maxZoom: 18,
-                center: LatLng(_listPointGo[0].latitude, _listPointGo[0].longitude),
+                center: LatLng(listPoint[0].latitude, listPoint[0].longitude),
                 onTap: (_){},
                 zoom: 16,
                 plugins: [
@@ -114,14 +132,10 @@ class ShowBusPathState extends State<ShowBusPath> {
                 PolylineLayerOptions(
                     polylines: [
                       Polyline(
+                        color: color,
                         strokeWidth: 5,
-                        points: _listPointGo,
+                        points: listPoint,
                       ),
-                      Polyline(
-                        color: Colors.deepOrangeAccent,
-                        strokeWidth: 5,
-                        points: _listPointReturn,
-                      )
                     ]
                 ),
                 MarkerLayerOptions(markers: markers),
@@ -136,7 +150,7 @@ class ShowBusPathState extends State<ShowBusPath> {
                       if (ld == null || ld.location == null) {
                         return;
                       }
-                      // mapController?.move(ld.location, 16);
+                      // mapController?.move(listPoint[0], 16);
                     },
                     buttonBuilder: (BuildContext context,
                         ValueNotifier<LocationServiceStatus> status,
@@ -177,147 +191,7 @@ class ShowBusPathState extends State<ShowBusPath> {
                     }),
               ],
             ),
-            DraggableScrollableSheet(
-              minChildSize: 0.05,
-                maxChildSize: 0.5,
-                builder: (context, controller) {
-                  return Container(
-                    color: Colors.white,
-                    child: ListView.builder(
-                      itemCount: 1,
-                        controller: controller,
-                        itemBuilder: (BuildContext context, index){
-                        return Column(
-                          children: [
-                            Container(
-                              child: Text(
-                                  "Bến xe Gia Lâm - Bến xe Yên Nghĩa",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                              padding: EdgeInsets.only(top: 10, bottom: 10),
-                            ),
-                            DefaultTabController(
-                              length: 3,
-                              child: Column(
-                                children: [
-                                  Container(
-                                    color: Colors.amber,
-                                    child: TabBar(
-                                      tabs: [
-                                        Tab(text: "Giờ xuất bến",),
-                                        Tab(text: "Điểm dừng",),
-                                        Tab(text: "Thông tin",),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 300,
-                                    child: TabBarView(
-                                      children: [
-                                        Container(
-                                          color: Colors.blue,
-                                          child: ListView.builder(
-                                            itemCount: 10,
-                                              itemBuilder: (BuildContext context, index){
-                                                return ListTile(
-                                                  title: Text('Item ${index+1}'),
-                                                );
-                                              }
-                                          ),
-                                        ),
-                                        Container(
-                                          color: Colors.redAccent,
-                                          child: ListView.builder(
-                                              itemCount: 10,
-                                              itemBuilder: (BuildContext context, index){
-                                                return ListTile(
-                                                  title: Text('Item ${index+1}'),
-                                                );
-                                              }
-                                          ),
-                                        ),
-                                        Container(
-                                          color: Colors.green,
-                                          child: ListView.builder(
-                                              itemCount: 10,
-                                              itemBuilder: (BuildContext context, index){
-                                                return ListTile(
-                                                  title: Text('Item ${index+1}'),
-                                                );
-                                              }
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ]
-                              ),
-                            )
-                          ]
-                        );
-                        },
-                    ),
-                    // child: Column(
-                    //   children: [
-                    //     Container(
-                    //       child: Text(
-                    //         "Bến xe Gia Lâm - Bến xe Yên Nghĩa",
-                    //         style: TextStyle(
-                    //           fontSize: 18
-                    //         ),
-                    //       ),
-                    //       padding: EdgeInsets.only(top: 10, bottom: 10),
-                    //     ),
-                    //     Divider(
-                    //       height: 2,
-                    //       color: Colors.blue,
-                    //     ),
-                    //     DefaultTabController(
-                    //         length: 3,
-                    //         child: Column(
-                    //           children: [
-                    //             Container(
-                    //               child: TabBar(
-                    //                 tabs: [
-                    //                   Tab(text: "Giờ xuất bến"),
-                    //                   Tab(text: "Điểm dừng"),
-                    //                   Tab(text: "Thông tin"),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    //             Divider(height: 2, color: Colors.blue,),
-                    //             Container(
-                    //               child:
-                    //                 TabBarView(
-                    //                   children: [
-                    //                     Container(
-                    //                       child: ListView.builder(
-                    //                       itemCount: 15,
-                    //                       controller: controller,
-                    //                       itemBuilder:
-                    //                           (BuildContext context, index) {
-                    //                         return ListTile(
-                    //                           title: Text('Item ${index + 1}'),
-                    //                         );
-                    //                       },
-                    //                     ),
-                    //                   ),
-                    //                     Container(color: Colors.amber,),
-                    //                     Container(color: Colors.red,)
-                    //                   ]
-                    //               ),
-                    //               height: 250,
-                    //             )
-                    //           ],
-                    //         )
-                    //     )
-                    //   ],
-                    // )
-                  );
-                }
-            ),
+            BusInformation(showBusPathState: this, routeId: routeId,),
           ],
         ),
       ),

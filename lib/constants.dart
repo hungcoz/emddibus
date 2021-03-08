@@ -12,3 +12,4 @@ List<StopPoint> STOP_POINT;
 List<BusRoute> BUS_ROUTE;
 List<PointOfBusPath> BUS_PATH_GO;
 List<PointOfBusPath> BUS_PATH_RETURN;
+int CHECK_DEPARTER_RETURN = 0;
