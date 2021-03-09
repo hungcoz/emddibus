@@ -85,11 +85,22 @@ class _SearchFieldState extends State<SearchField> {
     ]);
   }
 
+  String convertString(String str){
+    var withDia = 'àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữìíịỉĩđỳýỵỷỹ';
+    var withoutDia = 'aaaaaaaaaaaaaaaaaeeeeeeeeeeeooooooooooooooooouuuuuuuuuuuiiiiidyyyyy';
+
+    str = str.toLowerCase();
+    for (int i = 0; i < withDia.length; i++) {
+      str = str.replaceAll(withDia[i], withoutDia[i]);
+    }
+    return str;
+  }
+
   void search(String value) {
     if (value.isNotEmpty) {
       List<StopPoint> dummyData = <StopPoint>[];
       STOP_POINT.forEach((element) {
-        if (element.name.toLowerCase().contains(value.toLowerCase())) {
+        if (convertString(element.name).contains(convertString(value))) {
           dummyData.add(element);
         }
       });
@@ -113,9 +124,9 @@ class _SearchFieldState extends State<SearchField> {
       left: 15,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(30),
           color: _isSearching ? Colors.white : Colors.white70,
-          border: Border.all(color: Colors.grey[800], width: 2),
+          border: Border.all(color: Colors.grey[500], width: 2),
         ),
         child: Column(children: [
           TextField(
@@ -128,8 +139,9 @@ class _SearchFieldState extends State<SearchField> {
                   EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               hintText: 'Tìm kiếm điểm dừng...',
               hintStyle: TextStyle(fontSize: 18),
+              prefixIcon: Icon(Icons.search),
               suffixIcon: searchController.text.isEmpty
-                  ? Icon(Icons.search)
+                  ? null
                   : IconButton(
                       icon: Icon(Icons.clear),
                       onPressed: () {
