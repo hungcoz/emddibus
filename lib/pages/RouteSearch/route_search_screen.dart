@@ -1,6 +1,7 @@
 import 'package:emddibus/constants.dart';
 import 'package:emddibus/models/bus_route_model.dart';
 import 'package:emddibus/pages/BusPath/bus_path_screen.dart';
+import 'package:emddibus/pages/Loading/loading_dialog.dart';
 import 'package:emddibus/services/http_bus_path.dart';
 import 'package:flutter/material.dart';
 
@@ -99,12 +100,15 @@ class _RouteSearchState extends State<RouteSearch> {
       child: Card(
         child: ListTile(
           onTap: () async {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) => LoadingDialog());
             await getBusPathData(busRoute.routeId);
+            Navigator.of(context).pop();
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        ShowBusPath(busRoute: busRoute)));
+                    builder: (context) => ShowBusPath(busRoute: busRoute)));
           },
           title: Text(busRoute.name),
           leading: CircleAvatar(

@@ -19,7 +19,6 @@ class ShowBusPath extends StatefulWidget {
 }
 
 class ShowBusPathState extends State<ShowBusPath> {
-
   MapController mapController = MapController();
 
   List<Marker> markers = [];
@@ -46,14 +45,13 @@ class ShowBusPathState extends State<ShowBusPath> {
     listStopPointRoute.clear();
     listStopPoint.forEach((point) {
       STOP_POINT.forEach((element) {
-        if(element.stopId == point) {
+        if (element.stopId == point) {
           listStopPointRoute.add(element);
           markers.add(Marker(
-            width: 50,
-            height: 50,
-            point: LatLng(element.latitude, element.longitude),
-            builder: (context) => _buildMarker()
-          ));
+              width: 50,
+              height: 50,
+              point: LatLng(element.latitude, element.longitude),
+              builder: (context) => _buildMarker()));
         }
         markers.add(Marker());
       });

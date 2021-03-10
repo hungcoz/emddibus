@@ -55,6 +55,7 @@ class _FMapState extends State<FMap> {
             mapController: mapController,
             options: MapOptions(
               maxZoom: 18,
+              minZoom: 5,
               center: LatLng(15.594016, 110.450604),
               zoom: 5,
               onTap: (_) => _textSearchFocusNode.unfocus(),

@@ -8,8 +8,7 @@ import 'list_name_bus_stop.dart';
 
 class BusInformation extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() =>
-      BusInformationState();
+  State<StatefulWidget> createState() => BusInformationState();
 
   final ShowBusPathState showBusPathState;
   final BusRoute busRoute;
@@ -19,7 +18,7 @@ class BusInformation extends StatefulWidget {
 class BusInformationState extends State<BusInformation> {
   Color _color = Colors.green;
   String _text = "Chiều đi";
-  
+
   //ListNameBusStopState listNameBusStopState = new ListNameBusStopState();
 
   String nameOfBus;
@@ -115,13 +114,16 @@ class BusInformationState extends State<BusInformation> {
                                 widget.showBusPathState.color = _color;
                                 _text = "Chiều về";
                                 //cập nhật marker chiều về
-                                widget.showBusPathState.getStopPoint(widget.busRoute.listStopPointReturn);
+                                widget.showBusPathState.getStopPoint(
+                                    widget.busRoute.listStopPointReturn);
                                 //cập nhật path chiều về
-                                widget.showBusPathState.getPointOfPath(BUS_PATH_RETURN);
+                                widget.showBusPathState
+                                    .getPointOfPath(BUS_PATH_RETURN);
                                 // di chuyển camera đến điểm đầu của chiều về
                                 widget.showBusPathState.mapController.move(
-                                    widget.showBusPathState.listPoint[
-                                    widget.showBusPathState.listPoint.length - 1],
+                                    widget.showBusPathState.listPoint[widget
+                                            .showBusPathState.listPoint.length -
+                                        1],
                                     16);
                               } else {
                                 CHECK_DEPARTER_RETURN = 0;
@@ -129,12 +131,14 @@ class BusInformationState extends State<BusInformation> {
                                 widget.showBusPathState.color = _color;
                                 _text = "Chiều đi";
                                 //cập nhật marker chiều đi
-                                widget.showBusPathState.getStopPoint(widget.busRoute.listStopPointGo);
+                                widget.showBusPathState.getStopPoint(
+                                    widget.busRoute.listStopPointGo);
                                 //cập nhật path chiều đi
-                                widget.showBusPathState.getPointOfPath(BUS_PATH_GO);
+                                widget.showBusPathState
+                                    .getPointOfPath(BUS_PATH_GO);
                                 // di chuyển camera đến điểm đầu của chiều đi
-                                widget.showBusPathState.mapController
-                                    .move(widget.showBusPathState.listPoint[0], 16);
+                                widget.showBusPathState.mapController.move(
+                                    widget.showBusPathState.listPoint[0], 16);
                               }
                             });
                           },

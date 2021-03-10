@@ -18,7 +18,6 @@ class ListNameBusStop extends StatefulWidget {
 }
 
 class ListNameBusStopState extends State<ListNameBusStop> {
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -37,8 +36,11 @@ class ListNameBusStopState extends State<ListNameBusStop> {
             ),
             onTap: () {
               widget.showBusPathState.mapController.move(
-                  LatLng(widget.showBusPathState.listStopPointRoute[index].latitude,
-                      widget.showBusPathState.listStopPointRoute[index].longitude),
+                  LatLng(
+                      widget
+                          .showBusPathState.listStopPointRoute[index].latitude,
+                      widget.showBusPathState.listStopPointRoute[index]
+                          .longitude),
                   16);
               setState(() {
                 widget.busInformationState.selectedIndex = index;
