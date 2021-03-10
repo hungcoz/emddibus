@@ -40,6 +40,11 @@ class ShowBusPathState extends State<ShowBusPath> {
 
   Color color = Colors.green;
 
+  double widgetHeight = 0;
+  double dragScrollSheetExtent = 0;
+  double fabPosition = 0;
+  double fabPositionPadding = 10;
+
   void getPointOfPath() {
     BUS_PATH_GO.forEach((element) {
       listPointDeparter.add(LatLng(element.latitude, element.longitude));
@@ -98,6 +103,8 @@ class ShowBusPathState extends State<ShowBusPath> {
     listPoint = listPointDeparter;
     markers = markersDeparter;
     listStopPoint = listStopPointDeparter;
+
+
     // TODO: implement initState
     super.initState();
   }
@@ -106,90 +113,75 @@ class ShowBusPathState extends State<ShowBusPath> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text("Tuyến " + routeId.toString()),
       ),
       body: SafeArea(
         child: Stack(
           children: [
-            FlutterMap(
-              mapController: mapController,
-              options: MapOptions(
-                maxZoom: 18,
-                center: LatLng(listPoint[0].latitude, listPoint[0].longitude),
-                onTap: (_){},
-                zoom: 16,
-                plugins: [
-                  LocationPlugin(),
-                ],
-                interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
-              ),
-              layers: [
-                TileLayerOptions(
-                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            Container(
+              height: MediaQuery.of(context).size.height - fabPosition,
+              child: FlutterMap(
+                mapController: mapController,
+                options: MapOptions(
+                  maxZoom: 18,
+                  center: LatLng(listPoint[0].latitude, listPoint[0].longitude),
+                  onTap: (_){
+
+                  },
+                  zoom: 16,
+                  plugins: [
+                    LocationPlugin(),
+                  ],
+                  interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
                 ),
-                PolylineLayerOptions(
-                    polylines: [
-                      Polyline(
-                        color: color,
-                        strokeWidth: 5,
-                        points: listPoint,
-                      ),
-                    ]
-                ),
-                MarkerLayerOptions(markers: markers),
-                LocationOptions(
-                    markers: markers,
-                    onLocationUpdate: (LatLngData ld) {
-                      setState(() {
-                        currentPosition = ld.location;
-                      });
-                    },
-                    onLocationRequested: (LatLngData ld) {
-                      if (ld == null || ld.location == null) {
-                        return;
-                      }
-                      // mapController?.move(listPoint[0], 16);
-                    },
-                    buttonBuilder: (BuildContext context,
-                        ValueNotifier<LocationServiceStatus> status,
-                        Function onPressed) {
-                      return Positioned(
-                        bottom: 20,
-                        right: 20,
-                        child: FloatingActionButton(
-                          child: ValueListenableBuilder<LocationServiceStatus>(
-                            valueListenable: status,
-                            builder:
-                                (context, LocationServiceStatus value, child) {
-                              switch (value) {
-                                case LocationServiceStatus.disabled:
-                                case LocationServiceStatus.permissionDenied:
-                                case LocationServiceStatus.unsubscribed:
-                                  return Icon(
-                                    Icons.location_disabled,
-                                    color: Colors.black,
-                                  );
-                                  break;
-                                default:
-                                  return Icon(
-                                    Icons.my_location,
-                                    color: Colors.black,
-                                  );
-                                  break;
-                              }
-                            },
-                          ),
-                          onPressed:(){
-                            if(currentPosition == null) return;
-                            mapController?.move(currentPosition, 16);
-                        },
-                          backgroundColor: Colors.white,
+                layers: [
+                  TileLayerOptions(
+                    urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  ),
+                  PolylineLayerOptions(
+                      polylines: [
+                        Polyline(
+                          color: color,
+                          strokeWidth: 5,
+                          points: listPoint,
                         ),
-                      );
-                    }),
-              ],
+                      ]
+                  ),
+                  MarkerLayerOptions(markers: markers),
+                  LocationOptions(
+                      markers: markers,
+                      onLocationUpdate: (LatLngData ld) {
+                        setState(() {
+                          currentPosition = ld.location;
+                        });
+                      },
+                      onLocationRequested: (LatLngData ld) {
+                        if (ld == null || ld.location == null) {
+                          return;
+                        }
+                        // mapController?.move(listPoint[0], 16);
+                      },
+                      buttonBuilder: (context,
+                          ValueNotifier<LocationServiceStatus> status,
+                          Function onPressed) {
+                        return Container();
+                      }
+                      ),
+                ],
+              ),
+            ),
+            Positioned(
+              bottom: fabPosition + fabPositionPadding,
+              right: fabPositionPadding,
+              child: FloatingActionButton(
+                onPressed: () {
+                  if (currentPosition == null) return;
+                  mapController?.move(currentPosition, 16);
+                },
+                backgroundColor: Colors.white,
+                child: Icon(Icons.my_location, color: Colors.black,),
+              ),
             ),
             BusInformation(showBusPathState: this, routeId: routeId,),
           ],
