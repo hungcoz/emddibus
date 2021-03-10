@@ -10,15 +10,16 @@ import 'package:latlong/latlong.dart';
 import '../../constants.dart';
 
 class ShowBusPath extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() => ShowBusPathState(routeId: routeId);
   final String routeId;
+
   ShowBusPath({this.routeId});
 }
 
 class ShowBusPathState extends State<ShowBusPath> {
   final String routeId;
+
   ShowBusPathState({this.routeId});
 
   MapController mapController = MapController();
@@ -48,6 +49,7 @@ class ShowBusPathState extends State<ShowBusPath> {
       listPointReturn.add(LatLng(element.latitude, element.longitude));
     });
   }
+
   void getIdStopPoint() {
     BUS_ROUTE.forEach((element) {
       if (element.routeId.toString() == routeId) {
@@ -56,22 +58,27 @@ class ShowBusPathState extends State<ShowBusPath> {
       }
     });
   }
+
   void getStopPointGo() {
     listIdStopPointDeparter.forEach((point) {
       STOP_POINT.forEach((element) {
         if (element.stopId == point) {
           listStopPointDeparter.add(element);
           markersDeparter.add(Marker(
-            width: 50,
-            height: 50,
-            point: LatLng(element.latitude, element.longitude),
-            builder: (context) => StopPointMarker(stopPoint: element, mapController: mapController,)
-          ));
+              width: 50,
+              height: 50,
+              point: LatLng(element.latitude, element.longitude),
+              builder: (context) =>
+                  StopPointMarker(
+                    stopPoint: element,
+                    mapController: mapController,
+                  )));
         }
         markersDeparter.add(Marker());
       });
     });
   }
+
   void getStopPointReturn() {
     listIdStopPointReturn.forEach((point) {
       STOP_POINT.forEach((element) {
@@ -81,7 +88,8 @@ class ShowBusPathState extends State<ShowBusPath> {
               width: 50,
               height: 50,
               point: LatLng(element.latitude, element.longitude),
-              builder: (context) => StopPointMarker(stopPoint: element, mapController: mapController,)
+              builder: (context) =>
+                  _buildMarker()
           ));
         }
       });
@@ -118,7 +126,7 @@ class ShowBusPathState extends State<ShowBusPath> {
               options: MapOptions(
                 maxZoom: 18,
                 center: LatLng(listPoint[0].latitude, listPoint[0].longitude),
-                onTap: (_){},
+                onTap: (_) {},
                 zoom: 16,
                 plugins: [
                   LocationPlugin(),
@@ -129,27 +137,25 @@ class ShowBusPathState extends State<ShowBusPath> {
                 TileLayerOptions(
                   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                 ),
-                PolylineLayerOptions(
-                    polylines: [
-                      Polyline(
-                        color: color,
-                        strokeWidth: 5,
-                        points: listPoint,
-                      ),
-                    ]
-                ),
+                PolylineLayerOptions(polylines: [
+                  Polyline(
+                    color: color,
+                    strokeWidth: 5,
+                    points: listPoint,
+                  ),
+                ]),
                 MarkerLayerOptions(markers: markers),
                 LocationOptions(
                     markers: markers,
                     onLocationUpdate: (LatLngData ld) {
-                      setState(() {
-                        currentPosition = ld.location;
-                      });
+                      // setState(() {
+                      //   currentPosition = ld.location;
+                      // });
                     },
                     onLocationRequested: (LatLngData ld) {
-                      if (ld == null || ld.location == null) {
-                        return;
-                      }
+                      // if (ld == null || ld.location == null) {
+                      //   return;
+                      // }
                       // mapController?.move(listPoint[0], 16);
                     },
                     buttonBuilder: (BuildContext context,
@@ -181,21 +187,37 @@ class ShowBusPathState extends State<ShowBusPath> {
                               }
                             },
                           ),
-                          onPressed:(){
-                            if(currentPosition == null) return;
+                          onPressed: () {
+                            if (currentPosition == null) return;
                             mapController?.move(currentPosition, 16);
-                        },
+                          },
                           backgroundColor: Colors.white,
                         ),
                       );
                     }),
               ],
             ),
-            BusInformation(showBusPathState: this, routeId: routeId,),
+            BusInformation(
+              showBusPathState: this,
+              routeId: routeId,
+            ),
           ],
         ),
       ),
     );
   }
 
+  Widget _buildMarker() {
+    return Container(
+      child: IconButton(
+        icon: Image.asset('assets/stop_point.png'),
+        onPressed: () {
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => StopPointDetail(stopPoint)));
+        },
+      ),
+    );
+  }
 }

@@ -20,11 +20,12 @@ class _RouteSearchState extends State<RouteSearch> {
     super.initState();
   }
 
-  void searchRoute(String value){
+  void searchRoute(String value) {
     if (value.isNotEmpty) {
       List<BusRoute> data = [];
       BUS_ROUTE.forEach((element) {
-        if(element.name.toLowerCase().contains(value.toLowerCase()) || element.routeId.toString().contains(value)){
+        if (element.name.toLowerCase().contains(value.toLowerCase()) ||
+            element.routeId.toString().contains(value)) {
           data.add(element);
         }
       });
@@ -53,40 +54,40 @@ class _RouteSearchState extends State<RouteSearch> {
         onTap: () => FocusScope.of(context).unfocus(),
         child: Container(
             child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(8, 10, 8, 5),
-                  child: TextField(
-                    onChanged: (value) {
-                      searchRoute(value);
-                    },
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(25, 10, 5, 5),
-                      hintText: 'Tìm kiếm...',
-                      hintStyle: TextStyle(
-                        fontSize: 20,
-                      ),
-                      suffixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
-                    ),
+          children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(8, 10, 8, 5),
+              child: TextField(
+                onChanged: (value) {
+                  searchRoute(value);
+                },
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.fromLTRB(25, 10, 5, 5),
+                  hintText: 'Tìm kiếm...',
+                  hintStyle: TextStyle(
+                    fontSize: 20,
+                  ),
+                  suffixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
                 ),
-                Expanded(
-                  child: Scrollbar(
-                    isAlwaysShown: true,
-                    controller: _scrollController,
-                    child: ListView.builder(
-                      controller: _scrollController,
-                      itemCount: _listBusRoutes.length,
-                      itemBuilder: (context, index) => _buildCard(context, index),
-                      shrinkWrap: true,
-                    ),
-                  ),
-                )
-              ],
-            )),
+              ),
+            ),
+            Expanded(
+              child: Scrollbar(
+                isAlwaysShown: true,
+                controller: _scrollController,
+                child: ListView.builder(
+                  controller: _scrollController,
+                  itemCount: _listBusRoutes.length,
+                  itemBuilder: (context, index) => _buildCard(context, index),
+                  shrinkWrap: true,
+                ),
+              ),
+            )
+          ],
+        )),
       ),
     );
   }
@@ -99,7 +100,11 @@ class _RouteSearchState extends State<RouteSearch> {
         child: ListTile(
           onTap: () async {
             await getBusPathData(busRoute.routeId);
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ShowBusPath(routeId: '${busRoute.routeId}')));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        ShowBusPath(routeId: '${busRoute.routeId}')));
           },
           title: Text(busRoute.name),
           leading: CircleAvatar(

@@ -5,7 +5,8 @@ import 'package:latlong/latlong.dart';
 
 class ListNameBusStop extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => ListNameBusStopState(showBusPathState: showBusPathState);
+  State<StatefulWidget> createState() =>
+      ListNameBusStopState(showBusPathState: showBusPathState);
 
   final ShowBusPathState showBusPathState;
   ListNameBusStop({this.showBusPathState});
@@ -23,15 +24,15 @@ class ListNameBusStopState extends State<ListNameBusStop> {
       color: Colors.white,
       child: ListView.separated(
         itemCount: showBusPathState.listStopPoint.length,
-        itemBuilder: (BuildContext context, int index){
+        itemBuilder: (BuildContext context, int index) {
           return ListTile(
             title: Text(showBusPathState.listStopPoint[index].name),
-            onTap: (){
+            onTap: () {
               print(showBusPathState.listStopPoint.length);
               showBusPathState.mapController.move(
-                  LatLng(showBusPathState.listStopPoint[index].latitude, showBusPathState.listStopPoint[index].longitude),
-                  16
-              );
+                  LatLng(showBusPathState.listStopPoint[index].latitude,
+                      showBusPathState.listStopPoint[index].longitude),
+                  16);
             },
           );
         },

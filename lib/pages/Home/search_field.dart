@@ -8,7 +8,8 @@ import '../../constants.dart';
 class SearchField extends StatefulWidget {
   final FocusNode txtSearchFocusNode;
   final MapController mapController;
-  SearchField({Key key, this.txtSearchFocusNode, this.mapController}) : super(key: key);
+  SearchField({Key key, this.txtSearchFocusNode, this.mapController})
+      : super(key: key);
 
   @override
   _SearchFieldState createState() => _SearchFieldState();
@@ -64,7 +65,8 @@ class _SearchFieldState extends State<SearchField> {
         onTap: () {
           StopPoint tmp = listStopPoint[index];
           widget.mapController.move(
-              LatLng(listStopPoint[index].latitude, listStopPoint[index].longitude),
+              LatLng(listStopPoint[index].latitude,
+                  listStopPoint[index].longitude),
               16);
           listStopPoint.clear();
           listStopPoint.add(tmp);
@@ -85,9 +87,11 @@ class _SearchFieldState extends State<SearchField> {
     ]);
   }
 
-  String convertString(String str){
-    var withDia = 'àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữìíịỉĩđỳýỵỷỹ';
-    var withoutDia = 'aaaaaaaaaaaaaaaaaeeeeeeeeeeeooooooooooooooooouuuuuuuuuuuiiiiidyyyyy';
+  String convertString(String str) {
+    var withDia =
+        'àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữìíịỉĩđỳýỵỷỹ';
+    var withoutDia =
+        'aaaaaaaaaaaaaaaaaeeeeeeeeeeeooooooooooooooooouuuuuuuuuuuiiiiidyyyyy';
 
     str = str.toLowerCase();
     for (int i = 0; i < withDia.length; i++) {
@@ -164,7 +168,8 @@ class _SearchFieldState extends State<SearchField> {
               });
               if (value.isNotEmpty) {
                 widget.mapController.move(
-                    LatLng(listStopPoint[0].latitude, listStopPoint[0].longitude),
+                    LatLng(
+                        listStopPoint[0].latitude, listStopPoint[0].longitude),
                     16);
                 searchController.text = listStopPoint[0].name;
               }

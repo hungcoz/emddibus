@@ -16,14 +16,15 @@ class FMap extends StatefulWidget {
 class _FMapState extends State<FMap> {
   MapController mapController = MapController();
   List<Marker> markers = [];
+
   void setStopPointMarker() {
     STOP_POINT.forEach((point) {
       markers.add(Marker(
-        width: 50,
-        height: 50,
-        point: LatLng(point.latitude, point.longitude),
-        builder: (context) => StopPointMarker(stopPoint: point, mapController: mapController)
-      ));
+          width: 50,
+          height: 50,
+          point: LatLng(point.latitude, point.longitude),
+          builder: (context) =>
+              StopPointMarker(stopPoint: point, mapController: mapController)));
     });
     markers.add(Marker());
   }
@@ -42,7 +43,10 @@ class _FMapState extends State<FMap> {
       extendBodyBehindAppBar: true,
       drawer: Menu(),
       appBar: AppBar(
-        title: Image.asset('assets/EMDDI_2.png', scale: 2,),
+        title: Image.asset(
+          'assets/EMDDI_2.png',
+          scale: 2,
+        ),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -113,7 +117,10 @@ class _FMapState extends State<FMap> {
                   }),
             ],
           ),
-          SearchField(txtSearchFocusNode: _textSearchFocusNode, mapController:mapController,)
+          SearchField(
+            txtSearchFocusNode: _textSearchFocusNode,
+            mapController: mapController,
+          )
         ]),
       ),
     );

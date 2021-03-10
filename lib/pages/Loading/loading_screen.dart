@@ -11,7 +11,6 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-
   void getData() async {
     //await Future.delayed(Duration(seconds: 3));
     await getBusRouteData();
