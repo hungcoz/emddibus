@@ -79,9 +79,7 @@ class BusInformationState extends State<BusInformation> {
             if (controller.hasClients){
               var dimension = controller.position.viewportDimension;
               _height ??= dimension / _initialChildSize;
-              // print(
-              //     '${dimension} + ${_height * _maxChildSize *
-              //         0.9}');
+                  
               if (dimension >= _height * _maxChildSize * 0.9){
                 // setState(() {
                 //   _icon = Icons.arrow_downward_outlined;
