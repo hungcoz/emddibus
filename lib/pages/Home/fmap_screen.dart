@@ -42,7 +42,6 @@ class _FMapState extends State<FMap> {
       extendBodyBehindAppBar: true,
       drawer: Menu(),
       appBar: AppBar(
-        backgroundColor: Colors.amber,
         title: Image.asset('assets/EMDDI_2.png', scale: 2,),
         centerTitle: true,
       ),
