@@ -104,7 +104,7 @@ class _RouteSearchState extends State<RouteSearch> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        ShowBusPath(routeId: '${busRoute.routeId}')));
+                        ShowBusPath(busRoute: busRoute)));
           },
           title: Text(busRoute.name),
           leading: CircleAvatar(

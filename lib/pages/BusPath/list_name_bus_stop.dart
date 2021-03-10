@@ -6,10 +6,7 @@ import 'package:latlong/latlong.dart';
 
 class ListNameBusStop extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => ListNameBusStopState(
-        showBusPathState: showBusPathState,
-        busInformationState: busInformationState,
-      );
+  State<StatefulWidget> createState() => ListNameBusStopState();
 
   final ShowBusPathState showBusPathState;
   final BusInformationState busInformationState;
@@ -21,37 +18,30 @@ class ListNameBusStop extends StatefulWidget {
 }
 
 class ListNameBusStopState extends State<ListNameBusStop> {
-  ShowBusPathState showBusPathState;
-  BusInformationState busInformationState;
-
-  ListNameBusStopState({
-    this.showBusPathState,
-    this.busInformationState,
-  });
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return ListTileTheme(
       dense: true,
-      selectedColor: showBusPathState.color,
+      selectedColor: widget.showBusPathState.color,
       child: ListView.separated(
-        itemCount: showBusPathState.listStopPoint.length,
+        itemCount: widget.showBusPathState.listStopPointRoute.length,
         separatorBuilder: (BuildContext context, int index) => const Divider(),
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
-            selected: index == busInformationState.selectedIndex,
+            selected: index == widget.busInformationState.selectedIndex,
             title: Text(
-              showBusPathState.listStopPoint[index].name,
+              widget.showBusPathState.listStopPointRoute[index].name,
               style: TextStyle(fontSize: 15),
             ),
             onTap: () {
-              showBusPathState.mapController.move(
-                  LatLng(showBusPathState.listStopPoint[index].latitude,
-                      showBusPathState.listStopPoint[index].longitude),
+              widget.showBusPathState.mapController.move(
+                  LatLng(widget.showBusPathState.listStopPointRoute[index].latitude,
+                      widget.showBusPathState.listStopPointRoute[index].longitude),
                   16);
               setState(() {
-                busInformationState.selectedIndex = index;
+                widget.busInformationState.selectedIndex = index;
               });
             },
           );

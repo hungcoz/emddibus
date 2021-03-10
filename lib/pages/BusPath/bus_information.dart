@@ -1,4 +1,5 @@
 import 'package:emddibus/constants.dart';
+import 'package:emddibus/models/bus_route_model.dart';
 import 'package:emddibus/pages/BusPath/bus_path_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,21 +9,18 @@ import 'list_name_bus_stop.dart';
 class BusInformation extends StatefulWidget {
   @override
   State<StatefulWidget> createState() =>
-      BusInformationState(showBusPathState: showBusPathState, routeId: routeId);
+      BusInformationState();
 
   final ShowBusPathState showBusPathState;
-  final String routeId;
-  BusInformation({this.showBusPathState, this.routeId});
+  final BusRoute busRoute;
+  BusInformation({this.showBusPathState, this.busRoute});
 }
 
 class BusInformationState extends State<BusInformation> {
   Color _color = Colors.green;
   String _text = "Chiều đi";
-
-  ShowBusPathState showBusPathState;
-  ListNameBusStopState listNameBusStopState = new ListNameBusStopState();
-  String routeId;
-  BusInformationState({this.showBusPathState, this.routeId});
+  
+  //ListNameBusStopState listNameBusStopState = new ListNameBusStopState();
 
   String nameOfBus;
   int selectedIndex = 0;
@@ -34,19 +32,13 @@ class BusInformationState extends State<BusInformation> {
 
   IconData _icon = Icons.arrow_downward_outlined;
 
-  void getNameOfBus() {
-    BUS_ROUTE.forEach((element) {
-      if (element.routeId.toString() == routeId) nameOfBus = element.name;
-    });
-  }
-
   @override
   void initState() {
-    getNameOfBus();
+    // getNameOfBus();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      showBusPathState.setState(() {
+      widget.showBusPathState.setState(() {
         // render the floating button on widget
-        showBusPathState.fabPosition = 0.5 * context.size.height;
+        widget.showBusPathState.fabPosition = 0.5 * context.size.height;
       });
     });
     // TODO: implement initState
@@ -59,12 +51,12 @@ class BusInformationState extends State<BusInformation> {
 
     return NotificationListener<DraggableScrollableNotification>(
       onNotification: (DraggableScrollableNotification notification) {
-        showBusPathState.setState(() {
-          showBusPathState.widgetHeight = context.size.height;
-          showBusPathState.dragScrollSheetExtent = notification.extent;
-          showBusPathState.fabPosition =
-              showBusPathState.dragScrollSheetExtent *
-                  showBusPathState.widgetHeight;
+        widget.showBusPathState.setState(() {
+          widget.showBusPathState.widgetHeight = context.size.height;
+          widget.showBusPathState.dragScrollSheetExtent = notification.extent;
+          widget.showBusPathState.fabPosition =
+              widget.showBusPathState.dragScrollSheetExtent *
+                  widget.showBusPathState.widgetHeight;
         });
         return;
       },
@@ -108,7 +100,7 @@ class BusInformationState extends State<BusInformation> {
                               )),
                         ),
                         title: Text(
-                          nameOfBus,
+                          widget.busRoute.name,
                           style: TextStyle(
                             fontSize: 18,
                           ),
@@ -116,43 +108,33 @@ class BusInformationState extends State<BusInformation> {
                         trailing: OutlineButton(
                           onPressed: () {
                             selectedIndex = 0;
-                            showBusPathState.setState(() {
+                            widget.showBusPathState.setState(() {
                               if (CHECK_DEPARTER_RETURN == 0) {
                                 CHECK_DEPARTER_RETURN = 1;
                                 _color = Colors.deepOrange;
-                                showBusPathState.color = _color;
+                                widget.showBusPathState.color = _color;
                                 _text = "Chiều về";
                                 //cập nhật marker chiều về
-                                showBusPathState.markers =
-                                    showBusPathState.markersReturn;
+                                widget.showBusPathState.getStopPoint(widget.busRoute.listStopPointReturn);
                                 //cập nhật path chiều về
-                                showBusPathState.listPoint =
-                                    showBusPathState.listPointReturn;
-                                //cập nhật tên các điểm dừng chiều về
-                                showBusPathState.listStopPoint =
-                                    showBusPathState.listStopPointReturn;
+                                widget.showBusPathState.getPointOfPath(BUS_PATH_RETURN);
                                 // di chuyển camera đến điểm đầu của chiều về
-                                showBusPathState.mapController.move(
-                                    showBusPathState.listPoint[
-                                        showBusPathState.listPoint.length - 1],
+                                widget.showBusPathState.mapController.move(
+                                    widget.showBusPathState.listPoint[
+                                    widget.showBusPathState.listPoint.length - 1],
                                     16);
                               } else {
                                 CHECK_DEPARTER_RETURN = 0;
                                 _color = Colors.green;
-                                showBusPathState.color = _color;
+                                widget.showBusPathState.color = _color;
                                 _text = "Chiều đi";
                                 //cập nhật marker chiều đi
-                                showBusPathState.markers =
-                                    showBusPathState.markersDeparter;
+                                widget.showBusPathState.getStopPoint(widget.busRoute.listStopPointGo);
                                 //cập nhật path chiều đi
-                                showBusPathState.listPoint =
-                                    showBusPathState.listPointDeparter;
-                                //cập nhật tên các điểm dừng chiều đi
-                                showBusPathState.listStopPoint =
-                                    showBusPathState.listStopPointDeparter;
+                                widget.showBusPathState.getPointOfPath(BUS_PATH_GO);
                                 // di chuyển camera đến điểm đầu của chiều đi
-                                showBusPathState.mapController
-                                    .move(showBusPathState.listPoint[0], 16);
+                                widget.showBusPathState.mapController
+                                    .move(widget.showBusPathState.listPoint[0], 16);
                               }
                             });
                           },
@@ -203,7 +185,7 @@ class BusInformationState extends State<BusInformation> {
                                       }),
                                 ),
                                 ListNameBusStop(
-                                  showBusPathState: showBusPathState,
+                                  showBusPathState: widget.showBusPathState,
                                   busInformationState: this,
                                 ),
                                 Container(
