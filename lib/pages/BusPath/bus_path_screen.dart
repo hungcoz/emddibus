@@ -2,6 +2,7 @@ import 'package:emddibus/models/bus_path_model.dart';
 import 'package:emddibus/models/bus_route_model.dart';
 import 'package:emddibus/models/stop_point_model.dart';
 import 'package:emddibus/pages/BusPath/bus_information.dart';
+import 'package:emddibus/pages/Map/map.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -97,66 +98,14 @@ class ShowBusPathState extends State<ShowBusPath>
                   child: child,
                 );
               },
-              child: FlutterMap(
+              child: Map(
                 mapController: mapController,
-                options: MapOptions(
-                  maxZoom: 18,
-                  center: LatLng(listPoint[0].latitude, listPoint[0].longitude),
-                  onTap: (_) {},
-                  zoom: 16,
-                  plugins: [
-                    LocationPlugin(),
-                  ],
-                  interactiveFlags:
-                      InteractiveFlag.all & ~InteractiveFlag.rotate,
-                ),
-                layers: [
-                  TileLayerOptions(
-                    urlTemplate:
-                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  ),
-                  PolylineLayerOptions(polylines: [
-                    Polyline(
-                      color: color,
-                      strokeWidth: 5,
-                      points: listPoint,
-                    ),
-                  ]),
-                  MarkerLayerOptions(markers: markers),
-                  LocationOptions(
-                      markers: markers,
-                      onLocationUpdate: (LatLngData ld) {},
-                      onLocationRequested: (LatLngData ld) {},
-                      buttonBuilder: (context,
-                          ValueNotifier<LocationServiceStatus> status,
-                          Function onPressed) {
-                        return Container();
-                      }),
-                ],
-              ),
-            ),
-            Positioned(
-              bottom: contextSize * 0.5 + fabPositionPadding,
-              right: fabPositionPadding,
-              child: AnimatedBuilder(
-                animation: animationController,
-                builder: (_, child) {
-                  return Transform.translate(
-                    offset: Offset(0, animationController.value * animate),
-                    child: child,
-                  );
-                },
-                child: FloatingActionButton(
-                  onPressed: () {
-                    if (currentPosition == null) return;
-                    mapController?.move(currentPosition, 16);
-                  },
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.my_location,
-                    color: Colors.black,
-                  ),
-                ),
+                initialCamera: LatLng(listStopPointRoute[0].latitude,
+                    listStopPointRoute[0].longitude),
+                initialZoom: 16,
+                markers: markers,
+                listPoint: listPoint,
+                color: color,
               ),
             ),
             AnimatedBuilder(

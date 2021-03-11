@@ -11,9 +11,10 @@ class Map extends StatefulWidget {
   final double initialZoom;
   final List<Marker> markers;
   final List<LatLng> listPoint;
+  final Color color;
   final FocusNode focusNode;
 
-  Map({this.mapController, this.initialCamera, this.initialZoom, this.markers, this.listPoint, this.focusNode});
+  Map({this.mapController, this.initialCamera, this.initialZoom, this.markers, this.listPoint, this.color, this.focusNode});
 
   @override
   _MapState createState() => _MapState();
@@ -38,6 +39,15 @@ class _MapState extends State<Map> {
       layers: [
         TileLayerOptions(
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        ),
+        PolylineLayerOptions(
+          polylines: [
+            Polyline(
+              color: widget.color,
+              strokeWidth: 5,
+              points: (widget.listPoint != null) ? widget.listPoint : [],
+            )
+          ]
         ),
         MarkerLayerOptions(markers: widget.markers),
         LocationOptions(
