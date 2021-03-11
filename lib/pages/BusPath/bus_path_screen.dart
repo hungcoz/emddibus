@@ -9,6 +9,7 @@ import 'package:flutter_map_location/flutter_map_location.dart';
 import 'package:latlong/latlong.dart';
 
 import '../../constants.dart';
+import 'list_name_bus_stop.dart';
 
 class ShowBusPath extends StatefulWidget {
   @override
@@ -18,21 +19,24 @@ class ShowBusPath extends StatefulWidget {
   ShowBusPath({this.busRoute});
 }
 
-class ShowBusPathState extends State<ShowBusPath> {
+class ShowBusPathState extends State<ShowBusPath>
+    with SingleTickerProviderStateMixin {
   MapController mapController = MapController();
 
   List<Marker> markers = [];
-
   List<LatLng> listPoint = [];
-
   List<StopPoint> listStopPointRoute = [];
 
   Color color = Colors.green;
 
-  double widgetHeight = 0;
-  double dragScrollSheetExtent = 0;
-  double fabPosition = 0;
+  AnimationController animationController;
+
+  double heightMap = 0;
   double fabPositionPadding = 10;
+  double animate = 0;
+  double contextSize = 0;
+
+  // IconData _icon = Icons.arrow_downward_outlined;
 
   getPointOfPath(List<PointOfBusPath> listPointOfBusPath) {
     listPoint.clear();
@@ -63,6 +67,16 @@ class ShowBusPathState extends State<ShowBusPath> {
     getPointOfPath(BUS_PATH_GO);
     getStopPoint(widget.busRoute.listStopPointGo);
     super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -74,8 +88,15 @@ class ShowBusPathState extends State<ShowBusPath> {
       body: SafeArea(
         child: Stack(
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height - fabPosition,
+            AnimatedBuilder(
+              animation: animationController,
+              builder: (_, child) {
+                return Container(
+                  // color: Colors.redAccent,
+                  height: heightMap + animationController.value * animate,
+                  child: child,
+                );
+              },
               child: FlutterMap(
                 mapController: mapController,
                 options: MapOptions(
@@ -115,23 +136,41 @@ class ShowBusPathState extends State<ShowBusPath> {
               ),
             ),
             Positioned(
-              bottom: fabPosition + fabPositionPadding,
+              bottom: contextSize * 0.5 + fabPositionPadding,
               right: fabPositionPadding,
-              child: FloatingActionButton(
-                onPressed: () {
-                  if (currentPosition == null) return;
-                  mapController?.move(currentPosition, 16);
+              child: AnimatedBuilder(
+                animation: animationController,
+                builder: (_, child) {
+                  return Transform.translate(
+                    offset: Offset(0, animationController.value * animate),
+                    child: child,
+                  );
                 },
-                backgroundColor: Colors.white,
-                child: Icon(
-                  Icons.my_location,
-                  color: Colors.black,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    if (currentPosition == null) return;
+                    mapController?.move(currentPosition, 16);
+                  },
+                  backgroundColor: Colors.white,
+                  child: Icon(
+                    Icons.my_location,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),
-            BusInformation(
-              showBusPathState: this,
-              busRoute: widget.busRoute,
+            AnimatedBuilder(
+              animation: animationController,
+              builder: (_, child) {
+                return Transform.translate(
+                  offset: Offset(0, animationController.value * animate),
+                  child: child,
+                );
+              },
+              child: BusInformation(
+                showBusPathState: this,
+                busRoute: widget.busRoute,
+              ),
             ),
           ],
         ),

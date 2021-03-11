@@ -13,7 +13,9 @@ List<StopPoint> STOP_POINT;
 List<BusRoute> BUS_ROUTE;
 List<PointOfBusPath> BUS_PATH_GO;
 List<PointOfBusPath> BUS_PATH_RETURN;
+
 int CHECK_DEPARTER_RETURN = 0;
+int CHECK_UP_DOWN = 0;
 
 int TRACKING_REQUEST = 1;
 List<BusPosition> BUS_POSITION;

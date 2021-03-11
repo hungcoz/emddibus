@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../constants.dart';
 
 const String path = '/tracking/';
+
 Future<void> listenBusPosition() async {
   final response = await rootBundle
       .loadString(URL + path + TRACKING_REQUEST.toString() + '.json');

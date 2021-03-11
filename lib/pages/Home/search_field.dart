@@ -8,6 +8,7 @@ import '../../constants.dart';
 class SearchField extends StatefulWidget {
   final FocusNode txtSearchFocusNode;
   final MapController mapController;
+
   SearchField({Key key, this.txtSearchFocusNode, this.mapController})
       : super(key: key);
 
