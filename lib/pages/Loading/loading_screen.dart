@@ -35,7 +35,7 @@ class _LoadingState extends State<Loading> {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Image.asset('assets/EMDDI_1.jpg'),
             Text(
-              'Connecting to Internet...',
+              'Đang kết nối với máy chủ...',
               style: TextStyle(color: Colors.white),
             )
           ]),

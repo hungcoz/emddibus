@@ -3,13 +3,13 @@
   "message" : "Thành công",
   "list_bus_position" : [
     {
-      "bus_id" : 1,
-      "route_id" : 34,
-      "direction" : 1,
+      "bus_id" : "1",
+      "route_id" : "34",
+      "direction" : "1",
       "latitude" : "21.036411",
       "longitude" : "105.789466",
       "heading" : "180.0",
-      "next_point" : 91
+      "next_point" : "91"
     }
   ]
 }

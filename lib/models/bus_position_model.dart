@@ -19,13 +19,13 @@ class BusPosition {
       this.nextPoint});
 
   factory BusPosition.fromJson(dynamic json) => BusPosition(
-      busId: json['bus_id'],
-      routeId: json['route_id'],
-      direction: json['direction'],
-      latitude: json['latitude'],
-      longitude: json['longitude'],
-      heading: json['heading'],
-      nextPoint: json['next_point']);
+      busId: int.parse(json['bus_id']),
+      routeId: int.parse(json['route_id']),
+      direction: int.parse(json['direction']),
+      latitude: double.parse(json['latitude']),
+      longitude: double.parse(json['longitude']),
+      heading: double.parse(json['heading']),
+      nextPoint: int.parse(json['next_point']));
 }
 
 class ListBusPosition {
