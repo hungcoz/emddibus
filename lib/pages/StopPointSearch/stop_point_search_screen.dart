@@ -21,11 +21,11 @@ class _StopPointSearchState extends State<StopPointSearch> {
     super.initState();
   }
 
-  void searchStopPoint(String value){
-    if(value.isNotEmpty) {
+  void searchStopPoint(String value) {
+    if (value.isNotEmpty) {
       List<StopPoint> data = [];
       STOP_POINT.forEach((element) {
-        if(element.name.toLowerCase().contains(value.toLowerCase())){
+        if (element.name.toLowerCase().contains(value.toLowerCase())) {
           data.add(element);
         }
       });
@@ -34,7 +34,7 @@ class _StopPointSearchState extends State<StopPointSearch> {
         _listStopPoint.addAll(data);
       });
       return;
-    } else{
+    } else {
       setState(() {
         _listStopPoint.clear();
         _listStopPoint.addAll(STOP_POINT);
@@ -54,23 +54,24 @@ class _StopPointSearchState extends State<StopPointSearch> {
         child: Container(
           child: Column(
             children: [
-              Padding(padding: EdgeInsets.fromLTRB(8, 10, 8, 5),
-              child: TextField(
-                onChanged: (value) {
-                  searchStopPoint(value);
-                },
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.fromLTRB(25, 10, 5, 5),
-                  hintText: 'Tìm kiếm...',
-                  hintStyle: TextStyle(
-                    fontSize: 20,
-                  ),
-                  suffixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
+              Padding(
+                padding: EdgeInsets.fromLTRB(8, 10, 8, 5),
+                child: TextField(
+                  onChanged: (value) {
+                    searchStopPoint(value);
+                  },
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.fromLTRB(25, 10, 5, 5),
+                    hintText: 'Tìm kiếm...',
+                    hintStyle: TextStyle(
+                      fontSize: 20,
+                    ),
+                    suffixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
                   ),
                 ),
-              ),
               ),
               Expanded(
                 child: Scrollbar(
@@ -98,12 +99,13 @@ class _StopPointSearchState extends State<StopPointSearch> {
       child: Card(
         child: ListTile(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => StopPointDetail(stopPoint)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => StopPointDetail(stopPoint)));
           },
           title: Text(stopPoint.name),
-          leading: CircleAvatar(
-            child: Image.asset('assets/stop_point.png')
-          ),
+          leading: CircleAvatar(child: Image.asset('assets/stop_point.png')),
           //subtitle: Text('${busRoute.city}'),
         ),
       ),

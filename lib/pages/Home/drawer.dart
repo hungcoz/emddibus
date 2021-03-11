@@ -61,7 +61,10 @@ class _MenuState extends State<Menu> {
                       style: TextStyle(color: Colors.white),
                     ),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => RouteSearch()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RouteSearch()));
                     },
                   ),
                   ListTile(
@@ -74,7 +77,10 @@ class _MenuState extends State<Menu> {
                       style: TextStyle(color: Colors.white),
                     ),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => StopPointSearch()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => StopPointSearch()));
                     },
                   ),
                 ],

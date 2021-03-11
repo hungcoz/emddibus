@@ -8,8 +8,6 @@ class Tracking extends StatefulWidget {
 class _TrackingState extends State<Tracking> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-    );
+    return Scaffold();
   }
 }
-

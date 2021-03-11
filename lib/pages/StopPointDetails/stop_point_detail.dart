@@ -14,14 +14,13 @@ class StopPointDetail extends StatefulWidget {
 }
 
 class _StopPointDetailState extends State<StopPointDetail> {
-
   List<BusRoute> _listBusRoute = [];
   List<int> _listDirection = [];
 
-  void filterRoute(stopPoint){
+  void filterRoute(stopPoint) {
     BUS_ROUTE.forEach((route) {
       route.listStopPointGo.forEach((point) {
-        if(stopPoint.stopId == point){
+        if (stopPoint.stopId == point) {
           _listBusRoute.add(route);
           _listDirection.add(0);
         }
