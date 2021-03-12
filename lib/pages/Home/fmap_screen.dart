@@ -3,6 +3,7 @@ import 'package:emddibus/GGMap/ggmap.dart';
 import 'package:emddibus/constants.dart';
 import 'package:emddibus/pages/Home/search_field.dart';
 import 'package:emddibus/pages/Home/stop_point_marker.dart';
+import 'package:emddibus/pages/Map/map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
@@ -64,6 +65,10 @@ class _FMapState extends State<FMap> {
               return (position != null) ? GGMap(initialPosition: position,) : Center(child: CircularProgressIndicator(),);
             },),
           ),
+          // =======
+//           Map(mapController: mapController, initialCamera: LatLng(15.594016, 110.450604), initialZoom: 5, markers: markers, focusNode: _textSearchFocusNode),
+// >>>>>>> master
+
           // FlutterMap(
           //   mapController: mapController,
           //   options: MapOptions(

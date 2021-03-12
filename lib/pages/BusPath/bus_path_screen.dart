@@ -4,6 +4,7 @@ import 'package:emddibus/models/bus_path_model.dart';
 import 'package:emddibus/models/bus_route_model.dart';
 import 'package:emddibus/models/stop_point_model.dart';
 import 'package:emddibus/pages/BusPath/bus_information.dart';
+import 'package:emddibus/pages/Map/map.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -41,8 +42,6 @@ class ShowBusPathState extends State<ShowBusPath>
   double contextSize = 0;
 
   final geoService = GeolocatorService();
-
-  // IconData _icon = Icons.arrow_downward_outlined;
 
   getPointOfPath(List<PointOfBusPath> listPointOfBusPath) {
     listPoint.clear();
@@ -98,22 +97,27 @@ class ShowBusPathState extends State<ShowBusPath>
             AnimatedBuilder(
               animation: animationController,
               builder: (_, child) {
-                double scale = (heightMap+animate)/heightMap;
                 return SizedBox(
                     height: heightMap + animationController.value*animate,
                     child: child,
 
                 );
-                  // color: Colors.redAccent,
-                //   height: heightMap + animationController.value * animate,
-                //   child: child,
-                // );
               },
               child: FutureProvider(
                 create: (context) => geoService.getInitialLocation(),
                   child: Consumer<Position>(builder: (context, position, widget) {
                     return (position != null) ? GGMap(initialPosition: position,) : Center(child: CircularProgressIndicator(),);
                   },),
+// =======
+//               child: Map(
+//                 mapController: mapController,
+//                 initialCamera: LatLng(listStopPointRoute[0].latitude,
+//                     listStopPointRoute[0].longitude),
+//                 initialZoom: 16,
+//                 markers: markers,
+//                 listPoint: listPoint,
+//                 color: color,
+// >>>>>>> master
               ),
             ),
             // Positioned(
