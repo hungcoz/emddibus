@@ -1,6 +1,5 @@
 import 'package:emddibus/algothrim/function.dart';
 import 'package:emddibus/models/stop_point_model.dart';
-import 'package:emddibus/pages/StopPointDetails/stop_point_detail_screen.dart';
 import 'package:emddibus/pages/Tracking/tracking_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';

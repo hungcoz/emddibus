@@ -1,7 +1,5 @@
 import 'package:emddibus/constants.dart';
 import 'package:emddibus/models/stop_point_model.dart';
-import 'package:emddibus/pages/Home/fmap_screen.dart';
-import 'package:emddibus/pages/Home/search_field.dart';
 import 'package:emddibus/pages/StopPointDetails/stop_point_detail_screen.dart';
 import 'package:flutter/material.dart';
 

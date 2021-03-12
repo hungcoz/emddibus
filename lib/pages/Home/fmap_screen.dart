@@ -74,7 +74,7 @@ class _FMapState extends State<FMap> {
           //   },),
           // ),
 
-          Map(mapController: mapController, initialCamera: LatLng(15.594016, 110.450604), initialZoom: 16, markers: markers, focusNode: _textSearchFocusNode),
+          Map(mapController: mapController, markers: markers, focusNode: _textSearchFocusNode),
 
           // FlutterMap(
           //   mapController: mapController,

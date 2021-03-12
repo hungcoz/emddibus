@@ -14,7 +14,14 @@ class Map extends StatefulWidget {
   final Color color;
   final FocusNode focusNode;
 
-  Map({this.mapController, this.initialCamera, this.initialZoom, this.markers, this.listPoint, this.color, this.focusNode});
+  Map(
+      {this.mapController,
+      this.initialCamera,
+      this.initialZoom,
+      this.markers,
+      this.listPoint,
+      this.color,
+      this.focusNode});
 
   @override
   _MapState createState() => _MapState();
@@ -28,8 +35,10 @@ class _MapState extends State<Map> {
       options: MapOptions(
         maxZoom: 18,
         minZoom: 5,
-        center: widget.initialCamera,
-        zoom: widget.initialZoom,
+        center: (widget.initialCamera == null)
+            ? LatLng(15.594016, 110.450604)
+            : widget.initialCamera,
+        zoom: (widget.initialZoom == null) ? 5 : widget.initialZoom,
         onTap: (_) => widget.focusNode.unfocus(),
         plugins: [
           LocationPlugin(),
@@ -40,15 +49,13 @@ class _MapState extends State<Map> {
         TileLayerOptions(
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
         ),
-        PolylineLayerOptions(
-          polylines: [
-            Polyline(
-              color: widget.color,
-              strokeWidth: 5,
-              points: (widget.listPoint != null) ? widget.listPoint : [],
-            )
-          ]
-        ),
+        PolylineLayerOptions(polylines: [
+          Polyline(
+            color: widget.color,
+            strokeWidth: 5,
+            points: (widget.listPoint != null) ? widget.listPoint : [],
+          )
+        ]),
         MarkerLayerOptions(markers: widget.markers),
         LocationOptions(
             markers: widget.markers,
@@ -61,7 +68,10 @@ class _MapState extends State<Map> {
               if (ld == null || ld.location == null) {
                 return;
               }
-              widget.mapController?.move(ld.location, 16);
+              if (widget.initialCamera == null) {
+                widget.mapController?.move(ld.location, 16);
+              }
+              print(widget.initialCamera);
             },
             buttonBuilder: (BuildContext context,
                 ValueNotifier<LocationServiceStatus> status,
@@ -72,8 +82,7 @@ class _MapState extends State<Map> {
                 child: FloatingActionButton(
                   child: ValueListenableBuilder<LocationServiceStatus>(
                     valueListenable: status,
-                    builder:
-                        (context, LocationServiceStatus value, child) {
+                    builder: (context, LocationServiceStatus value, child) {
                       switch (value) {
                         case LocationServiceStatus.disabled:
                         case LocationServiceStatus.permissionDenied:
