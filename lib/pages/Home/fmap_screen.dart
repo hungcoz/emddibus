@@ -41,6 +41,14 @@ class _FMapState extends State<FMap> {
 
   @override
   void initState() {
+    // int permissionCheck = ContextCompat.checkSelfPermission(thisActivity,
+    //     Manifest.permission.ACCESS_FINE_LOCATION);
+    // if(permissionCheck != PackageManager.PERMISSION_GRANTED) {
+    //   // ask permissions here using below code
+    //   ActivityCompat.requestPermissions(thisActivity,
+    //       new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+    //       REQUEST_CODE);
+    // }
     setStopPointMarker();
     super.initState();
   }
