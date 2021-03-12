@@ -27,10 +27,10 @@ class BusInformationState extends State<BusInformation> {
   double _maxChildSize = 0.5;
   double _height;
 
-  double widgetHeight = 0;
-  double dragScrollSheetExtent = 0;
-  double fabPosition = 0;
-  double fabPositionPadding = 10;
+  // double widgetHeight = 0;
+  // double dragScrollSheetExtent = 0;
+  // double fabPosition = 0;
+  // double fabPositionPadding = 10;
 
   IconData _icon = Icons.arrow_downward_outlined;
 
@@ -50,11 +50,17 @@ class BusInformationState extends State<BusInformation> {
   void checkUpOrDown() {
     if (CHECK_UP_DOWN == 0) {
       CHECK_UP_DOWN = 1;
+      setState(() {
+        _icon = Icons.arrow_upward_outlined;
+      });
       widget.showBusPathState.animate =
           widget.showBusPathState.contextSize * (_maxChildSize - _minChildSize);
       widget.showBusPathState.animationController.forward();
     } else {
       CHECK_UP_DOWN = 0;
+      setState(() {
+        _icon = Icons.arrow_downward_outlined;
+      });
       widget.showBusPathState.animationController.reverse();
     }
   }
@@ -104,15 +110,15 @@ class BusInformationState extends State<BusInformation> {
         minChildSize: _minChildSize,
         maxChildSize: _maxChildSize,
         builder: (context, controller) {
-          if (controller.hasClients) {
-            var dimension = controller.position.viewportDimension;
-            _height ??= dimension / _initialChildSize;
-            if (dimension >= _height * _maxChildSize * 0.9) {
-              _icon = Icons.arrow_downward_outlined;
-            } else if (dimension <= _height * _minChildSize * 1.2) {
-              _icon = Icons.arrow_upward_outlined;
-            }
-          }
+          // if (controller.hasClients) {
+          //   var dimension = controller.position.viewportDimension;
+          //   _height ??= dimension / _initialChildSize;
+          //   if (dimension >= _height * _maxChildSize * 0.9) {
+          //     _icon = Icons.arrow_downward_outlined;
+          //   } else if (dimension <= _height * _minChildSize * 1.2) {
+          //     _icon = Icons.arrow_upward_outlined;
+          //   }
+          // }
           return Container(
             color: Colors.white,
             child: ListView.builder(
