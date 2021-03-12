@@ -105,122 +105,129 @@ class BusInformationState extends State<BusInformation> {
   Widget build(BuildContext context) {
     // TODO: implement build
 
-    return DraggableScrollableSheet(
-        initialChildSize: _initialChildSize,
-        minChildSize: _minChildSize,
-        maxChildSize: _maxChildSize,
-        builder: (context, controller) {
-          // if (controller.hasClients) {
-          //   var dimension = controller.position.viewportDimension;
-          //   _height ??= dimension / _initialChildSize;
-          //   if (dimension >= _height * _maxChildSize * 0.9) {
-          //     _icon = Icons.arrow_downward_outlined;
-          //   } else if (dimension <= _height * _minChildSize * 1.2) {
-          //     _icon = Icons.arrow_upward_outlined;
-          //   }
-          // }
-          return Container(
-            color: Colors.white,
-            child: ListView.builder(
-              itemCount: 1,
-              controller: controller,
-              itemBuilder: (BuildContext context, index) {
-                return Column(children: [
-                  GestureDetector(
-                    onTap: () {
-                      checkUpOrDown();
-                    },
-                    child: Container(
-                      height: widget.showBusPathState.contextSize*0.08,
-                      child: ListTile(
-                        contentPadding: EdgeInsets.only(left: 5, right: 10),
-                        leading: CircleAvatar(
-                            backgroundColor: Colors.black26,
-                            child: Icon(
-                              _icon,
-                              color: Colors.blue,
-                            )),
-                        title: Text(
-                          widget.busRoute.name,
-                          style: TextStyle(
-                            fontSize: 18,
+    return DraggableScrollableActuator(
+      child: DraggableScrollableSheet(
+          initialChildSize: _initialChildSize,
+          minChildSize: _minChildSize,
+          maxChildSize: _maxChildSize,
+          builder: (context, controller) {
+            if (controller.hasClients) {
+              var dimension = controller.position.viewportDimension;
+              _height ??= dimension / _initialChildSize;
+              if (dimension >= _height * _maxChildSize*0.5) {
+                _icon = Icons.arrow_downward_outlined;
+              } else if (dimension < _height * _maxChildSize*0.5) {
+                _icon = Icons.arrow_upward_outlined;
+              }
+            }
+            return Container(
+              color: Colors.white,
+              child: ListView.builder(
+                itemCount: 1,
+                controller: controller,
+                itemBuilder: (BuildContext context, index) {
+                  return Column(children: [
+                    GestureDetector(
+                      onTap: () {
+                        // widget.showBusPathState.setState(() {
+                        //   controller.animateTo(offset, duration: null, curve: null);
+                        // });
+                        // _initialChildSize = widget.showBusPathState.contextSize*0.08;
+                        // DraggableScrollableActuator.reset(context);
+                        checkUpOrDown();
+                      },
+                      child: Container(
+                        height: widget.showBusPathState.contextSize*0.08,
+                        child: ListTile(
+                          contentPadding: EdgeInsets.only(left: 5, right: 10),
+                          leading: CircleAvatar(
+                              backgroundColor: Colors.black26,
+                              child: Icon(
+                                _icon,
+                                color: Colors.blue,
+                              )),
+                          title: Text(
+                            widget.busRoute.name,
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
                           ),
-                        ),
-                        trailing: OutlineButton(
-                          onPressed: () {
-                            checkGoOrReturn();
-                          },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          borderSide: BorderSide(color: _color),
-                          child: Text(
-                            _text,
-                            style: TextStyle(color: _color),
+                          trailing: OutlineButton(
+                            onPressed: () {
+                                checkGoOrReturn();
+                            },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            borderSide: BorderSide(color: _color),
+                            child: Text(
+                              _text,
+                              style: TextStyle(color: _color),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    child: DefaultTabController(
-                      length: 3,
-                      child: Column(children: [
-                        Container(
-                          height: widget.showBusPathState.contextSize*0.07,
-                          color: Colors.amber,
-                          child: TabBar(
-                            tabs: [
-                              Tab(
-                                text: "Giờ xuất bến",
-                              ),
-                              Tab(
-                                text: "Điểm dừng",
-                              ),
-                              Tab(
-                                text: "Thông tin",
-                              ),
-                            ],
+                    Container(
+                      child: DefaultTabController(
+                        length: 3,
+                        child: Column(children: [
+                          Container(
+                            height: widget.showBusPathState.contextSize*0.07,
+                            color: Colors.amber,
+                            child: TabBar(
+                              tabs: [
+                                Tab(
+                                  text: "Giờ xuất bến",
+                                ),
+                                Tab(
+                                  text: "Điểm dừng",
+                                ),
+                                Tab(
+                                  text: "Thông tin",
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Container(
-                          height: widget.showBusPathState.contextSize*0.35,
-                          child: TabBarView(
-                            children: [
-                              Container(
-                                color: Colors.redAccent,
-                                child: ListView.builder(
-                                    itemCount: 27,
-                                    itemBuilder: (BuildContext context, index) {
-                                      return ListTile(
-                                        title: Text('Item ${index + 1}'),
-                                      );
-                                    }),
-                              ),
-                              ListNameBusStop(
-                                showBusPathState: widget.showBusPathState,
-                                busInformationState: this,
-                              ),
-                              Container(
-                                color: Colors.green,
-                                child: ListView.builder(
-                                    itemCount: 10,
-                                    itemBuilder: (BuildContext context, index) {
-                                      return ListTile(
-                                        title: Text('Item ${index + 1}'),
-                                      );
-                                    }),
-                              )
-                            ],
-                          ),
-                        )
-                      ]),
-                    ),
-                  )
-                ]);
-              },
-            ),
-          );
-        });
+                          Container(
+                            height: widget.showBusPathState.contextSize*0.35,
+                            child: TabBarView(
+                              children: [
+                                Container(
+                                  color: Colors.redAccent,
+                                  child: ListView.builder(
+                                      itemCount: 27,
+                                      itemBuilder: (BuildContext context, index) {
+                                        return ListTile(
+                                          title: Text('Item ${index + 1}'),
+                                        );
+                                      }),
+                                ),
+                                ListNameBusStop(
+                                  showBusPathState: widget.showBusPathState,
+                                  busInformationState: this,
+                                ),
+                                Container(
+                                  color: Colors.green,
+                                  child: ListView.builder(
+                                      itemCount: 10,
+                                      itemBuilder: (BuildContext context, index) {
+                                        return ListTile(
+                                          title: Text('Item ${index + 1}'),
+                                        );
+                                      }),
+                                )
+                              ],
+                            ),
+                          )
+                        ]),
+                      ),
+                    )
+                  ]);
+                },
+              ),
+            );
+          }),
+    );
   }
 }
