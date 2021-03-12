@@ -67,15 +67,14 @@ class _FMapState extends State<FMap> {
       ),
       body: SafeArea(
         child: Stack(children: [
-          FutureProvider(
-            create: (context) => geoService.getInitialLocation(),
-            child: Consumer<Position>(builder: (context, position, widget) {
-              return (position != null) ? GGMap(initialPosition: position,) : Center(child: CircularProgressIndicator(),);
-            },),
-          ),
-          // =======
-//           Map(mapController: mapController, initialCamera: LatLng(15.594016, 110.450604), initialZoom: 5, markers: markers, focusNode: _textSearchFocusNode),
-// >>>>>>> master
+          // FutureProvider(
+          //   create: (context) => geoService.getInitialLocation(),
+          //   child: Consumer<Position>(builder: (context, position, widget) {
+          //     return (position != null) ? GGMap(initialPosition: position,) : Center(child: CircularProgressIndicator(),);
+          //   },),
+          // ),
+
+          Map(mapController: mapController, initialCamera: LatLng(15.594016, 110.450604), initialZoom: 16, markers: markers, focusNode: _textSearchFocusNode),
 
           // FlutterMap(
           //   mapController: mapController,

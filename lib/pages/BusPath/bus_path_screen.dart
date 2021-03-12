@@ -1,5 +1,6 @@
 import 'package:emddibus/GGMap/geolocator_service.dart';
-import 'package:emddibus/GGMap/ggmap.dart';
+
+// import 'package:emddibus/GGMap/ggmap.dart';
 import 'package:emddibus/models/bus_path_model.dart';
 import 'package:emddibus/models/bus_route_model.dart';
 import 'package:emddibus/models/stop_point_model.dart';
@@ -8,10 +9,11 @@ import 'package:emddibus/pages/Map/map.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map_location/flutter_map_location.dart';
-import 'package:geolocator/geolocator.dart';
+
+// import 'package:flutter_map_location/flutter_map_location.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 import 'list_name_bus_stop.dart';
@@ -98,27 +100,25 @@ class ShowBusPathState extends State<ShowBusPath>
               animation: animationController,
               builder: (_, child) {
                 return SizedBox(
-                    height: heightMap + animationController.value*animate,
-                    child: child,
-
+                  height: heightMap + animationController.value * animate,
+                  child: child,
                 );
               },
-              child: FutureProvider(
-                create: (context) => geoService.getInitialLocation(),
-                  child: Consumer<Position>(builder: (context, position, widget) {
-                    return (position != null) ? GGMap(initialPosition: position,) : Center(child: CircularProgressIndicator(),);
-                  },),
-// =======
-//               child: Map(
-//                 mapController: mapController,
-//                 initialCamera: LatLng(listStopPointRoute[0].latitude,
-//                     listStopPointRoute[0].longitude),
-//                 initialZoom: 16,
-//                 markers: markers,
-//                 listPoint: listPoint,
-//                 color: color,
-// >>>>>>> master
+              child: Map(
+                mapController: mapController,
+                initialCamera: LatLng(listStopPointRoute[0].latitude,
+                    listStopPointRoute[0].longitude),
+                initialZoom: 16,
+                markers: markers,
+                color: color,
+                listPoint: listPoint,
               ),
+              //               child: FutureProvider(
+//                 create: (context) => geoService.getInitialLocation(),
+//                   child: Consumer<Position>(builder: (context, position, widget) {
+//                     return (position != null) ? GGMap(initialPosition: position,) : Center(child: CircularProgressIndicator(),);
+//                   },),
+//               ),
             ),
             // Positioned(
             //   bottom: contextSize * 0.5 + fabPositionPadding,
