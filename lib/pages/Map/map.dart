@@ -71,7 +71,6 @@ class _MapState extends State<Map> {
               if (widget.initialCamera == null) {
                 widget.mapController?.move(ld.location, 16);
               }
-              print(widget.initialCamera);
             },
             buttonBuilder: (BuildContext context,
                 ValueNotifier<LocationServiceStatus> status,
@@ -101,7 +100,11 @@ class _MapState extends State<Map> {
                       }
                     },
                   ),
-                  onPressed: () => onPressed(),
+                  onPressed: () {
+                    {
+                      if (currentPosition != null) widget.mapController.move(LatLng(currentPosition.latitude, currentPosition.longitude), 16);
+                    }
+                  },
                   backgroundColor: Colors.white,
                 ),
               );

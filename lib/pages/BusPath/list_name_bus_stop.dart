@@ -19,12 +19,19 @@ class ListNameBusStop extends StatefulWidget {
 
 class ListNameBusStopState extends State<ListNameBusStop> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return ListTileTheme(
       dense: true,
       selectedColor: widget.showBusPathState.color,
       child: ListView.separated(
+        controller: widget.showBusPathState.scrollController,
+        reverse: false,
         itemCount: widget.showBusPathState.listStopPointRoute.length,
         separatorBuilder: (BuildContext context, int index) => const Divider(),
         itemBuilder: (BuildContext context, int index) {

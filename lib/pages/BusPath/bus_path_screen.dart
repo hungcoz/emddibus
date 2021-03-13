@@ -29,6 +29,7 @@ class ShowBusPath extends StatefulWidget {
 class ShowBusPathState extends State<ShowBusPath>
     with SingleTickerProviderStateMixin {
   MapController mapController = MapController();
+  ScrollController scrollController = ScrollController();
 
   List<Marker> markers = [];
   List<LatLng> listPoint = [];
@@ -42,6 +43,10 @@ class ShowBusPathState extends State<ShowBusPath>
   double fabPositionPadding = 10;
   double animate = 0;
   double contextSize = 0;
+
+  double widgetHeight = 0;
+  double dragScrollSheetExtent = 0;
+  double fabPosition = 0;
 
   final geoService = GeolocatorService();
 
@@ -96,66 +101,21 @@ class ShowBusPathState extends State<ShowBusPath>
       body: SafeArea(
         child: Stack(
           children: [
-            AnimatedBuilder(
-              animation: animationController,
-              builder: (_, child) {
-                return SizedBox(
-                  height: heightMap + animationController.value * animate,
-                  child: child,
-                );
-              },
+            Container(
+              height: contextSize - fabPosition,
               child: Map(
                 mapController: mapController,
-                initialCamera: LatLng(listPoint[0].latitude,
-                    listPoint[0].longitude),
+                initialCamera: LatLng(listStopPointRoute[0].latitude,
+                    listStopPointRoute[0].longitude),
                 initialZoom: 16,
                 markers: markers,
                 color: color,
                 listPoint: listPoint,
               ),
-              //               child: FutureProvider(
-//                 create: (context) => geoService.getInitialLocation(),
-//                   child: Consumer<Position>(builder: (context, position, widget) {
-//                     return (position != null) ? GGMap(initialPosition: position,) : Center(child: CircularProgressIndicator(),);
-//                   },),
-//               ),
             ),
-            // Positioned(
-            //   bottom: contextSize * 0.5 + fabPositionPadding,
-            //   right: fabPositionPadding,
-            //   child: AnimatedBuilder(
-            //     animation: animationController,
-            //     builder: (_, child) {
-            //       return Transform.translate(
-            //         offset: Offset(0, animationController.value * animate),
-            //         child: child,
-            //       );
-            //     },
-            //     child: FloatingActionButton(
-            //       onPressed: () {
-            //         if (currentPosition == null) return;
-            //         mapController?.move(currentPosition, 16);
-            //       },
-            //       backgroundColor: Colors.white,
-            //       child: Icon(
-            //         Icons.my_location,
-            //         color: Colors.black,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            AnimatedBuilder(
-              animation: animationController,
-              builder: (_, child) {
-                return Transform.translate(
-                  offset: Offset(0, animationController.value * animate),
-                  child: child,
-                );
-              },
-              child: BusInformation(
-                showBusPathState: this,
-                busRoute: widget.busRoute,
-              ),
+            BusInformation(
+              showBusPathState: this,
+              busRoute: widget.busRoute,
             ),
           ],
         ),
