@@ -1,6 +1,7 @@
 import 'package:emddibus/algothrim/function.dart';
 import 'package:emddibus/models/stop_point_model.dart';
 import 'package:emddibus/pages/Tracking/tracking_bus.dart';
+import 'package:emddibus/services/http_bus_position.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
@@ -21,8 +22,8 @@ class StopPointMarker extends StatelessWidget {
         child: IconButton(
           icon: Image.asset('assets/stop_point.png'),
           onPressed: () async {
-            // showDialog(context: context, builder: (context) => LoadingDialog());
-            // await listenBusPosition();
+            print(stopPoint.stopId);
+            await listenBusPosition();
             Navigator.push(
                 context,
                 MaterialPageRoute(
