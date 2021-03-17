@@ -21,7 +21,7 @@ packages:
       name: characters
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0-nullsafety.5"
+    version: "1.1.0-nullsafety.3"
   charcode:
     dependency: transitive
     description:
@@ -35,7 +35,7 @@ packages:
       name: collection
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.15.0-nullsafety.5"
+    version: "1.15.0-nullsafety.3"
   console_log_handler:
     dependency: transitive
     description:
@@ -130,6 +130,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  http:
+    dependency: "direct main"
+    description:
+      name: http
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.12.2"
   http_parser:
     dependency: transitive
     description:
@@ -150,7 +157,7 @@ packages:
       name: js
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.3-nullsafety.3"
+    version: "0.6.2"
   latlong:
     dependency: transitive
     description:
@@ -213,7 +220,7 @@ packages:
       name: meta
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.0-nullsafety.6"
+    version: "1.3.0-nullsafety.3"
   mgrs_dart:
     dependency: transitive
     description:
@@ -228,6 +235,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.4"
+  osm_nominatim:
+    dependency: "direct main"
+    description:
+      name: osm_nominatim
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   path:
     dependency: transitive
     description:
@@ -235,6 +249,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  pedantic:
+    dependency: transitive
+    description:
+      name: pedantic
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.9.2"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -277,6 +298,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.24.1"
+  scrollable_bottom_sheet:
+    dependency: "direct main"
+    description:
+      name: scrollable_bottom_sheet
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -337,7 +365,7 @@ packages:
       name: typed_data
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.0-nullsafety.5"
+    version: "1.3.0-nullsafety.3"
   unicode:
     dependency: transitive
     description:
@@ -400,7 +428,7 @@ packages:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0-nullsafety.5"
+    version: "2.1.0-nullsafety.3"
   wkt_parser:
     dependency: transitive
     description:
@@ -409,5 +437,5 @@ packages:
     source: hosted
     version: "1.0.7"
 sdks:
-  dart: ">=2.12.0-0 <3.0.0"
+  dart: ">=2.10.0-110 <2.11.0"
   flutter: ">=1.22.0 <2.0.0"
