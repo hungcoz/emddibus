@@ -1,0 +1,15 @@
+{
+    "code" : 0,
+    "message" : "Thành công",
+    "list_bus_position" : [
+      {
+        "bus_id" : "1",
+        "route_id" : "34",
+        "direction" : "0",
+        "latitude" : "21.036069",
+        "longitude" : "105.780968",
+        "heading" : "45",
+        "next_point" : "64"
+      }
+    ]
+  }

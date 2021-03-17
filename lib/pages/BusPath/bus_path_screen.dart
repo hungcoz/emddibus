@@ -59,6 +59,7 @@ class ShowBusPathState extends State<ShowBusPath>
 
   getStopPoint(List<dynamic> listStopPoint) {
     listStopPointRoute.clear();
+    markers.clear();
     listStopPoint.forEach((point) {
       STOP_POINT.forEach((element) {
         if (element.stopId == point) {
