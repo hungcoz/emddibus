@@ -130,6 +130,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  http:
+    dependency: "direct main"
+    description:
+      name: http
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.12.2"
   http_parser:
     dependency: transitive
     description:
@@ -228,6 +235,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.4"
+  osm_nominatim:
+    dependency: "direct main"
+    description:
+      name: osm_nominatim
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   path:
     dependency: transitive
     description:
@@ -235,6 +249,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  pedantic:
+    dependency: transitive
+    description:
+      name: pedantic
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.9.2"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -277,6 +298,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.24.1"
+  scrollable_bottom_sheet:
+    dependency: "direct main"
+    description:
+      name: scrollable_bottom_sheet
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1"
   sky_engine:
     dependency: transitive
     description: flutter
