@@ -16,10 +16,10 @@ import 'drawer.dart';
 
 class FMap extends StatefulWidget {
   @override
-  _FMapState createState() => _FMapState();
+  FMapState createState() => FMapState();
 }
 
-class _FMapState extends State<FMap> {
+class FMapState extends State<FMap> {
   MapController mapController = MapController();
   List<Marker> markers = [];
 
@@ -36,6 +36,7 @@ class _FMapState extends State<FMap> {
           builder: (context) =>
               StopPointMarker(stopPoint: point, mapController: mapController)));
     });
+    markers.add(Marker());
     markers.add(Marker());
   }
 
@@ -146,6 +147,7 @@ class _FMapState extends State<FMap> {
           SearchField(
             txtSearchFocusNode: _textSearchFocusNode,
             mapController: mapController,
+            fMapState: this,
           )
         ]),
       ),
