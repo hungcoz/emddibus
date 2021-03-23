@@ -79,6 +79,7 @@ class _MapState extends State<Map> {
                 bottom: 20,
                 right: 20,
                 child: FloatingActionButton(
+                  heroTag: null,
                   child: ValueListenableBuilder<LocationServiceStatus>(
                     valueListenable: status,
                     builder: (context, LocationServiceStatus value, child) {

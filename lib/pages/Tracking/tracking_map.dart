@@ -26,6 +26,7 @@ class TrackingMap extends StatefulWidget {
 }
 
 class _TrackingMapState extends State<TrackingMap> {
+  MapController mapController = MapController();
   List<LatLng> listPoint = [];
   List<Marker> markers = [];
 
@@ -33,7 +34,7 @@ class _TrackingMapState extends State<TrackingMap> {
   Timer t;
 
   void fechtData(BusPosition busPosition) {
-    BUS_POSITION.forEach((element) {
+    BUS_POSITION.forEach((element) async {
       if (busPosition.busId == element.busId &&
           busPosition.direction == element.direction &&
           isPassed(
@@ -42,12 +43,6 @@ class _TrackingMapState extends State<TrackingMap> {
               (widget.busPosition.direction == 0)
                   ? widget.busRoute.listStopPointGo
                   : widget.busRoute.listStopPointReturn)) {
-        // if (isPassed(
-        //     widget.stopPoint.stopId,
-        //     element.nextPoint,
-        //     (widget.busPosition.direction == 0)
-        //         ? widget.busRoute.listStopPointGo
-        //         : widget.busRoute.listStopPointReturn)) {
         setState(() {
           bus = element;
           markers[3] = Marker(
@@ -62,10 +57,11 @@ class _TrackingMapState extends State<TrackingMap> {
         });
         return;
       } else {
-        showDialog(
+        t.cancel();
+        await showDialog(
             context: context,
             builder: (BuildContext context) => PassedDialog());
-        t.cancel();
+        Navigator.pop(context);
       }
     });
   }
@@ -149,13 +145,29 @@ class _TrackingMapState extends State<TrackingMap> {
         children: [
           Container(
             height: MediaQuery.of(context).size.height * 0.8,
-            child: Map(
-              initialCamera: LatLng(
-                  widget.busPosition.latitude, widget.busPosition.longitude),
-              initialZoom: 16,
-              markers: markers,
-              listPoint: listPoint,
-              color: Colors.blue,
+            child: Stack(
+              children: [
+                Map(
+                  mapController: mapController,
+                  initialCamera: LatLng(widget.busPosition.latitude,
+                      widget.busPosition.longitude),
+                  initialZoom: 16,
+                  markers: markers,
+                  listPoint: listPoint,
+                  color: Colors.blue,
+                ),
+                Positioned(
+                  left: 20,
+                  bottom: 20,
+                  child: FloatingActionButton(
+                    heroTag: null,
+                    child: Icon(Icons.directions_bus, color: Colors.black,
+                    ),
+                    onPressed: () => mapController.move(bus.getPosition(), 16),
+                    backgroundColor: Colors.white,
+                  ),
+                )
+              ],
             ),
           ),
           Container(

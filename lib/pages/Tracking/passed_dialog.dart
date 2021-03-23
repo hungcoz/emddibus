@@ -12,8 +12,7 @@ class PassedDialog extends StatelessWidget {
                 child: Text('Đóng'),
                 onPressed: () {
                   Navigator.pop(context);
-                  Navigator.pop(context);
-                })
+                }),
           ],
         ),
       ),
