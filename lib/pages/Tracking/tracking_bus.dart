@@ -1,6 +1,7 @@
 import 'dart:async';
 
-import 'package:emddibus/algothrim/function.dart';
+import 'package:emddibus/algothrim/calculate_distance.dart';
+import 'package:emddibus/algothrim/is_passed_bus.dart';
 import 'package:emddibus/constants.dart';
 import 'package:emddibus/models/bus_position_model.dart';
 import 'package:emddibus/models/bus_route_model.dart';
@@ -17,30 +18,13 @@ class Tracking extends StatefulWidget {
   Tracking({this.stopPoint});
 
   @override
-  _TrackingState createState() => _TrackingState();
+  TrackingState createState() => TrackingState();
 }
 
-class _TrackingState extends State<Tracking> {
+class TrackingState extends State<Tracking> {
   List<BusPosition> _listBusPosition = [];
   List<BusRoute> _listBusRoute = [];
   List<int> _listDirection = [];
-
-  bool isPassed(int point, int nextPoint, List<dynamic> listPoint) {
-    int pointIndex = -1;
-    int nextPointIndex = listPoint.length + 1;
-    for (int i = 0; i < listPoint.length; i++) {
-      if (point == listPoint[i]) {
-        pointIndex = i;
-      }
-      if (nextPoint == listPoint[i]) {
-        nextPointIndex = i;
-      }
-    }
-    if (pointIndex >= nextPointIndex)
-      return true;
-    else
-      return false;
-  }
 
   void filterRoute(StopPoint stopPoint) {
     _listBusPosition.clear();
@@ -98,11 +82,13 @@ class _TrackingState extends State<Tracking> {
           title: Text(widget.stopPoint.name),
           centerTitle: true,
         ),
-        body: Scrollbar(
-            child: ListView.builder(
-          itemCount: _listBusPosition.length,
-          itemBuilder: (context, index) => _buildCard(context, index),
-        )));
+        body: (_listBusPosition.length == 0)
+            ? Center(child: Text('Không có xe nào sắp chạy qua'))
+            : Scrollbar(
+                child: ListView.builder(
+                itemCount: _listBusPosition.length,
+                itemBuilder: (context, index) => _buildCard(context, index),
+              )));
   }
 
   Widget _buildCard(BuildContext context, int index) {
@@ -121,7 +107,7 @@ class _TrackingState extends State<Tracking> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => TrackingMap(
-                          bus: busPosition,
+                          busPosition: busPosition,
                           stopPoint: widget.stopPoint,
                           busRoute: busRoute,
                         )));

@@ -1,4 +1,4 @@
-import 'package:emddibus/algothrim/function.dart';
+import 'package:emddibus/algothrim/calculate_distance.dart';
 import 'package:emddibus/models/stop_point_model.dart';
 import 'package:emddibus/pages/Tracking/tracking_bus.dart';
 import 'package:emddibus/services/http_bus_position.dart';

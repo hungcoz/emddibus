@@ -6,8 +6,8 @@
         "bus_id" : "1",
         "route_id" : "34",
         "direction" : "1",
-        "latitude" : "21.028437",
-        "longitude" : "105.777908",
+        "latitude" : "21.028108",
+        "longitude" : "105.778531",
         "heading" : "270",
         "next_point" : "63"
       }

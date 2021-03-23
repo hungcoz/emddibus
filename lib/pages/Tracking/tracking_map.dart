@@ -1,20 +1,25 @@
-import 'package:emddibus/algothrim/function.dart';
+import 'dart:async';
+import 'dart:math';
+
+import 'package:emddibus/algothrim/calculate_distance.dart';
+import 'package:emddibus/algothrim/is_passed_bus.dart';
 import 'package:emddibus/constants.dart';
 import 'package:emddibus/models/bus_path_model.dart';
 import 'package:emddibus/models/bus_position_model.dart';
 import 'package:emddibus/models/bus_route_model.dart';
 import 'package:emddibus/models/stop_point_model.dart';
 import 'package:emddibus/pages/Map/map.dart';
+import 'package:emddibus/pages/Tracking/passed_dialog.dart';
 import 'package:latlong/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter/material.dart';
 
 class TrackingMap extends StatefulWidget {
-  final BusPosition bus;
+  final BusPosition busPosition;
   final StopPoint stopPoint;
   final BusRoute busRoute;
 
-  TrackingMap({this.bus, this.stopPoint, this.busRoute});
+  TrackingMap({this.busPosition, this.stopPoint, this.busRoute});
 
   @override
   _TrackingMapState createState() => _TrackingMapState();
@@ -24,17 +29,45 @@ class _TrackingMapState extends State<TrackingMap> {
   List<LatLng> listPoint = [];
   List<Marker> markers = [];
 
-  BusPosition busPosition;
+  BusPosition bus;
+  Timer t;
 
-  Stream fetchData() {
-    BUS_POSITION.forEach((bus) {
-      if (bus.busId == widget.bus.busId) {
+  void fechtData(BusPosition busPosition) {
+    BUS_POSITION.forEach((element) {
+      if (busPosition.busId == element.busId &&
+          busPosition.direction == element.direction &&
+          isPassed(
+              widget.stopPoint.stopId,
+              element.nextPoint,
+              (widget.busPosition.direction == 0)
+                  ? widget.busRoute.listStopPointGo
+                  : widget.busRoute.listStopPointReturn)) {
+        // if (isPassed(
+        //     widget.stopPoint.stopId,
+        //     element.nextPoint,
+        //     (widget.busPosition.direction == 0)
+        //         ? widget.busRoute.listStopPointGo
+        //         : widget.busRoute.listStopPointReturn)) {
         setState(() {
-          busPosition = bus;
+          bus = element;
+          markers[3] = Marker(
+              height: 50,
+              width: 50,
+              point: bus.getPosition(),
+              builder: (context) => IconButton(
+                  icon: Transform.rotate(
+                      angle: bus.heading * -pi / 180,
+                      child: Image.asset('assets/bus.png')),
+                  onPressed: () {}));
         });
+        return;
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => PassedDialog());
+        t.cancel();
       }
     });
-    print('Stream');
   }
 
   getPointOfPath(List<PointOfBusPath> listPointOfBusPath) {
@@ -72,24 +105,44 @@ class _TrackingMapState extends State<TrackingMap> {
         ),
       ),
     ));
+    markers.add(Marker(
+        height: 50,
+        width: 50,
+        point: bus.getPosition(),
+        builder: (context) => IconButton(
+            icon: Transform.rotate(
+                angle: bus.heading * -pi / 180,
+                child: Image.asset('assets/bus.png')),
+            onPressed: () {})));
     markers.add(Marker());
   }
 
   @override
   void initState() {
-    getMarker((widget.bus.direction == 0)
+    bus = widget.busPosition;
+    getMarker((widget.busPosition.direction == 0)
         ? widget.busRoute.listStopPointGo
         : widget.busRoute.listStopPointReturn);
-    getPointOfPath((widget.bus.direction == 0) ? BUS_PATH_GO : BUS_PATH_RETURN);
-    fetchData();
+    getPointOfPath(
+        (widget.busPosition.direction == 0) ? BUS_PATH_GO : BUS_PATH_RETURN);
+    t = Timer.periodic(Duration(seconds: 1), (Timer t) {
+      fechtData(widget.busPosition);
+      print(bus.heading);
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    t.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tuyến ${widget.bus.routeId}'),
+        title: Text(widget.stopPoint.name),
         centerTitle: true,
       ),
       body: Column(
@@ -97,7 +150,8 @@ class _TrackingMapState extends State<TrackingMap> {
           Container(
             height: MediaQuery.of(context).size.height * 0.8,
             child: Map(
-              initialCamera: LatLng(widget.bus.latitude, widget.bus.longitude),
+              initialCamera: LatLng(
+                  widget.busPosition.latitude, widget.busPosition.longitude),
               initialZoom: 16,
               markers: markers,
               listPoint: listPoint,
@@ -107,11 +161,11 @@ class _TrackingMapState extends State<TrackingMap> {
           Container(
             child: Column(
               children: [
-                Text(widget.bus.busId.toString()),
+                Text(widget.busPosition.busId.toString()),
                 Text(widget.busRoute.name),
                 Text('Khoảng cách: ' +
                     calculateDistance(
-                            LatLng(busPosition.latitude, busPosition.longitude),
+                            LatLng(bus.latitude, bus.longitude),
                             LatLng(widget.stopPoint.latitude,
                                 widget.stopPoint.longitude))
                         .toStringAsFixed(2)
