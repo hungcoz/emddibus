@@ -1,12 +1,9 @@
-// import 'dart:html';
-
 import 'package:emddibus/constants.dart';
 import 'package:emddibus/models/bus_route_model.dart';
 import 'package:emddibus/pages/BusPath/bus_path_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong/latlong.dart';
-import 'package:scrollable_bottom_sheet/scrollable_controller.dart';
 
 import 'list_name_bus_stop.dart';
 
@@ -30,8 +27,6 @@ class BusInformationState extends State<BusInformation> {
   double _minChildSize = 0.08;
   double _maxChildSize = 0.5;
 
-  ScrollableController _scrollableController = ScrollableController();
-
   IconData _icon = Icons.arrow_downward_outlined;
 
   @override
@@ -39,29 +34,11 @@ class BusInformationState extends State<BusInformation> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.showBusPathState.setState(() {
         widget.showBusPathState.contextSize = context.size.height;
-        widget.showBusPathState.fabPosition = context.size.height*0.5;
+        widget.showBusPathState.fabPosition = context.size.height * 0.5;
       });
     });
 
     super.initState();
-  }
-
-  void checkUpOrDown() {
-    if (CHECK_UP_DOWN == 0) {
-      CHECK_UP_DOWN = 1;
-      setState(() {
-        _icon = Icons.arrow_upward_outlined;
-      });
-      widget.showBusPathState.fabPosition =
-          widget.showBusPathState.contextSize * (_maxChildSize - _minChildSize);
-      widget.showBusPathState.animationController.forward();
-    } else {
-      CHECK_UP_DOWN = 0;
-      setState(() {
-        _icon = Icons.arrow_downward_outlined;
-      });
-      // widget.showBusPathState.animationController.reverse();
-    }
   }
 
   void checkGoOrReturn() {
@@ -104,8 +81,6 @@ class BusInformationState extends State<BusInformation> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-
     return NotificationListener<DraggableScrollableNotification>(
       onNotification: (notification) {
         widget.showBusPathState.setState(() {
@@ -114,10 +89,9 @@ class BusInformationState extends State<BusInformation> {
           widget.showBusPathState.fabPosition =
               widget.showBusPathState.widgetHeight *
                   widget.showBusPathState.dragScrollSheetExtent;
-          if (notification.extent >= _initialChildSize*0.5){
+          if (notification.extent >= _initialChildSize * 0.5) {
             _icon = Icons.arrow_downward_outlined;
-          }
-          else if (notification.extent < _initialChildSize*0.5) {
+          } else if (notification.extent < _initialChildSize * 0.5) {
             _icon = Icons.arrow_upward_outlined;
           }
           widget.showBusPathState.animationController.forward();
@@ -136,39 +110,35 @@ class BusInformationState extends State<BusInformation> {
                 controller: controller,
                 itemBuilder: (BuildContext context, index) {
                   return Column(children: [
-                    GestureDetector(
-                      onTap: () {
-                        checkUpOrDown();
-                      },
-                      child: Container(
-                        height: widget.showBusPathState.contextSize * 0.08,
-                        child: ListTile(
-                          contentPadding: EdgeInsets.only(left: 5, right: 10),
-                          leading: CircleAvatar(
-                              backgroundColor: Colors.black26,
-                              child: Icon(
-                                _icon,
-                                color: Colors.blue,
-                              )),
-                          title: Text(
-                            widget.busRoute.name,
-                            style: TextStyle(
-                              fontSize: 18,
-                            ),
+                    Container(
+                      height: widget.showBusPathState.contextSize * 0.08,
+                      child: ListTile(
+                        contentPadding: EdgeInsets.only(left: 5, right: 10),
+                        leading: CircleAvatar(
+                            backgroundColor: Colors.black26,
+                            child: Icon(
+                              _icon,
+                              color: Colors.blue,
+                            )),
+                        title: Text(
+                          widget.busRoute.name,
+                          style: TextStyle(
+                            fontSize: 18,
                           ),
-                          trailing: OutlineButton(
-                            onPressed: () {
-                              widget.showBusPathState.scrollController.jumpTo(0.0);
-                              checkGoOrReturn();
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            borderSide: BorderSide(color: _color),
-                            child: Text(
-                              _text,
-                              style: TextStyle(color: _color),
-                            ),
+                        ),
+                        trailing: OutlineButton(
+                          onPressed: () {
+                            widget.showBusPathState.scrollController
+                                .jumpTo(0.0);
+                            checkGoOrReturn();
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          borderSide: BorderSide(color: _color),
+                          child: Text(
+                            _text,
+                            style: TextStyle(color: _color),
                           ),
                         ),
                       ),
@@ -201,7 +171,8 @@ class BusInformationState extends State<BusInformation> {
                                 Container(
                                   color: Colors.redAccent,
                                   child: ListView.builder(
-                                    controller: widget.showBusPathState.scrollController,
+                                      controller: widget
+                                          .showBusPathState.scrollController,
                                       itemCount: 27,
                                       itemBuilder:
                                           (BuildContext context, index) {
@@ -217,7 +188,8 @@ class BusInformationState extends State<BusInformation> {
                                 Container(
                                   color: Colors.green,
                                   child: ListView.builder(
-                                      controller: widget.showBusPathState.scrollController,
+                                      controller: widget
+                                          .showBusPathState.scrollController,
                                       itemCount: 10,
                                       itemBuilder:
                                           (BuildContext context, index) {
