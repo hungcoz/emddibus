@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 Future<ListLocation> searchLocation(String value) async {
   final response = await http.get(
-      "https://nominatim.openstreetmap.org/search/"+value+"?format=json&&countrycode=vn&addressdetails=1&limit=10&polygon_svg=1");
+      "https://nominatim.openstreetmap.org/search/?q="+value+"&format=json&countrycode=vn&addressdetails=1&limit=10");
   if (response.statusCode == 200){
     print(response.body.toString());
     return listLocationFromJson(response.body);

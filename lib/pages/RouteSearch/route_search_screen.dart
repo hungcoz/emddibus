@@ -1,3 +1,4 @@
+import 'package:emddibus/algothrim/convert_string.dart';
 import 'package:emddibus/constants.dart';
 import 'package:emddibus/models/bus_route_model.dart';
 import 'package:emddibus/pages/BusPath/bus_path_screen.dart';
@@ -15,6 +16,9 @@ class _RouteSearchState extends State<RouteSearch> {
 
   ScrollController _scrollController = ScrollController();
 
+  bool _isSearching = false;
+  TextEditingController searchController = TextEditingController();
+
   @override
   void initState() {
     _listBusRoutes.addAll(BUS_ROUTE);
@@ -25,7 +29,8 @@ class _RouteSearchState extends State<RouteSearch> {
     if (value.isNotEmpty) {
       List<BusRoute> data = [];
       BUS_ROUTE.forEach((element) {
-        if (element.name.toLowerCase().contains(value.toLowerCase()) ||
+        if (convertString(element.name.toLowerCase())
+                .contains(convertString(value.toLowerCase())) ||
             element.routeId.toString().contains(value)) {
           data.add(element);
         }
@@ -59,7 +64,9 @@ class _RouteSearchState extends State<RouteSearch> {
             Padding(
               padding: EdgeInsets.fromLTRB(8, 10, 8, 5),
               child: TextField(
+                controller: searchController,
                 onChanged: (value) {
+                  _isSearching = true;
                   searchRoute(value);
                 },
                 decoration: InputDecoration(
@@ -68,7 +75,17 @@ class _RouteSearchState extends State<RouteSearch> {
                   hintStyle: TextStyle(
                     fontSize: 20,
                   ),
-                  suffixIcon: Icon(Icons.search),
+                  suffixIcon: (_isSearching)
+                      ? IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            searchController.clear();
+                            setState(() {
+                              _isSearching = false;
+                            });
+                            searchRoute(searchController.text);
+                          })
+                      : Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),

@@ -46,8 +46,8 @@ class _TrackingMapState extends State<TrackingMap> {
         setState(() {
           bus = element;
           markers[3] = Marker(
-              height: 50,
-              width: 50,
+              height: 60,
+              width: 60,
               point: bus.getPosition(),
               builder: (context) => IconButton(
                   icon: Transform.rotate(
@@ -102,8 +102,8 @@ class _TrackingMapState extends State<TrackingMap> {
       ),
     ));
     markers.add(Marker(
-        height: 50,
-        width: 50,
+        height: 60,
+        width: 60,
         point: bus.getPosition(),
         builder: (context) => IconButton(
             icon: Transform.rotate(
@@ -142,6 +142,7 @@ class _TrackingMapState extends State<TrackingMap> {
         centerTitle: true,
       ),
       body: Column(
+        //mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
             height: MediaQuery.of(context).size.height * 0.8,
@@ -161,7 +162,9 @@ class _TrackingMapState extends State<TrackingMap> {
                   bottom: 20,
                   child: FloatingActionButton(
                     heroTag: null,
-                    child: Icon(Icons.directions_bus, color: Colors.black,
+                    child: Icon(
+                      Icons.directions_bus,
+                      color: Colors.black,
                     ),
                     onPressed: () => mapController.move(bus.getPosition(), 16),
                     backgroundColor: Colors.white,
@@ -170,20 +173,63 @@ class _TrackingMapState extends State<TrackingMap> {
               ],
             ),
           ),
-          Container(
-            child: Column(
-              children: [
-                Text(widget.busPosition.busId.toString()),
-                Text(widget.busRoute.name),
-                Text('Khoảng cách: ' +
-                    calculateDistance(
-                            LatLng(bus.latitude, bus.longitude),
-                            LatLng(widget.stopPoint.latitude,
-                                widget.stopPoint.longitude))
-                        .toStringAsFixed(2)
-                        .toString() +
-                    ' km')
-              ],
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.green[100],
+                border:
+                    Border(top: BorderSide(color: Color(0xffeeac24), width: 3)),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 100,
+                    child: Image.asset(
+                      'assets/bus_icon.png',
+                      width: 70,
+                      height: 70,
+                    ),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RichText(
+                        text: TextSpan(children: [
+                          TextSpan(
+                              text: 'Tuyến số ${widget.busRoute.routeId}   ',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold)),
+                          TextSpan(
+                              text: (bus.direction == 0)
+                                  ? '(Chiều đi)'
+                                  : '(Chiều về)',
+                              style: TextStyle(
+                                  color: (bus.direction == 0)
+                                      ? Colors.green
+                                      : Colors.redAccent,
+                                  fontStyle: FontStyle.italic)),
+                        ]),
+                      ),
+                      Text(widget.busRoute.name),
+                      Text('Biển số: ${bus.busId}'),
+                      Text(
+                        'Khoảng cách: ' +
+                            calculateDistance(
+                                    bus.getPosition(),
+                                    LatLng(widget.stopPoint.latitude,
+                                        widget.stopPoint.longitude))
+                                .toStringAsFixed(2)
+                                .toString() +
+                            ' km',
+                        style: TextStyle(
+                            color: Colors.green, fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           )
         ],

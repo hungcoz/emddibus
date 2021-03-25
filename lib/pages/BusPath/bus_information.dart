@@ -42,7 +42,7 @@ class BusInformationState extends State<BusInformation> {
         widget.showBusPathState.fabPosition = context.size.height*0.5;
       });
     });
-    // TODO: implement initState
+
     super.initState();
   }
 

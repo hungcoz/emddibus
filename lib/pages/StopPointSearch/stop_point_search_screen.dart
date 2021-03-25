@@ -1,3 +1,4 @@
+import 'package:emddibus/algothrim/convert_string.dart';
 import 'package:emddibus/constants.dart';
 import 'package:emddibus/models/stop_point_model.dart';
 import 'package:emddibus/pages/StopPointDetails/stop_point_detail_screen.dart';
@@ -13,6 +14,9 @@ class _StopPointSearchState extends State<StopPointSearch> {
 
   ScrollController _scrollController = ScrollController();
 
+  bool _isSearching = false;
+  TextEditingController searchController = TextEditingController();
+
   @override
   void initState() {
     _listStopPoint.addAll(STOP_POINT);
@@ -23,7 +27,8 @@ class _StopPointSearchState extends State<StopPointSearch> {
     if (value.isNotEmpty) {
       List<StopPoint> data = [];
       STOP_POINT.forEach((element) {
-        if (element.name.toLowerCase().contains(value.toLowerCase())) {
+        if (convertString(element.name.toLowerCase())
+            .contains(convertString(value.toLowerCase()))) {
           data.add(element);
         }
       });
@@ -43,6 +48,7 @@ class _StopPointSearchState extends State<StopPointSearch> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text('Danh sách các điểm dừng'),
         centerTitle: true,
@@ -55,7 +61,9 @@ class _StopPointSearchState extends State<StopPointSearch> {
               Padding(
                 padding: EdgeInsets.fromLTRB(8, 10, 8, 5),
                 child: TextField(
+                  controller: searchController,
                   onChanged: (value) {
+                    _isSearching = true;
                     searchStopPoint(value);
                   },
                   decoration: InputDecoration(
@@ -64,7 +72,17 @@ class _StopPointSearchState extends State<StopPointSearch> {
                     hintStyle: TextStyle(
                       fontSize: 20,
                     ),
-                    suffixIcon: Icon(Icons.search),
+                    suffixIcon: (_isSearching)
+                        ? IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              searchController.clear();
+                              setState(() {
+                                _isSearching = false;
+                              });
+                              searchStopPoint(searchController.text);
+                            })
+                        : Icon(Icons.search),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
@@ -102,8 +120,15 @@ class _StopPointSearchState extends State<StopPointSearch> {
                 MaterialPageRoute(
                     builder: (context) => StopPointDetail(stopPoint)));
           },
-          title: Text(stopPoint.name),
-          leading: CircleAvatar(child: Image.asset('assets/stop_point.png')),
+          title: Text(
+            stopPoint.name,
+            style: TextStyle(),
+          ),
+          leading: Image.asset(
+            'assets/stop_point.png',
+            width: 50,
+            height: 50,
+          ),
           //subtitle: Text('${busRoute.city}'),
         ),
       ),
