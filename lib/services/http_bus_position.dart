@@ -12,5 +12,6 @@ Future<void> listenBusPosition() async {
   var result = listBusPositionFromJson(response);
   BUS_POSITION = result.listBusPosition;
   print(TRACKING_REQUEST);
+  if (TRACKING_REQUEST == 10) TRACKING_REQUEST = 1;
   print(BUS_POSITION[0].nextPoint);
 }

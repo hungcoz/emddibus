@@ -5,7 +5,10 @@ import 'package:emddibus/models/bus_path_model.dart';
 import 'package:emddibus/models/bus_route_model.dart';
 import 'package:emddibus/models/stop_point_model.dart';
 import 'package:emddibus/pages/BusPath/bus_information.dart';
+import 'package:emddibus/pages/Loading/loading_dialog.dart';
 import 'package:emddibus/pages/Map/map.dart';
+import 'package:emddibus/pages/Tracking/tracking_bus.dart';
+import 'package:emddibus/services/http_bus_position.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -16,7 +19,6 @@ import 'package:latlong/latlong.dart';
 // import 'package:provider/provider.dart';
 
 import '../../constants.dart';
-import 'list_name_bus_stop.dart';
 
 class ShowBusPath extends StatefulWidget {
   @override
@@ -65,10 +67,10 @@ class ShowBusPathState extends State<ShowBusPath>
         if (element.stopId == point) {
           listStopPointRoute.add(element);
           markers.add(Marker(
-              width: 50,
-              height: 50,
+              width: 60,
+              height: 60,
               point: LatLng(element.latitude, element.longitude),
-              builder: (context) => _buildMarker()));
+              builder: (context) => _buildMarker(element)));
         }
       });
     });
@@ -124,11 +126,21 @@ class ShowBusPathState extends State<ShowBusPath>
     );
   }
 
-  Widget _buildMarker() {
+  Widget _buildMarker(StopPoint stopPoint) {
     return Container(
       child: IconButton(
         icon: Image.asset('assets/stop_point.png'),
-        onPressed: () {},
+        onPressed: () async {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) => LoadingDialog());
+          await listenBusPosition();
+          Navigator.pop(context);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Tracking(stopPoint: stopPoint)));
+        },
       ),
     );
   }

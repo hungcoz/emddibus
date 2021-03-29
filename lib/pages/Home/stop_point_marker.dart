@@ -1,5 +1,6 @@
-import 'package:emddibus/algothrim/function.dart';
+import 'package:emddibus/algothrim/calculate_distance.dart';
 import 'package:emddibus/models/stop_point_model.dart';
+import 'package:emddibus/pages/Loading/loading_dialog.dart';
 import 'package:emddibus/pages/Tracking/tracking_bus.dart';
 import 'package:emddibus/services/http_bus_position.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,11 @@ class StopPointMarker extends StatelessWidget {
           icon: Image.asset('assets/stop_point.png'),
           onPressed: () async {
             print(stopPoint.stopId);
+            showDialog(
+                context: context,
+                builder: (BuildContext context) => LoadingDialog());
             await listenBusPosition();
+            Navigator.pop(context);
             Navigator.push(
                 context,
                 MaterialPageRoute(

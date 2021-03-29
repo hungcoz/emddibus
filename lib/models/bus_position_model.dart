@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:latlong/latlong.dart';
 
 class BusPosition {
   int busId;
@@ -26,6 +27,10 @@ class BusPosition {
       longitude: double.parse(json['longitude']),
       heading: double.parse(json['heading']),
       nextPoint: int.parse(json['next_point']));
+
+  LatLng getPosition() {
+    return LatLng(latitude, longitude);
+  }
 }
 
 class ListBusPosition {

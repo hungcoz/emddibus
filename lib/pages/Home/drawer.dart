@@ -38,29 +38,41 @@ class _MenuState extends State<Menu> {
                       color: Colors.amber,
                     ),
                   ),
+                  SizedBox(height: 20),
                   ListTile(
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    leading: Icon(
-                      Icons.home,
-                      color: Colors.white,
+                    leading: Image.asset(
+                      'assets/home.png',
+                      width: 40,
+                      height: 40,
                     ),
+                    // Icon(
+                    //   Icons.home,
+                    //   color: Colors.white,
+                    // ),
                     title: Text(
                       "Trang chủ",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
                   ListTile(
-                    leading: Icon(
-                      Icons.directions_bus,
-                      color: Colors.white,
+                    leading: Image.asset(
+                      'assets/bus_icon.png',
+                      width: 40,
+                      height: 40,
                     ),
+                    // Icon(
+                    //   Icons.directions_bus,
+                    //   color: Colors.white,
+                    // ),
                     title: Text(
                       "Tra cứu các tuyến bus",
                       style: TextStyle(color: Colors.white),
                     ),
                     onTap: () {
+                      Navigator.pop(context);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -68,15 +80,21 @@ class _MenuState extends State<Menu> {
                     },
                   ),
                   ListTile(
-                    leading: Icon(
-                      Icons.search,
-                      color: Colors.white,
+                    leading: Image.asset(
+                      'assets/stop_point.png',
+                      width: 40,
+                      height: 40,
                     ),
+                    // Icon(
+                    //   Icons.search,
+                    //   color: Colors.white,
+                    // ),
                     title: Text(
                       "Tra cứu các điểm dừng",
                       style: TextStyle(color: Colors.white),
                     ),
                     onTap: () {
+                      Navigator.pop(context);
                       Navigator.push(
                           context,
                           MaterialPageRoute(

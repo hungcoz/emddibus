@@ -1,14 +1,13 @@
 import 'dart:collection';
 
 import 'package:emddibus/GGMap/geolocator_service.dart';
-import 'package:emddibus/algothrim/filter_route.dart';
 import 'package:emddibus/constants.dart';
 import 'package:emddibus/models/stop_point_model.dart';
+import 'package:emddibus/pages/Home/address_to_or_from.dart';
 import 'file:///F:/flutter/emddibus/lib/algothrim/find_the_way.dart';
 import 'package:emddibus/pages/Home/search_field.dart';
 import 'package:emddibus/pages/Home/stop_point_marker.dart';
 import 'package:emddibus/pages/Map/map.dart';
-import 'package:emddibus/pages/StopPointSearch/stop_point_search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
@@ -38,8 +37,8 @@ class FMapState extends State<FMap> {
   void setStopPointMarker() {
     STOP_POINT.forEach((point) {
       markers.add(Marker(
-          width: 50,
-          height: 50,
+          width: 60,
+          height: 60,
           point: LatLng(point.latitude, point.longitude),
           builder: (context) =>
               StopPointMarker(stopPoint: point, mapController: mapController)));
@@ -107,8 +106,9 @@ class FMapState extends State<FMap> {
                                     start = await Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => StopPointSearch()));
+                                            builder: (context) => AddressToOrFrom(title: "Chọn điểm bắt đầu")));
                                     setState(() {
+                                      mapController.move(LatLng(start.latitude, start.longitude), 16);
                                       if (start != null){
                                         addressFrom = start.name;
                                       }
@@ -149,8 +149,9 @@ class FMapState extends State<FMap> {
                                     target = await Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => StopPointSearch()));
+                                            builder: (context) => AddressToOrFrom(title: "Chọn điểm kết thúc")));
                                     setState(() {
+                                      mapController.move(LatLng(target.latitude, target.longitude), 16);
                                       if (target != null){
                                         addressTo = target.name;
                                       }
@@ -288,17 +289,20 @@ class FMapState extends State<FMap> {
             )
           ]),
         ),
+        // centerTitle: true,
       ),
     );
   }
 }
+
 class CircularButton extends StatelessWidget {
   final double width, height;
   final Color color;
   final Icon icon;
   final Function onClick;
 
-  CircularButton({this.width, this.height, this.color, this.icon, this.onClick});
+  CircularButton(
+      {this.width, this.height, this.color, this.icon, this.onClick});
 
   @override
   Widget build(BuildContext context) {
@@ -307,8 +311,11 @@ class CircularButton extends StatelessWidget {
       decoration: BoxDecoration(color: color, shape: BoxShape.circle),
       width: width,
       height: height,
-      child: IconButton(icon: icon, enableFeedback: true, onPressed: onClick,),
+      child: IconButton(
+        icon: icon,
+        enableFeedback: true,
+        onPressed: onClick,
+      ),
     );
   }
-
 }
