@@ -136,39 +136,34 @@ class BusInformationState extends State<BusInformation> {
                 controller: controller,
                 itemBuilder: (BuildContext context, index) {
                   return Column(children: [
-                    GestureDetector(
-                      onTap: () {
-                        checkUpOrDown();
-                      },
-                      child: Container(
-                        height: widget.showBusPathState.contextSize * 0.08,
-                        child: ListTile(
-                          contentPadding: EdgeInsets.only(left: 5, right: 10),
-                          leading: CircleAvatar(
-                              backgroundColor: Colors.black26,
-                              child: Icon(
-                                _icon,
-                                color: Colors.blue,
-                              )),
-                          title: Text(
-                            widget.busRoute.name,
-                            style: TextStyle(
-                              fontSize: 18,
-                            ),
+                    Container(
+                      height: widget.showBusPathState.contextSize * 0.08,
+                      child: ListTile(
+                        contentPadding: EdgeInsets.only(left: 5, right: 10),
+                        leading: CircleAvatar(
+                            backgroundColor: Colors.black26,
+                            child: Icon(
+                              _icon,
+                              color: Colors.blue,
+                            )),
+                        title: Text(
+                          widget.busRoute.name,
+                          style: TextStyle(
+                            fontSize: 18,
                           ),
-                          trailing: OutlineButton(
-                            onPressed: () {
-                              widget.showBusPathState.scrollController.jumpTo(0.0);
-                              checkGoOrReturn();
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            borderSide: BorderSide(color: _color),
-                            child: Text(
-                              _text,
-                              style: TextStyle(color: _color),
-                            ),
+                        ),
+                        trailing: OutlineButton(
+                          onPressed: () {
+                            widget.showBusPathState.scrollController.jumpTo(0.0);
+                            checkGoOrReturn();
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          borderSide: BorderSide(color: _color),
+                          child: Text(
+                            _text,
+                            style: TextStyle(color: _color),
                           ),
                         ),
                       ),

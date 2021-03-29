@@ -97,10 +97,11 @@ class _StopPointSearchState extends State<StopPointSearch> {
       child: Card(
         child: ListTile(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => StopPointDetail(stopPoint)));
+            // Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //         builder: (context) => StopPointDetail(stopPoint)));
+            Navigator.pop(context, stopPoint);
           },
           title: Text(stopPoint.name),
           leading: CircleAvatar(child: Image.asset('assets/stop_point.png')),

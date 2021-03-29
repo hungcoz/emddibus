@@ -1,3 +1,4 @@
+import 'package:emddibus/pages/Home/fmap_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location/flutter_map_location.dart';
@@ -13,6 +14,7 @@ class Map extends StatefulWidget {
   final List<LatLng> listPoint;
   final Color color;
   final FocusNode focusNode;
+  final FMapState fMapState;
 
   Map(
       {this.mapController,
@@ -21,13 +23,15 @@ class Map extends StatefulWidget {
       this.markers,
       this.listPoint,
       this.color,
-      this.focusNode});
+      this.focusNode,
+      this.fMapState});
 
   @override
   _MapState createState() => _MapState();
 }
 
 class _MapState extends State<Map> {
+  int checkVisibility = 0;
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
@@ -78,34 +82,66 @@ class _MapState extends State<Map> {
               return Positioned(
                 bottom: 20,
                 right: 20,
-                child: FloatingActionButton(
-                  child: ValueListenableBuilder<LocationServiceStatus>(
-                    valueListenable: status,
-                    builder: (context, LocationServiceStatus value, child) {
-                      switch (value) {
-                        case LocationServiceStatus.disabled:
-                        case LocationServiceStatus.permissionDenied:
-                        case LocationServiceStatus.unsubscribed:
-                          return Icon(
-                            Icons.location_disabled,
-                            color: Colors.black,
-                          );
-                          break;
-                        default:
-                          return Icon(
-                            Icons.my_location,
-                            color: Colors.black,
-                          );
-                          break;
-                      }
-                    },
-                  ),
-                  onPressed: () {
-                    {
-                      if (currentPosition != null) widget.mapController.move(LatLng(currentPosition.latitude, currentPosition.longitude), 16);
-                    }
-                  },
-                  backgroundColor: Colors.white,
+                child: Column(
+                  children: [
+                    Container(
+                      child: FloatingActionButton(
+                        child: Icon(
+                          Icons.search,
+                          size: 30,
+                          color: Colors.black,
+                        ),
+                          backgroundColor: Colors.amber,
+                          heroTag: "search_route",
+                          onPressed: (){
+                            if (checkVisibility == 0) {
+                              checkVisibility = 1;
+                              widget.fMapState.setState(() {
+                                widget.fMapState.isVisibleSearchLocation = false;
+                                widget.fMapState.isVisibleSearchWay = true;
+                              });
+                            } else {
+                              checkVisibility = 0;
+                              widget.fMapState.setState(() {
+                                widget.fMapState.isVisibleSearchLocation = true;
+                                widget.fMapState.isVisibleSearchWay = false;
+                              });
+                            }
+                          },
+                      ),
+                      margin: EdgeInsets.only(bottom: 15),
+                    ),
+                    FloatingActionButton(
+                      child: ValueListenableBuilder<LocationServiceStatus>(
+                        valueListenable: status,
+                        builder: (context, LocationServiceStatus value, child) {
+                          switch (value) {
+                            case LocationServiceStatus.disabled:
+                            case LocationServiceStatus.permissionDenied:
+                            case LocationServiceStatus.unsubscribed:
+                              return Icon(
+                                Icons.location_disabled,
+                                color: Colors.black,
+                              );
+                              break;
+                            default:
+                              return Icon(
+                                Icons.my_location,
+                                color: Colors.black,
+                              );
+                              break;
+                          }
+                        },
+                      ),
+                      heroTag: "my_location",
+                      onPressed: () {
+                        {
+                          if (currentPosition != null) widget.mapController.move(LatLng(currentPosition.latitude, currentPosition.longitude), 16);
+                        }
+                      },
+                      backgroundColor: Colors.white,
+                    ),
+                  ],
                 ),
               );
             }),
