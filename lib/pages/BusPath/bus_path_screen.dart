@@ -1,4 +1,5 @@
 import 'package:emddibus/GGMap/geolocator_service.dart';
+import 'package:emddibus/GGMap/ggmap.dart';
 
 // import 'package:emddibus/GGMap/ggmap.dart';
 import 'package:emddibus/models/bus_path_model.dart';
@@ -12,6 +13,7 @@ import 'package:emddibus/services/http_bus_position.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geolocator/geolocator.dart';
 
 // import 'package:flutter_map_location/flutter_map_location.dart';
 // import 'package:geolocator/geolocator.dart';
@@ -106,15 +108,16 @@ class ShowBusPathState extends State<ShowBusPath>
           children: [
             Container(
               height: contextSize - fabPosition,
-              child: Map(
-                mapController: mapController,
-                initialCamera: LatLng(listStopPointRoute[0].latitude,
-                    listStopPointRoute[0].longitude),
-                initialZoom: 16,
-                markers: markers,
-                color: color,
-                listPoint: listPoint,
-              ),
+              // child: Map(
+              //   mapController: mapController,
+              //   initialCamera: LatLng(listStopPointRoute[0].latitude,
+              //       listStopPointRoute[0].longitude),
+              //   initialZoom: 16,
+              //   markers: markers,
+              //   color: color,
+              //   listPoint: listPoint,
+              // ),
+              child: GGMap(initialPosition: Position(latitude: currentPosition.latitude, longitude: currentPosition.longitude),),
             ),
             BusInformation(
               showBusPathState: this,

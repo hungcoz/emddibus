@@ -1,7 +1,5 @@
 import 'package:emddibus/algothrim/convert_string.dart';
 import 'package:emddibus/models/stop_point_model.dart';
-import 'package:emddibus/pages/Home/search_field.dart';
-import 'package:emddibus/pages/StopPointDetails/stop_point_detail_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -74,38 +72,91 @@ class AddressToOrFromState extends State<AddressToOrFrom> {
             Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 15, left: 10, right: 10),
-                  child: SearchField(),
+                  child: GestureDetector(
+                    onTap: () => FocusScope.of(context).unfocus(),
+                    child: Container(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(8, 10, 8, 5),
+                            child: TextField(
+                              controller: searchController,
+                              onChanged: (value) {
+                                _isSearching = true;
+                                searchStopPoint(value);
+                              },
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.fromLTRB(25, 10, 5, 5),
+                                hintText: 'Tìm kiếm...',
+                                hintStyle: TextStyle(
+                                  fontSize: 20,
+                                ),
+                                suffixIcon: (_isSearching)
+                                    ? IconButton(
+                                    icon: Icon(Icons.clear),
+                                    onPressed: () {
+                                      searchController.clear();
+                                      setState(() {
+                                        _isSearching = false;
+                                      });
+                                      searchStopPoint(searchController.text);
+                                    })
+                                    : Icon(Icons.search),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                ),
+                              ),
+                            ),
+                          ),
+                          // Expanded(
+                          //   child: Scrollbar(
+                          //     isAlwaysShown: true,
+                          //     controller: _scrollController,
+                          //     child: ListView.builder(
+                          //       controller: _scrollController,
+                          //       itemCount: _listStopPoint.length,
+                          //       itemBuilder: (context, index) => _buildCard(context, index),
+                          //       shrinkWrap: true,
+                          //     ),
+                          //   ),
+                          // )
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(top: 10),
-                  padding: EdgeInsets.all(10),
-                  color: Colors.amber[200],
+                Visibility(
                   child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Các điểm đã đi",
-                      style: TextStyle(fontSize: 18),
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(top: 10),
+                    padding: EdgeInsets.all(10),
+                    color: Colors.amber[200],
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Các điểm đã đi",
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
                   ),
                 ),
                 Expanded(
-                    child: ListView.separated(
-                      itemCount: 4,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ListTile(
-                          leading: Icon(Icons.history),
-                          title: Text(
-                            "Ngõ 44 Triều Khúc",
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          dense: true,
-                          contentPadding: EdgeInsets.only(left: 10),
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) => Divider(),
-                    ))
+                  child: ListView.separated(
+                    itemCount: 4,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        leading: Icon(Icons.history),
+                        title: Text(
+                          "Ngõ 44 Triều Khúc",
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        dense: true,
+                        contentPadding: EdgeInsets.only(left: 10),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) => Divider(),
+                  ),
+                )
               ],
             ),
             Container(
