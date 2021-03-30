@@ -126,8 +126,8 @@ class _StopPointSearchState extends State<StopPointSearch> {
           ),
           leading: Image.asset(
             'assets/stop_point.png',
-            width: 50,
-            height: 50,
+            width: 40,
+            height: 40,
           ),
           //subtitle: Text('${busRoute.city}'),
         ),

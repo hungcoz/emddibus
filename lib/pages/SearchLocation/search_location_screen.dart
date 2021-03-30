@@ -1,3 +1,4 @@
+import 'package:emddibus/constants.dart';
 import 'package:emddibus/models/location_model.dart';
 import 'package:emddibus/services/http_search_location.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,8 @@ class _SearchLocationState extends State<SearchLocation> {
                 padding: EdgeInsets.fromLTRB(8, 10, 8, 5),
                 child: TextField(
                   controller: searchController,
+                  //focusNode: _txtSearchFocusNode,
+                  autofocus: true,
                   // onChanged: (value) {
                   //   setState(() {
                   //     _isSearching = value.isNotEmpty;
@@ -75,7 +78,7 @@ class _SearchLocationState extends State<SearchLocation> {
                 ),
               ),
               Expanded(
-                child: _isSearching ? listResult() : Container(),
+                child: _isSearching ? listResult() : listHistory(),
               )
             ],
           ),
@@ -133,7 +136,8 @@ class _SearchLocationState extends State<SearchLocation> {
       child: ListTile(
         leading: Icon(Icons.location_on),
         onTap: () {
-          Navigator.pop(context, []);
+          SEARCH_HISTORY.add(location);
+          Navigator.pop(context, location);
         },
         title: Text(
           textName(location),
@@ -143,6 +147,30 @@ class _SearchLocationState extends State<SearchLocation> {
           text(location),
         ),
       ),
+    );
+  }
+
+  Widget listHistory() {
+    return ListView.builder(
+      itemCount: SEARCH_HISTORY.length,
+      itemBuilder: (context, index) {
+        return Card(
+          child: ListTile(
+            leading: Icon(Icons.history),
+            onTap: () {
+              SEARCH_HISTORY.add(SEARCH_HISTORY[index]);
+              Navigator.pop(context, SEARCH_HISTORY[index]);
+            },
+            title: Text(
+              textName(SEARCH_HISTORY[index]),
+              style: TextStyle(fontSize: 18),
+            ),
+            subtitle: Text(
+              text(SEARCH_HISTORY[index]),
+            ),
+          ),
+        );
+      },
     );
   }
 }

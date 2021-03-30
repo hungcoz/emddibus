@@ -1,3 +1,4 @@
+import 'package:emddibus/models/location_model.dart';
 import 'package:latlong/latlong.dart';
 
 import 'models/bus_position_model.dart';
@@ -19,3 +20,5 @@ int CHECK_UP_DOWN = 0;
 
 int TRACKING_REQUEST = 1;
 List<BusPosition> BUS_POSITION;
+
+List<LocationModel> SEARCH_HISTORY;

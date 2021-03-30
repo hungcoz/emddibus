@@ -35,7 +35,7 @@ class _MenuState extends State<Menu> {
                     child: Image.asset('assets/EMDDI_2.png'),
                     margin: EdgeInsets.only(bottom: 0),
                     decoration: BoxDecoration(
-                      color: Colors.amber,
+                      color: Colors.black,
                     ),
                   ),
                   SizedBox(height: 20),

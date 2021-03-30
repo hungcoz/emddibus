@@ -8,7 +8,7 @@ import 'package:flutter_map/flutter_map.dart';
 class SearchField extends StatefulWidget {
   final FocusNode txtSearchFocusNode;
   final MapController mapController;
-  final FMapState fMapState;
+  final HomeState fMapState;
 
   SearchField(
       {Key key, this.txtSearchFocusNode, this.mapController, this.fMapState})

@@ -15,7 +15,7 @@ class Map extends StatefulWidget {
   final List<LatLng> listPoint;
   final Color color;
   final FocusNode focusNode;
-  final FMapState fMapState;
+  final HomeState fMapState;
 
   Map(
       {this.mapController,
