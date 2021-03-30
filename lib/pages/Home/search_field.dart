@@ -1,5 +1,5 @@
 import 'package:emddibus/models/location_model.dart';
-import 'package:emddibus/pages/Home/fmap_screen.dart';
+import 'package:emddibus/pages/Home/home_screen.dart';
 import 'package:emddibus/services/http_search_location.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong/latlong.dart';

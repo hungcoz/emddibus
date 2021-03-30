@@ -1,4 +1,4 @@
-import 'package:emddibus/pages/Home/fmap_screen.dart';
+import 'package:emddibus/pages/Home/home_screen.dart';
 import 'package:emddibus/pages/Home/result_of_search_way.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -92,24 +92,27 @@ class _MapState extends State<Map> {
                           size: 30,
                           color: Colors.black,
                         ),
-                          backgroundColor: Colors.amber,
-                          heroTag: "search_route",
-                          onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => ResultSearch()));
-                            // if (checkVisibility == 0) {
-                            //   checkVisibility = 1;
-                            //   widget.fMapState.setState(() {
-                            //     widget.fMapState.isVisibleSearchLocation = false;
-                            //     widget.fMapState.isVisibleSearchWay = true;
-                            //   });
-                            // } else {
-                            //   checkVisibility = 0;
-                            //   widget.fMapState.setState(() {
-                            //     widget.fMapState.isVisibleSearchLocation = true;
-                            //     widget.fMapState.isVisibleSearchWay = false;
-                            //   });
-                            // }
-                          },
+                        backgroundColor: Colors.amber,
+                        heroTag: "search_route",
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ResultSearch()));
+                          // if (checkVisibility == 0) {
+                          //   checkVisibility = 1;
+                          //   widget.fMapState.setState(() {
+                          //     widget.fMapState.isVisibleSearchLocation = false;
+                          //     widget.fMapState.isVisibleSearchWay = true;
+                          //   });
+                          // } else {
+                          //   checkVisibility = 0;
+                          //   widget.fMapState.setState(() {
+                          //     widget.fMapState.isVisibleSearchLocation = true;
+                          //     widget.fMapState.isVisibleSearchWay = false;
+                          //   });
+                          // }
+                        },
                       ),
                       margin: EdgeInsets.only(bottom: 15),
                     ),
@@ -138,7 +141,11 @@ class _MapState extends State<Map> {
                       heroTag: "my_location",
                       onPressed: () {
                         {
-                          if (currentPosition != null) widget.mapController.move(LatLng(currentPosition.latitude, currentPosition.longitude), 16);
+                          if (currentPosition != null)
+                            widget.mapController.move(
+                                LatLng(currentPosition.latitude,
+                                    currentPosition.longitude),
+                                16);
                         }
                       },
                       backgroundColor: Colors.white,
