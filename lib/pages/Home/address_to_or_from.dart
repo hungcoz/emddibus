@@ -55,10 +55,12 @@ class AddressToOrFromState extends State<AddressToOrFrom> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return DefaultTabController(
+      initialIndex: 1,
       length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
+          centerTitle: true,
           bottom: TabBar(
             indicatorColor: Colors.black,
             tabs: [

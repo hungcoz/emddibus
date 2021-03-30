@@ -106,6 +106,7 @@ class BusInformationState extends State<BusInformation> {
             return Container(
               color: Colors.white,
               child: ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
                 itemCount: 1,
                 controller: controller,
                 itemBuilder: (BuildContext context, index) {
@@ -129,7 +130,7 @@ class BusInformationState extends State<BusInformation> {
                         trailing: OutlineButton(
                           onPressed: () {
                             widget.showBusPathState.scrollController.jumpTo(0.0);
-                            checkGoOrReturn();
+                            // checkGoOrReturn();
                           },
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -144,6 +145,7 @@ class BusInformationState extends State<BusInformation> {
                     ),
                     Container(
                       child: DefaultTabController(
+                        initialIndex: 1,
                         length: 3,
                         child: Column(children: [
                           Container(

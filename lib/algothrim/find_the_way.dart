@@ -86,7 +86,6 @@ class AStar {
     kiểm tra điểm bắt đầu với kết thúc có trùng nhau hay không
      */
     if (startPoint.stopId == goalPoint.stopId) {
-      print("Điểm đến là vị trí bắt đầu");
       return NO_VALID_PATH;
     } else {
       Node goal = new Node();
