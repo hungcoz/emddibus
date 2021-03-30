@@ -15,7 +15,7 @@ class _LoadingState extends State<Loading> {
     await getBusRouteData();
     await getStopPointData();
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => FMap()), (route) => false);
+        MaterialPageRoute(builder: (context) => Home()), (route) => false);
   }
 
   @override

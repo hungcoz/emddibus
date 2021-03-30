@@ -1,11 +1,6 @@
-import 'dart:collection';
-
 import 'package:emddibus/GGMap/geolocator_service.dart';
-import 'package:emddibus/algothrim/find_the_way.dart';
 import 'package:emddibus/constants.dart';
-import 'package:emddibus/models/stop_point_model.dart';
-import 'package:emddibus/pages/Home/address_to_or_from.dart';
-import 'package:emddibus/pages/Home/search_field.dart';
+import 'package:emddibus/models/location_model.dart';
 import 'package:emddibus/pages/Home/stop_point_marker.dart';
 import 'package:emddibus/pages/Map/map.dart';
 import 'package:emddibus/pages/SearchLocation/search_location_screen.dart';
@@ -15,23 +10,19 @@ import 'package:latlong/latlong.dart';
 
 import 'drawer.dart';
 
-class FMap extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  FMapState createState() => FMapState();
+  HomeState createState() => HomeState();
 }
 
-class FMapState extends State<FMap> {
+class HomeState extends State<Home> {
   MapController mapController = MapController();
   List<Marker> markers = [];
 
-  bool isVisibleSearchWay = false;
-  bool isVisibleSearchLocation = true;
-  String addressFrom = "Điểm bắt đầu";
-  String addressTo = "Điểm kết thúc";
-  StopPoint start;
-  StopPoint target;
-
   FocusNode _textSearchFocusNode = FocusNode();
+  TextEditingController searchController = TextEditingController();
+
+  LocationModel dataSearch;
 
   final geoService = GeolocatorService();
 
@@ -69,64 +60,85 @@ class FMapState extends State<FMap> {
           centerTitle: true,
         ),
         body: SafeArea(
-          child: Stack(children: [
-            // FutureProvider(
-            //   create: (context) => geoService.getInitialLocation(),
-            //   child: Consumer<Position>(builder: (context, position, widget) {
-            //     return (position != null) ? GGMap(initialPosition: position,) : Center(child: CircularProgressIndicator(),);
-            //   },),
-            // ),
+          child: Stack(
+            children: [
+              // FutureProvider(
+              //   create: (context) => geoService.getInitialLocation(),
+              //   child: Consumer<Position>(builder: (context, position, widget) {
+              //     return (position != null) ? GGMap(initialPosition: position,) : Center(child: CircularProgressIndicator(),);
+              //   },),
+              // ),
 
-            Map(
-              mapController: mapController,
-              markers: markers,
-              focusNode: _textSearchFocusNode,
-              fMapState: this,
-            ),
-
-            Visibility(
-              visible: isVisibleSearchLocation,
-              child:
-                  // SearchField(
-                  //   txtSearchFocusNode: _textSearchFocusNode,
-                  //   mapController: mapController,
-                  //   fMapState: this,
-                  // ),
-                  IconButton(
-                icon: Icon(
-                  Icons.search,
-                ),
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SearchLocation())),
+              Map(
+                mapController: mapController,
+                markers: markers,
+                focusNode: _textSearchFocusNode,
+                fMapState: this,
               ),
-            )
-          ]),
+              Positioned(
+                top: 10,
+                right: 15,
+                left: 15,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.white70,
+                    border: Border.all(color: Colors.grey[500], width: 2),
+                  ),
+                  child: Column(children: [
+                    TextField(
+                      style: TextStyle(fontSize: 18),
+                      controller: searchController,
+                      focusNode: _textSearchFocusNode,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                        hintText: 'Tìm kiếm địa điểm...',
+                        hintStyle: TextStyle(fontSize: 18),
+                        prefixIcon: Icon(Icons.search),
+                        suffixIcon:
+                            // searchController.text.isEmpty
+                            //     ? null
+                            //     :
+                            IconButton(
+                                icon: Icon(Icons.clear),
+                                onPressed: () {
+                                  searchController.text = '';
+                                  setState(() {
+                                    markers[markers.length - 2] = Marker();
+                                  });
+                                }),
+                      ),
+                      onTap: () async {
+                        _textSearchFocusNode.unfocus();
+                        dataSearch = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SearchLocation()));
+                        if (dataSearch != null) {
+                          mapController.move(
+                              LatLng(dataSearch.lat, dataSearch.long), 16);
+                          searchController.text = text(dataSearch);
+                          setState(() {
+                            markers[markers.length - 2] = Marker(
+                                anchorPos: AnchorPos.align(AnchorAlign.top),
+                                point: LatLng(dataSearch.lat, dataSearch.long),
+                                builder: (context) => Icon(
+                                      Icons.location_on,
+                                      color: Colors.red,
+                                      size: 50,
+                                    ));
+                          });
+                        }
+                      },
+                    ),
+                  ]),
+                ),
+              ),
+            ],
+          ),
         ),
-        // centerTitle: true,
-      ),
-    );
-  }
-}
-
-class CircularButton extends StatelessWidget {
-  final double width, height;
-  final Color color;
-  final Icon icon;
-  final Function onClick;
-
-  CircularButton(
-      {this.width, this.height, this.color, this.icon, this.onClick});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-      width: width,
-      height: height,
-      child: IconButton(
-        icon: icon,
-        enableFeedback: true,
-        onPressed: onClick,
       ),
     );
   }
