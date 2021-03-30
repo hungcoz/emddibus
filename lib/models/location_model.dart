@@ -15,40 +15,54 @@ class LocationModel {
   String countryCode;
   double lat, long;
 
-  LocationModel({this.building, this.road, this.village, this.town,
-    this.suburb, this.county,this.state, this.postCode, this.countryCode, this.lat, this.long});
+  LocationModel(
+      {this.building,
+      this.road,
+      this.village,
+      this.town,
+      this.suburb,
+      this.county,
+      this.state,
+      this.postCode,
+      this.countryCode,
+      this.lat,
+      this.long});
 
   factory LocationModel.fromJson(dynamic json) => LocationModel(
-      building: json['address']['building'] != null ? json['address']['building'] : null,
+      building: json['address']['building'] != null
+          ? json['address']['building']
+          : null,
       road: json['address']['road'] != null ? json['address']['road'] : null,
-      village: json['address']['village'] != null ? json['address']['village'] : null,
+      village: json['address']['village'] != null
+          ? json['address']['village']
+          : null,
       town: json['address']['town'] != null ? json['address']['town'] : null,
-      suburb: json['address']['suburb'] != null ? json['address']['suburb'] : null,
-      county: json['address']['county'] != null ? json['address']['county'] : null,
+      suburb:
+          json['address']['suburb'] != null ? json['address']['suburb'] : null,
+      county:
+          json['address']['county'] != null ? json['address']['county'] : null,
       state: json['address']['state'] != null ? json['address']['state'] : null,
       postCode: json['address']['postcode'],
       countryCode: json['address']['country_code'],
       lat: double.parse(json['lat']),
-      long: double.parse(json['lon'])
-  );
+      long: double.parse(json['lon']));
 }
+
 class ListLocation {
   List<LocationModel> listLocation;
 
-  factory ListLocation.fromJson(dynamic json){
+  factory ListLocation.fromJson(dynamic json) {
     var list = json as List;
     List<LocationModel> _listLocation =
         list.map((e) => LocationModel.fromJson(e)).toList();
     List<LocationModel> _listLocationTmp = [];
     _listLocation.forEach((element) {
-      if(element.countryCode.contains('vn')){
+      if (element.countryCode.contains('vn')) {
         // element.postCode = convertPostCode(int.parse(element.postCode));
         _listLocationTmp.add(element);
       }
     });
-    return ListLocation(
-      listLocation: _listLocationTmp
-    );
+    return ListLocation(listLocation: _listLocationTmp);
   }
 
   ListLocation({this.listLocation});
@@ -56,3 +70,37 @@ class ListLocation {
 
 ListLocation listLocationFromJson(String str) =>
     ListLocation.fromJson(json.decode(str));
+
+String textName(LocationModel locationModel) {
+  String text = "";
+  if (locationModel.building != null)
+    text = locationModel.building;
+  else if (locationModel.road != null)
+    text = locationModel.road;
+  else if (locationModel.village != null)
+    text = locationModel.village;
+  else if (locationModel.town != null)
+    text = locationModel.town;
+  else if (locationModel.suburb != null)
+    text = locationModel.suburb;
+  else if (locationModel.county != null)
+    text = locationModel.county;
+  else if (locationModel.postCode != null)
+    text = locationModel.postCode;
+  else if (locationModel.state != null) text = locationModel.state;
+  return text;
+}
+
+String text(LocationModel locationModel) {
+  String text = "";
+  if (locationModel.building != null)
+    text = text + locationModel.building + ', ';
+  if (locationModel.road != null) text = text + locationModel.road + ', ';
+  if (locationModel.village != null) text = text + locationModel.village + ', ';
+  if (locationModel.town != null) text = text + locationModel.town + ', ';
+  if (locationModel.suburb != null) text = text + locationModel.suburb + ', ';
+  if (locationModel.county != null) text = text + locationModel.county + ', ';
+  if (locationModel.postCode != null) text = text + locationModel.postCode;
+  if (locationModel.state != null) text = text + locationModel.state;
+  return text;
+}
