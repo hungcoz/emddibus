@@ -47,97 +47,94 @@ class HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        drawer: Menu(),
-        appBar: AppBar(
-          title: Image.asset(
-            'assets/EMDDI_2.png',
-            scale: 2,
-          ),
-          centerTitle: true,
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      drawer: Menu(),
+      appBar: AppBar(
+        title: Image.asset(
+          'assets/EMDDI_2.png',
+          scale: 2,
         ),
-        body: SafeArea(
-          child: Stack(
-            children: [
-              // FutureProvider(
-              //   create: (context) => geoService.getInitialLocation(),
-              //   child: Consumer<Position>(builder: (context, position, widget) {
-              //     return (position != null) ? GGMap(initialPosition: position,) : Center(child: CircularProgressIndicator(),);
-              //   },),
-              // ),
+        centerTitle: true,
+      ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            // FutureProvider(
+            //   create: (context) => geoService.getInitialLocation(),
+            //   child: Consumer<Position>(builder: (context, position, widget) {
+            //     return (position != null) ? GGMap(initialPosition: position,) : Center(child: CircularProgressIndicator(),);
+            //   },),
+            // ),
 
-              Map(
-                mapController: mapController,
-                markers: markers,
-                focusNode: _textSearchFocusNode,
-                fMapState: this,
-              ),
-              Positioned(
-                top: 10,
-                right: 15,
-                left: 15,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.white70,
-                    border: Border.all(color: Colors.grey[500], width: 2),
-                  ),
-                  child: Column(children: [
-                    TextField(
-                      style: TextStyle(fontSize: 18),
-                      controller: searchController,
-                      focusNode: _textSearchFocusNode,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                        hintText: 'Tìm kiếm địa điểm...',
-                        hintStyle: TextStyle(fontSize: 18),
-                        prefixIcon: Icon(Icons.search),
-                        suffixIcon:
-                            // searchController.text.isEmpty
-                            //     ? null
-                            //     :
-                            IconButton(
-                                icon: Icon(Icons.clear),
-                                onPressed: () {
-                                  searchController.text = '';
-                                  setState(() {
-                                    markers[markers.length - 2] = Marker();
-                                  });
-                                }),
-                      ),
-                      onTap: () async {
-                        _textSearchFocusNode.unfocus();
-                        dataSearch = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SearchLocation()));
-                        if (dataSearch != null) {
-                          mapController.move(
-                              LatLng(dataSearch.lat, dataSearch.long), 16);
-                          searchController.text = text(dataSearch);
-                          setState(() {
-                            markers[markers.length - 2] = Marker(
-                                anchorPos: AnchorPos.align(AnchorAlign.top),
-                                point: LatLng(dataSearch.lat, dataSearch.long),
-                                builder: (context) => Icon(
-                                      Icons.location_on,
-                                      color: Colors.red,
-                                      size: 50,
-                                    ));
-                          });
-                        }
-                      },
-                    ),
-                  ]),
+            Map(
+              mapController: mapController,
+              markers: markers,
+              focusNode: _textSearchFocusNode,
+              fMapState: this,
+            ),
+            Positioned(
+              top: 10,
+              right: 15,
+              left: 15,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: Colors.white70,
+                  border: Border.all(color: Colors.grey[500], width: 2),
                 ),
+                child: Column(children: [
+                  TextField(
+                    style: TextStyle(fontSize: 18),
+                    controller: searchController,
+                    focusNode: _textSearchFocusNode,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                      hintText: 'Tìm kiếm địa điểm...',
+                      hintStyle: TextStyle(fontSize: 18),
+                      prefixIcon: Icon(Icons.search),
+                      suffixIcon:
+                          // searchController.text.isEmpty
+                          //     ? null
+                          //     :
+                          IconButton(
+                              icon: Icon(Icons.clear),
+                              onPressed: () {
+                                searchController.text = '';
+                                setState(() {
+                                  markers[markers.length - 2] = Marker();
+                                });
+                              }),
+                    ),
+                    onTap: () async {
+                      _textSearchFocusNode.unfocus();
+                      dataSearch = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SearchLocation()));
+                      if (dataSearch != null) {
+                        mapController.move(
+                            LatLng(dataSearch.lat, dataSearch.long), 16);
+                        searchController.text = text(dataSearch);
+                        setState(() {
+                          markers[markers.length - 2] = Marker(
+                              anchorPos: AnchorPos.align(AnchorAlign.top),
+                              point: LatLng(dataSearch.lat, dataSearch.long),
+                              builder: (context) => Icon(
+                                    Icons.location_on,
+                                    color: Colors.red,
+                                    size: 50,
+                                  ));
+                        });
+                      }
+                    },
+                  ),
+                ]),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

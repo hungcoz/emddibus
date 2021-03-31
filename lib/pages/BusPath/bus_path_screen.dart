@@ -69,8 +69,8 @@ class ShowBusPathState extends State<ShowBusPath>
         if (element.stopId == point) {
           listStopPointRoute.add(element);
           markers.add(Marker(
-              width: 60,
-              height: 60,
+              width: 50,
+              height: 50,
               point: LatLng(element.latitude, element.longitude),
               builder: (context) => _buildMarker(element)));
         }
@@ -108,16 +108,16 @@ class ShowBusPathState extends State<ShowBusPath>
           children: [
             Container(
               height: contextSize - fabPosition,
-              // child: Map(
-              //   mapController: mapController,
-              //   initialCamera: LatLng(listStopPointRoute[0].latitude,
-              //       listStopPointRoute[0].longitude),
-              //   initialZoom: 16,
-              //   markers: markers,
-              //   color: color,
-              //   listPoint: listPoint,
-              // ),
-              child: GGMap(initialPosition: Position(latitude: currentPosition.latitude, longitude: currentPosition.longitude),),
+              child: Map(
+                mapController: mapController,
+                initialCamera: LatLng(listStopPointRoute[0].latitude,
+                    listStopPointRoute[0].longitude),
+                initialZoom: 16,
+                markers: markers,
+                color: color,
+                listPoint: listPoint,
+              ),
+              // child: GGMap(initialPosition: Position(latitude: currentPosition.latitude, longitude: currentPosition.longitude),),
             ),
             BusInformation(
               showBusPathState: this,
