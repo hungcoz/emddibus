@@ -32,12 +32,12 @@ class ResultSearchState extends State<ResultSearch> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amber,
+        // backgroundColor: Colors.amber,
         title: Text("Tìm đường"),
         centerTitle: true,
       ),
       body: Container(
-        color: Colors.amber,
+        color: Colors.grey[200],
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -45,7 +45,7 @@ class ResultSearchState extends State<ResultSearch> {
               margin: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: Colors.grey,
+                color: Colors.amber,
               ),
               child: SearchWay(
                 resultSearchState: this,
@@ -129,7 +129,7 @@ class ResultSearchState extends State<ResultSearch> {
                     }
                   },
                   minWidth: double.infinity,
-                  color: Colors.white,
+                  color: Colors.amber,
                   highlightColor: Colors.amber,
                   padding: EdgeInsets.only(top: 15, bottom: 15),
                   shape: RoundedRectangleBorder(
@@ -194,83 +194,88 @@ class ResultSearchState extends State<ResultSearch> {
   }
 
   Widget _buildCard(List<List<int>> allList, int i) {
-    return Card(
-      // margin: EdgeInsets.only(left: 10, right: 10),
-      shadowColor: Colors.grey,
-      child: Container(
-        margin: EdgeInsets.only(left: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: allList[i].length,
-                itemBuilder: (context, index) => Container(
-                  margin: EdgeInsets.only(top: 10, bottom: 5),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.amber),
-                  child: Container(
-                    padding: EdgeInsets.only(left: 5, right: 5),
-                    child: Row(children: [
-                      Icon(
-                        Icons.directions_bus,
+    return GestureDetector(
+      onTap: (){
+
+      },
+      child: Card(
+        margin: EdgeInsets.only(left: 10, bottom: 10, right: 10),
+        shadowColor: Colors.amber,
+        child: Container(
+          margin: EdgeInsets.only(left: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemCount: allList[i].length,
+                  itemBuilder: (context, index) => Container(
+                    margin: EdgeInsets.only(top: 10, bottom: 5),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.amber),
+                    child: Container(
+                      padding: EdgeInsets.only(left: 5, right: 5),
+                      child: Row(children: [
+                        Icon(
+                          Icons.directions_bus,
+                          size: 20,
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            allList[i][index].toString(),
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      ]),
+                    ),
+                  ),
+                  separatorBuilder: (context, index) => Container(
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Icons.arrow_forward,
                         size: 20,
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          allList[i][index].toString(),
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
-                        ),
-                      )
-                    ]),
-                  ),
+                      )),
                 ),
-                separatorBuilder: (context, index) => Container(
-                    alignment: Alignment.center,
-                    child: Icon(
-                      Icons.arrow_forward,
-                      size: 20,
-                    )),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.accessibility,
-                        color: Colors.black54,
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(right: 15),
-                        child: Text(
-                          "200 m",
-                          style: TextStyle(color: Colors.black54),
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                child: Row(
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.accessibility,
+                          color: Colors.black54,
                         ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.directions_bus, color: Colors.black54),
-                      Container(
-                        child: Text("6 km",
-                            style: TextStyle(color: Colors.black54)),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
+                        Container(
+                          margin: EdgeInsets.only(right: 15),
+                          child: Text(
+                            "200 m",
+                            style: TextStyle(color: Colors.black54),
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.directions_bus, color: Colors.black54),
+                        Container(
+                          child: Text("6 km",
+                              style: TextStyle(color: Colors.black54)),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

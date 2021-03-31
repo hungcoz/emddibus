@@ -35,10 +35,13 @@ class SearchWayState extends State<SearchWay> {
                     Icons.location_on,
                     color: Colors.green,
                   ),
-                  title: Text(
-                    widget.resultSearchState.addressFrom,
-                    style: TextStyle(fontSize: 15),
-                    overflow: TextOverflow.ellipsis,
+                  title: Container(
+                    // origin: Offset(0, 10.0),
+                    child: Text(
+                      widget.resultSearchState.addressFrom,
+                      style: TextStyle(fontSize: 15),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   dense: true,
                   onTap: () async {
