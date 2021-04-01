@@ -22,3 +22,5 @@ int TRACKING_REQUEST = 1;
 List<BusPosition> BUS_POSITION;
 
 List<LocationModel> SEARCH_HISTORY;
+
+double CONTEXT_SIZE = 0;

@@ -4,46 +4,15 @@ import 'package:emddibus/pages/Home/convert_post_code.dart';
 import 'package:flutter/cupertino.dart';
 
 class LocationModel {
-  String building;
-  String road;
-  String village;
-  String town;
-  String suburb;
-  String county;
-  String state;
-  String postCode;
-  String countryCode;
-  double lat, long;
+  final String displayName;
+  final double lat;
+  final double long;
 
   LocationModel(
-      {this.building,
-      this.road,
-      this.village,
-      this.town,
-      this.suburb,
-      this.county,
-      this.state,
-      this.postCode,
-      this.countryCode,
-      this.lat,
-      this.long});
+      {this.displayName, this.lat, this.long});
 
   factory LocationModel.fromJson(dynamic json) => LocationModel(
-      building: json['address']['building'] != null
-          ? json['address']['building']
-          : null,
-      road: json['address']['road'] != null ? json['address']['road'] : null,
-      village: json['address']['village'] != null
-          ? json['address']['village']
-          : null,
-      town: json['address']['town'] != null ? json['address']['town'] : null,
-      suburb:
-          json['address']['suburb'] != null ? json['address']['suburb'] : null,
-      county:
-          json['address']['county'] != null ? json['address']['county'] : null,
-      state: json['address']['state'] != null ? json['address']['state'] : null,
-      postCode: json['address']['postcode'],
-      countryCode: json['address']['country_code'],
+      displayName: json['display_name'],
       lat: double.parse(json['lat']),
       long: double.parse(json['lon']));
 }
@@ -55,14 +24,7 @@ class ListLocation {
     var list = json as List;
     List<LocationModel> _listLocation =
         list.map((e) => LocationModel.fromJson(e)).toList();
-    List<LocationModel> _listLocationTmp = [];
-    _listLocation.forEach((element) {
-      if (element.countryCode.contains('vn')) {
-        // element.postCode = convertPostCode(int.parse(element.postCode));
-        _listLocationTmp.add(element);
-      }
-    });
-    return ListLocation(listLocation: _listLocationTmp);
+    return ListLocation(listLocation: _listLocation);
   }
 
   ListLocation({this.listLocation});
@@ -73,34 +35,27 @@ ListLocation listLocationFromJson(String str) =>
 
 String textName(LocationModel locationModel) {
   String text = "";
-  if (locationModel.building != null)
-    text = locationModel.building;
-  else if (locationModel.road != null)
-    text = locationModel.road;
-  else if (locationModel.village != null)
-    text = locationModel.village;
-  else if (locationModel.town != null)
-    text = locationModel.town;
-  else if (locationModel.suburb != null)
-    text = locationModel.suburb;
-  else if (locationModel.county != null)
-    text = locationModel.county;
-  else if (locationModel.postCode != null)
-    text = locationModel.postCode;
-  else if (locationModel.state != null) text = locationModel.state;
+  List<String> list = locationModel.displayName.split(",");
+  text = list[0];
   return text;
 }
 
 String text(LocationModel locationModel) {
   String text = "";
-  if (locationModel.building != null)
-    text = text + locationModel.building + ', ';
-  if (locationModel.road != null) text = text + locationModel.road + ', ';
-  if (locationModel.village != null) text = text + locationModel.village + ', ';
-  if (locationModel.town != null) text = text + locationModel.town + ', ';
-  if (locationModel.suburb != null) text = text + locationModel.suburb + ', ';
-  if (locationModel.county != null) text = text + locationModel.county + ', ';
-  if (locationModel.postCode != null) text = text + locationModel.postCode;
-  if (locationModel.state != null) text = text + locationModel.state;
+  List<String> number = ['0','1','2','3','4','5','6','7','8','9'];
+  List<String> list = locationModel.displayName.split(",");
+  List<String> listTmp = [];
+  list.forEach((element) {
+    int count = 0;
+    number.forEach((e) { 
+      if (element.contains(e)) count++;
+    });
+    if (count == 0)
+      listTmp.add(element);
+  });
+  for (int i=0; i < listTmp.length; i++) {
+    if (i < listTmp.length-1) text = text + listTmp[i] + ', ';
+    else if (i == listTmp.length - 1) text += listTmp[i];
+  }
   return text;
 }

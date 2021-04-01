@@ -34,6 +34,7 @@ class BusInformationState extends State<BusInformation> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.showBusPathState.setState(() {
         widget.showBusPathState.contextSize = context.size.height;
+        CONTEXT_SIZE = widget.showBusPathState.contextSize;
         widget.showBusPathState.fabPosition = context.size.height * 0.5;
       });
     });
@@ -106,7 +107,7 @@ class BusInformationState extends State<BusInformation> {
             return Container(
               color: Colors.white,
               child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
+                // physics: NeverScrollableScrollPhysics(),
                 itemCount: 1,
                 controller: controller,
                 itemBuilder: (BuildContext context, index) {
@@ -130,7 +131,7 @@ class BusInformationState extends State<BusInformation> {
                         trailing: OutlineButton(
                           onPressed: () {
                             widget.showBusPathState.scrollController.jumpTo(0.0);
-                            // checkGoOrReturn();
+                            checkGoOrReturn();
                           },
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),

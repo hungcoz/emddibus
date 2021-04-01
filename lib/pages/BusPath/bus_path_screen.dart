@@ -108,16 +108,16 @@ class ShowBusPathState extends State<ShowBusPath>
           children: [
             Container(
               height: contextSize - fabPosition,
-              // child: Map(
-              //   mapController: mapController,
-              //   initialCamera: LatLng(listStopPointRoute[0].latitude,
-              //       listStopPointRoute[0].longitude),
-              //   initialZoom: 16,
-              //   markers: markers,
-              //   color: color,
-              //   listPoint: listPoint,
-              // ),
-              child: GGMap(initialPosition: Position(latitude: currentPosition.latitude, longitude: currentPosition.longitude),),
+              child: Map(
+                mapController: mapController,
+                initialCamera: LatLng(listStopPointRoute[0].latitude,
+                    listStopPointRoute[0].longitude),
+                initialZoom: 16,
+                markers: markers,
+                color: color,
+                listPoint: listPoint,
+              ),
+              // child: GGMap(initialPosition: Position(latitude: currentPosition.latitude, longitude: currentPosition.longitude),),
             ),
             BusInformation(
               showBusPathState: this,

@@ -6,18 +6,18 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GGMap extends StatefulWidget {
   final Position initialPosition;
+  final Completer<GoogleMapController> controller;
+  final List<Marker> listMarker;
 
-  GGMap({this.initialPosition});
+  GGMap({this.initialPosition, this.controller, this.listMarker});
 
   @override
   _GGMapState createState() => _GGMapState();
 }
 
 class _GGMapState extends State<GGMap> {
-  Completer<GoogleMapController> _controller = Completer();
-
   Future<void> _centerScreen() async {
-    final GoogleMapController mapController = await _controller.future;
+    final GoogleMapController mapController = await widget.controller.future;
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: LatLng(
           widget.initialPosition.latitude, widget.initialPosition.longitude),
@@ -38,9 +38,10 @@ class _GGMapState extends State<GGMap> {
         zoomControlsEnabled: false,
         onMapCreated: (GoogleMapController controller) {
           setState(() {
-            _controller.complete(controller);
+            widget.controller.complete(controller);
           });
         },
+        markers: (widget.listMarker.isNotEmpty) ? Set<Marker>.of(widget.listMarker) : Set<Marker>(),
         // padding: EdgeInsets.only(top: 150),
       ),
       floatingActionButton: FloatingActionButton(

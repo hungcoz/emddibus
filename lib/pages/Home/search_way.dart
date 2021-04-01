@@ -2,6 +2,7 @@ import 'package:emddibus/models/stop_point_model.dart';
 import 'package:emddibus/pages/Home/result_of_search_way.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'address_to_or_from.dart';
 
@@ -50,11 +51,23 @@ class SearchWayState extends State<SearchWay> {
                         MaterialPageRoute(
                             builder: (context) => AddressToOrFrom(
                                 title: "Chọn điểm bắt đầu")));
-                    setState(() {
+                    widget.resultSearchState.setState(() {
                       if (widget.resultSearchState.start != null) {
                         widget.resultSearchState.tmpStart = widget.resultSearchState.start;
                         widget.resultSearchState.addressFrom = widget.resultSearchState.tmpStart.name;
-
+                        widget.resultSearchState.mapController.animateCamera(
+                            CameraUpdate.newCameraPosition(CameraPosition(
+                              zoom: 16,
+                                target: LatLng(widget.resultSearchState.tmpStart.latitude, widget.resultSearchState.tmpStart.longitude)
+                            ))
+                        );
+                        widget.resultSearchState.listMarker.add(
+                            Marker(
+                                markerId: MarkerId("${widget.resultSearchState.tmpStart.name}"),
+                                position: LatLng(widget.resultSearchState.tmpStart.latitude, widget.resultSearchState.tmpStart.longitude),
+                                icon: BitmapDescriptor.defaultMarker,
+                            )
+                        );
                       }
                     });
                   },
@@ -80,10 +93,23 @@ class SearchWayState extends State<SearchWay> {
                         MaterialPageRoute(
                             builder: (context) => AddressToOrFrom(
                                 title: "Chọn điểm kết thúc")));
-                    setState(() {
+                    widget.resultSearchState.setState(() {
                       if (widget.resultSearchState.target != null) {
                         widget.resultSearchState.tmpTarget = widget.resultSearchState.target;
                         widget.resultSearchState.addressTo = widget.resultSearchState.tmpTarget.name;
+                        widget.resultSearchState.mapController.animateCamera(
+                            CameraUpdate.newCameraPosition(CameraPosition(
+                                zoom: 16,
+                                target: LatLng(widget.resultSearchState.tmpTarget.latitude, widget.resultSearchState.tmpTarget.longitude)
+                            ))
+                        );
+                        widget.resultSearchState.listMarker.add(
+                            Marker(
+                              markerId: MarkerId('${widget.resultSearchState.tmpTarget.name}'),
+                              position: LatLng(widget.resultSearchState.tmpTarget.latitude, widget.resultSearchState.tmpTarget.longitude),
+                              icon: BitmapDescriptor.defaultMarker,
+                            )
+                        );
                       }
                     });
                   },
