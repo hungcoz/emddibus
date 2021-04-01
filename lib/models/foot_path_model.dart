@@ -1,28 +1,29 @@
 import 'dart:convert';
+import 'package:latlong/latlong.dart';
 
-class Coordinate {
-  double latitude;
-  double longitude;
-
-  Coordinate({this.latitude, this.longitude});
-
-  factory Coordinate.fromList(List<double> list) => Coordinate(
-        latitude: list[1],
-        longitude: list[0],
-      );
-}
+// class Coordinate {
+//   double latitude;
+//   double longitude;
+//
+//   Coordinate({this.latitude, this.longitude});
+//
+//   factory Coordinate.fromList(List<double> list) => Coordinate(
+//         latitude: list[1],
+//         longitude: list[0],
+//       );
+// }
 
 class Geometry {
-  List<Coordinate> coordinates;
+  List<LatLng> coordinates;
 
   Geometry({this.coordinates});
 
   factory Geometry.fromJson(dynamic json) {
-    List<Coordinate> _coordinates;
+    List<LatLng> _coordinates = [];
     List<List<double>> listCoor = List<List<double>>.from(json["coordinates"]
         .map((x) => List<double>.from(x.map((x) => x.toDouble()))));
     listCoor.forEach((list) {
-      _coordinates.add(Coordinate.fromList(list));
+      _coordinates.add(LatLng(list[1], list[0]));
     });
     return Geometry(coordinates: _coordinates);
   }

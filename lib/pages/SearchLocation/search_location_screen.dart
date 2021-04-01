@@ -105,18 +105,10 @@ class _SearchLocationState extends State<SearchLocation> {
                         shrinkWrap: true,
                       ),
                     )
-                  : Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          top: BorderSide(color: Colors.grey, width: 1),
-                        ),
-                      ),
-                      height: 30,
-                      child: Center(
-                        child: Text(
-                          'Không tìm thấy kết quả',
-                          style: TextStyle(fontStyle: FontStyle.italic),
-                        ),
+                  : Center(
+                      child: Text(
+                        'Không tìm thấy kết quả',
+                        style: TextStyle(fontStyle: FontStyle.italic),
                       ),
                     ),
             );
@@ -136,7 +128,6 @@ class _SearchLocationState extends State<SearchLocation> {
       child: ListTile(
         leading: Icon(Icons.location_on),
         onTap: () {
-          SEARCH_HISTORY.add(location);
           Navigator.pop(context, location);
         },
         title: Text(
@@ -151,24 +142,26 @@ class _SearchLocationState extends State<SearchLocation> {
   }
 
   Widget listHistory() {
+    List<LocationModel> history = [];
+    history.addAll(SEARCH_HISTORY.reversed);
     return (SEARCH_HISTORY.length == null)
         ? Container()
         : ListView.builder(
-            itemCount: SEARCH_HISTORY.length,
+            itemCount: history.length,
             itemBuilder: (context, index) {
+              LocationModel location = history[index];
               return Card(
                 child: ListTile(
                   leading: Icon(Icons.history),
                   onTap: () {
-                    SEARCH_HISTORY.add(SEARCH_HISTORY[index]);
-                    Navigator.pop(context, SEARCH_HISTORY[index]);
+                    Navigator.pop(context, location);
                   },
                   title: Text(
-                    textName(SEARCH_HISTORY[index]),
+                    textName(location),
                     style: TextStyle(fontSize: 18),
                   ),
                   subtitle: Text(
-                    text(SEARCH_HISTORY[index]),
+                    text(location),
                   ),
                 ),
               );
