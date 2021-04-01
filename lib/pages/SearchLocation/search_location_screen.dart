@@ -151,26 +151,28 @@ class _SearchLocationState extends State<SearchLocation> {
   }
 
   Widget listHistory() {
-    return ListView.builder(
-      itemCount: SEARCH_HISTORY.length,
-      itemBuilder: (context, index) {
-        return Card(
-          child: ListTile(
-            leading: Icon(Icons.history),
-            onTap: () {
-              SEARCH_HISTORY.add(SEARCH_HISTORY[index]);
-              Navigator.pop(context, SEARCH_HISTORY[index]);
+    return (SEARCH_HISTORY.length == null)
+        ? Container()
+        : ListView.builder(
+            itemCount: SEARCH_HISTORY.length,
+            itemBuilder: (context, index) {
+              return Card(
+                child: ListTile(
+                  leading: Icon(Icons.history),
+                  onTap: () {
+                    SEARCH_HISTORY.add(SEARCH_HISTORY[index]);
+                    Navigator.pop(context, SEARCH_HISTORY[index]);
+                  },
+                  title: Text(
+                    textName(SEARCH_HISTORY[index]),
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  subtitle: Text(
+                    text(SEARCH_HISTORY[index]),
+                  ),
+                ),
+              );
             },
-            title: Text(
-              textName(SEARCH_HISTORY[index]),
-              style: TextStyle(fontSize: 18),
-            ),
-            subtitle: Text(
-              text(SEARCH_HISTORY[index]),
-            ),
-          ),
-        );
-      },
-    );
+          );
   }
 }

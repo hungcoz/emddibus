@@ -1,7 +1,7 @@
-import 'package:emddibus/GGMap/geolocator_service.dart';
-import 'package:emddibus/GGMap/ggmap.dart';
+import 'dart:core';
 
-// import 'package:emddibus/GGMap/ggmap.dart';
+import 'package:emddibus/GGMap/geolocator_service.dart';
+
 import 'package:emddibus/models/bus_path_model.dart';
 import 'package:emddibus/models/bus_route_model.dart';
 import 'package:emddibus/models/stop_point_model.dart';
@@ -13,12 +13,7 @@ import 'package:emddibus/services/http_bus_position.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:geolocator/geolocator.dart';
-
-// import 'package:flutter_map_location/flutter_map_location.dart';
-// import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
-// import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 
@@ -69,8 +64,8 @@ class ShowBusPathState extends State<ShowBusPath>
         if (element.stopId == point) {
           listStopPointRoute.add(element);
           markers.add(Marker(
-              width: 60,
-              height: 60,
+              width: 50,
+              height: 50,
               point: LatLng(element.latitude, element.longitude),
               builder: (context) => _buildMarker(element)));
         }

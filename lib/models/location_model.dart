@@ -1,8 +1,5 @@
 import 'dart:convert';
 
-import 'package:emddibus/pages/Home/convert_post_code.dart';
-import 'package:flutter/cupertino.dart';
-
 class LocationModel {
   final String displayName;
   final double lat;
@@ -53,9 +50,9 @@ String text(LocationModel locationModel) {
     if (count == 0)
       listTmp.add(element);
   });
-  for (int i=0; i < listTmp.length; i++) {
-    if (i < listTmp.length-1) text = text + listTmp[i] + ', ';
-    else if (i == listTmp.length - 1) text += listTmp[i];
+  for (int i=0; i < listTmp.length - 1; i++) {
+    if (i < listTmp.length-2) text = text + listTmp[i] + ', ';
+    else if (i == listTmp.length - 2) text += listTmp[i];
   }
   return text;
 }

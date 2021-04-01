@@ -21,6 +21,5 @@ int CHECK_UP_DOWN = 0;
 int TRACKING_REQUEST = 1;
 List<BusPosition> BUS_POSITION;
 
-List<LocationModel> SEARCH_HISTORY;
-
 double CONTEXT_SIZE = 0;
+List<LocationModel> SEARCH_HISTORY = [];
