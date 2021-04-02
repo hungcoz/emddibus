@@ -1,3 +1,4 @@
+import 'package:emddibus/constants.dart';
 import 'package:emddibus/pages/Home/home_screen.dart';
 import 'package:emddibus/services/http_stop_point.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,6 +27,8 @@ class _LoadingState extends State<Loading> {
 
   @override
   Widget build(BuildContext context) {
+    CONTEXT_SIZE = MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top;
+    print(CONTEXT_SIZE);
     return Scaffold(
       backgroundColor: Color(0xff1e1e1e),
       body: Center(

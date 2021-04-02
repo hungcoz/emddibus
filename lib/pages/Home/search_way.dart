@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../constants.dart';
 import 'address_to_or_from.dart';
 
 class SearchWay extends StatefulWidget {
@@ -19,6 +20,11 @@ class SearchWay extends StatefulWidget {
 class SearchWayState extends State<SearchWay> {
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Row(
@@ -29,7 +35,7 @@ class SearchWayState extends State<SearchWay> {
           child: Column(
             children: [
               Card(
-                shadowColor: Colors.grey,
+                shadowColor: Colors.amber,
                 margin: EdgeInsets.only(top: 5, left: 5),
                 child: ListTile(
                   leading: Icon(
@@ -74,7 +80,7 @@ class SearchWayState extends State<SearchWay> {
                 ),
               ),
               Card(
-                shadowColor: Colors.grey,
+                shadowColor: Colors.amber,
                 margin: EdgeInsets.only(top: 5, left: 5, bottom: 5),
                 child: ListTile(
                   leading: Icon(
@@ -125,7 +131,7 @@ class SearchWayState extends State<SearchWay> {
               padding: EdgeInsets.all(0),
               icon: Icon(
                 Icons.swap_vert,
-                color: Colors.white,
+                color: Colors.amber,
                 size: 40,
               ),
               onPressed: () {

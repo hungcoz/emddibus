@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:emddibus/constants.dart';
 import 'package:emddibus/models/bus_route_model.dart';
 import 'package:emddibus/pages/BusPath/bus_path_screen.dart';
@@ -31,13 +33,17 @@ class BusInformationState extends State<BusInformation> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.showBusPathState.setState(() {
-        widget.showBusPathState.contextSize = context.size.height;
-        CONTEXT_SIZE = widget.showBusPathState.contextSize;
-        widget.showBusPathState.fabPosition = context.size.height * 0.5;
-      });
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   widget.showBusPathState.setState(() {
+    //     widget.showBusPathState.contextSize = MediaQuery.of(context).size.height;
+    //     CONTEXT_SIZE = MediaQuery.of(context).size.height;
+    //     widget.showBusPathState.fabPosition = context.size.height * 0.5;
+    //     widget.showBusPathState.height = CONTEXT_SIZE;
+    //     print(MediaQuery.of(context).size.height);
+    //     widget.showBusPathState.two = CONTEXT_SIZE*0.5;
+    //     widget.showBusPathState.twoFixed = CONTEXT_SIZE;
+    //   });
+    // });
 
     super.initState();
   }
@@ -82,135 +88,250 @@ class BusInformationState extends State<BusInformation> {
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<DraggableScrollableNotification>(
-      onNotification: (notification) {
-        widget.showBusPathState.setState(() {
-          widget.showBusPathState.widgetHeight = context.size.height;
-          widget.showBusPathState.dragScrollSheetExtent = notification.extent;
-          widget.showBusPathState.fabPosition =
-              widget.showBusPathState.widgetHeight *
-                  widget.showBusPathState.dragScrollSheetExtent;
-          if (notification.extent >= _initialChildSize * 0.5) {
-            _icon = Icons.arrow_downward_outlined;
-          } else if (notification.extent < _initialChildSize * 0.5) {
-            _icon = Icons.arrow_upward_outlined;
-          }
-          widget.showBusPathState.animationController.forward();
-        });
-        return;
+    // return GestureDetector(
+    //   onTap: _toggleBottom,
+    //   child: NotificationListener<DraggableScrollableNotification>(
+    //     onNotification: (notification) {
+    //       widget.showBusPathState.setState(() {
+    //         widget.showBusPathState.widgetHeight = context.size.height;
+    //         widget.showBusPathState.dragScrollSheetExtent = notification.extent;
+    //         widget.showBusPathState.fabPosition =
+    //             widget.showBusPathState.widgetHeight *
+    //                 widget.showBusPathState.dragScrollSheetExtent;
+    //         if (notification.extent >= _initialChildSize * 0.5) {
+    //           _icon = Icons.arrow_downward_outlined;
+    //         } else if (notification.extent < _initialChildSize * 0.5) {
+    //           _icon = Icons.arrow_upward_outlined;
+    //         }
+    //         widget.showBusPathState.animationController.forward();
+    //       });
+    //       return;
+    //     },
+    //     child: DraggableScrollableSheet(
+    //         initialChildSize: _initialChildSize,
+    //         minChildSize: _minChildSize,
+    //         maxChildSize: _maxChildSize,
+    //         builder: (context, controller) {
+    //           return Container(
+    //             color: Colors.white,
+    //             child: ListView.builder(
+    //               // physics: NeverScrollableScrollPhysics(),
+    //               itemCount: 1,
+    //               controller: controller,
+    //               itemBuilder: (BuildContext context, index) {
+    //                 return Column(children: [
+    //                   Container(
+    //                     height: widget.showBusPathState.contextSize * 0.08,
+    //                     child: ListTile(
+    //                       contentPadding: EdgeInsets.only(left: 5, right: 10),
+    //                       leading: CircleAvatar(
+    //                           backgroundColor: Colors.black26,
+    //                           child: Icon(
+    //                             _icon,
+    //                             color: Colors.blue,
+    //                           )),
+    //                       title: Text(
+    //                         widget.busRoute.name,
+    //                         style: TextStyle(
+    //                           fontSize: 18,
+    //                         ),
+    //                       ),
+    //                       trailing: OutlineButton(
+    //                         onPressed: () {
+    //                           widget.showBusPathState.scrollController.jumpTo(0.0);
+    //                           checkGoOrReturn();
+    //                         },
+    //                         shape: RoundedRectangleBorder(
+    //                           borderRadius: BorderRadius.circular(20),
+    //                         ),
+    //                         borderSide: BorderSide(color: _color),
+    //                         child: Text(
+    //                           _text,
+    //                           style: TextStyle(color: _color),
+    //                         ),
+    //                       ),
+    //                     ),
+    //                   ),
+    //                   Container(
+    //                     child: DefaultTabController(
+    //                       initialIndex: 1,
+    //                       length: 3,
+    //                       child: Column(children: [
+    //                         Container(
+    //                           height: widget.showBusPathState.contextSize * 0.07,
+    //                           color: Colors.amber,
+    //                           child: TabBar(
+    //                             tabs: [
+    //                               Tab(
+    //                                 text: "Giờ xuất bến",
+    //                               ),
+    //                               Tab(
+    //                                 text: "Điểm dừng",
+    //                               ),
+    //                               Tab(
+    //                                 text: "Thông tin",
+    //                               ),
+    //                             ],
+    //                           ),
+    //                         ),
+    //                         Container(
+    //                           height: widget.showBusPathState.contextSize * 0.35,
+    //                           child: TabBarView(
+    //                             children: [
+    //                               Container(
+    //                                 color: Colors.redAccent,
+    //                                 child: ListView.builder(
+    //                                     controller: widget
+    //                                         .showBusPathState.scrollController,
+    //                                     itemCount: 27,
+    //                                     itemBuilder:
+    //                                         (BuildContext context, index) {
+    //                                       return ListTile(
+    //                                         title: Text('Item ${index + 1}'),
+    //                                       );
+    //                                     }),
+    //                               ),
+    //                               ListNameBusStop(
+    //                                 showBusPathState: widget.showBusPathState,
+    //                                 busInformationState: this,
+    //                               ),
+    //                               Container(
+    //                                 color: Colors.green,
+    //                                 child: ListView.builder(
+    //                                     controller: widget
+    //                                         .showBusPathState.scrollController,
+    //                                     itemCount: 10,
+    //                                     itemBuilder:
+    //                                         (BuildContext context, index) {
+    //                                       return ListTile(
+    //                                         title: Text('Item ${index + 1}'),
+    //                                       );
+    //                                     }),
+    //                               )
+    //                             ],
+    //                           ),
+    //                         )
+    //                       ]),
+    //                     ),
+    //                   )
+    //                 ]);
+    //               },
+    //             ),
+    //           );
+    //         }),
+    //   ),
+    // );
+    return GestureDetector(
+      onTap: (){
+        widget.showBusPathState.toggleBottom(_icon);
+        // widget.showBusPathState.toggleTop();
       },
-      child: DraggableScrollableSheet(
-          initialChildSize: _initialChildSize,
-          minChildSize: _minChildSize,
-          maxChildSize: _maxChildSize,
-          builder: (context, controller) {
-            return Container(
-              color: Colors.white,
-              child: ListView.builder(
-                // physics: NeverScrollableScrollPhysics(),
-                itemCount: 1,
-                controller: controller,
-                itemBuilder: (BuildContext context, index) {
-                  return Column(children: [
-                    Container(
-                      height: widget.showBusPathState.contextSize * 0.08,
-                      child: ListTile(
-                        contentPadding: EdgeInsets.only(left: 5, right: 10),
-                        leading: CircleAvatar(
-                            backgroundColor: Colors.black26,
-                            child: Icon(
-                              _icon,
-                              color: Colors.blue,
-                            )),
-                        title: Text(
-                          widget.busRoute.name,
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                        trailing: OutlineButton(
-                          onPressed: () {
-                            widget.showBusPathState.scrollController.jumpTo(0.0);
-                            checkGoOrReturn();
-                          },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          borderSide: BorderSide(color: _color),
-                          child: Text(
-                            _text,
-                            style: TextStyle(color: _color),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: DefaultTabController(
-                        initialIndex: 1,
-                        length: 3,
-                        child: Column(children: [
-                          Container(
-                            height: widget.showBusPathState.contextSize * 0.07,
-                            color: Colors.amber,
-                            child: TabBar(
-                              tabs: [
-                                Tab(
-                                  text: "Giờ xuất bến",
-                                ),
-                                Tab(
-                                  text: "Điểm dừng",
-                                ),
-                                Tab(
-                                  text: "Thông tin",
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: widget.showBusPathState.contextSize * 0.35,
-                            child: TabBarView(
-                              children: [
-                                Container(
-                                  color: Colors.redAccent,
-                                  child: ListView.builder(
-                                      controller: widget
-                                          .showBusPathState.scrollController,
-                                      itemCount: 27,
-                                      itemBuilder:
-                                          (BuildContext context, index) {
-                                        return ListTile(
-                                          title: Text('Item ${index + 1}'),
-                                        );
-                                      }),
-                                ),
-                                ListNameBusStop(
-                                  showBusPathState: widget.showBusPathState,
-                                  busInformationState: this,
-                                ),
-                                Container(
-                                  color: Colors.green,
-                                  child: ListView.builder(
-                                      controller: widget
-                                          .showBusPathState.scrollController,
-                                      itemCount: 10,
-                                      itemBuilder:
-                                          (BuildContext context, index) {
-                                        return ListTile(
-                                          title: Text('Item ${index + 1}'),
-                                        );
-                                      }),
-                                )
-                              ],
-                            ),
-                          )
-                        ]),
-                      ),
-                    )
-                  ]);
-                },
+      onPanEnd: (context) => widget.showBusPathState.toggleBottom(_icon),
+      onPanUpdate: (details) {
+        widget.showBusPathState.two += details.delta.dy;
+        if (widget.showBusPathState.two <= CONTEXT_SIZE*0.5) widget.showBusPathState.two = CONTEXT_SIZE*0.5;
+        if (widget.showBusPathState.two >= CONTEXT_SIZE*0.92) widget.showBusPathState.two = CONTEXT_SIZE*0.92;
+        widget.showBusPathState.setState(() {});
+      },
+      child: Container(
+        color: Colors.white,
+        child: Column(children: [
+          Container(
+            height: CONTEXT_SIZE * 0.08,
+            child: ListTile(
+              contentPadding: EdgeInsets.only(left: 5, right: 10),
+              leading: CircleAvatar(
+                  backgroundColor: Colors.black26,
+                  child: Icon(
+                    _icon,
+                    color: Colors.blue,
+                  )),
+              title: Text(
+                widget.busRoute.name,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
               ),
-            );
-          }),
+              trailing: OutlineButton(
+                onPressed: () {
+                  widget.showBusPathState.scrollController.jumpTo(0.0);
+                  checkGoOrReturn();
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                borderSide: BorderSide(color: _color),
+                child: Text(
+                  _text,
+                  style: TextStyle(color: _color),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            child: DefaultTabController(
+              initialIndex: 1,
+              length: 3,
+              child: Column(children: [
+                Container(
+                  height: CONTEXT_SIZE * 0.07,
+                  color: Colors.amber,
+                  child: TabBar(
+                    tabs: [
+                      Tab(
+                        text: "Giờ xuất bến",
+                      ),
+                      Tab(
+                        text: "Điểm dừng",
+                      ),
+                      Tab(
+                        text: "Thông tin",
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: CONTEXT_SIZE * 0.35,
+                  child: TabBarView(
+                    children: [
+                      Container(
+                        color: Colors.redAccent,
+                        child: ListView.builder(
+                            controller: widget
+                                .showBusPathState.scrollController,
+                            itemCount: 27,
+                            itemBuilder:
+                                (BuildContext context, index) {
+                              return ListTile(
+                                title: Text('Item ${index + 1}'),
+                              );
+                            }),
+                      ),
+                      ListNameBusStop(
+                        showBusPathState: widget.showBusPathState,
+                        busInformationState: this,
+                      ),
+                      Container(
+                        color: Colors.green,
+                        child: ListView.builder(
+                            controller: widget
+                                .showBusPathState.scrollController,
+                            itemCount: 10,
+                            itemBuilder:
+                                (BuildContext context, index) {
+                              return ListTile(
+                                title: Text('Item ${index + 1}'),
+                              );
+                            }),
+                      )
+                    ],
+                  ),
+                )
+              ]),
+            ),
+          )
+        ]),
+      ),
     );
   }
 }

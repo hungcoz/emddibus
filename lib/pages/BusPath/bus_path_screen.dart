@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:core';
 
 import 'package:emddibus/GGMap/geolocator_service.dart';
@@ -25,8 +26,7 @@ class ShowBusPath extends StatefulWidget {
   ShowBusPath({this.busRoute});
 }
 
-class ShowBusPathState extends State<ShowBusPath>
-    with SingleTickerProviderStateMixin {
+class ShowBusPathState extends State<ShowBusPath> {
   MapController mapController = MapController();
   ScrollController scrollController = ScrollController();
 
@@ -48,6 +48,52 @@ class ShowBusPathState extends State<ShowBusPath>
   double fabPosition = 0;
 
   final geoService = GeolocatorService();
+
+  double height = 0, two = 0, one = 0;
+  double twoFixed = 0, oneFixed = 0;
+  Duration _duration = Duration(milliseconds: 1);
+  bool _bottom = false;
+
+  void toggleTop() {
+    _bottom = !_bottom;
+    Timer.periodic(_duration, (timer) {
+      if (_bottom) one -= 2;
+      else one += 2;
+
+      if (one >= 0) {
+        one = 0;
+        timer.cancel();
+      }
+      if (one <= oneFixed) {
+        one = oneFixed;
+        timer.cancel();
+      }
+      setState(() {});
+    });
+  }
+
+  void toggleBottom(IconData iconData) {
+    _bottom = !_bottom;
+    Timer.periodic(_duration, (timer) {
+      if (_bottom) two += 2;
+      else two -= 2;
+
+      if (two <= CONTEXT_SIZE*0.5) {
+        two = CONTEXT_SIZE*0.5;
+        timer.cancel();
+      }
+      if (two >= CONTEXT_SIZE*0.92) {
+        two = CONTEXT_SIZE*0.92;
+        timer.cancel();
+      }
+      setState(() {
+        if (two >= CONTEXT_SIZE*0.75)
+          iconData = Icons.arrow_upward;
+        if (two <= CONTEXT_SIZE*0.75)
+          iconData = Icons.arrow_downward;
+      });
+    });
+  }
 
   getPointOfPath(List<PointOfBusPath> listPointOfBusPath) {
     listPoint.clear();
@@ -79,17 +125,12 @@ class ShowBusPathState extends State<ShowBusPath>
     CHECK_UP_DOWN = 0;
     getPointOfPath(BUS_PATH_GO);
     getStopPoint(widget.busRoute.listStopPointGo);
+    height = CONTEXT_SIZE*0.5;
+    two = height;
+    one = - height;
+    twoFixed = height;
+    oneFixed = height;
     super.initState();
-    animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 500),
-    );
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
   }
 
   @override
@@ -98,25 +139,37 @@ class ShowBusPathState extends State<ShowBusPath>
       appBar: AppBar(
         title: Text("Tuyến " + widget.busRoute.routeId.toString()),
       ),
-      body: SafeArea(
+      body: Container(
         child: Stack(
           children: [
-            Container(
-              height: contextSize - fabPosition,
-              child: Map(
-                mapController: mapController,
-                initialCamera: LatLng(listStopPointRoute[0].latitude,
-                    listStopPointRoute[0].longitude),
-                initialZoom: 16,
-                markers: markers,
-                color: color,
-                listPoint: listPoint,
+            Positioned(
+              left: 0,
+              right: 0,
+              top: (two - CONTEXT_SIZE)*0.5,
+              height: CONTEXT_SIZE,
+              child: Container(
+                // height: contextSize - fabPosition,
+                child: Map(
+                  mapController: mapController,
+                  initialCamera: LatLng(listStopPointRoute[0].latitude,
+                      listStopPointRoute[0].longitude),
+                  initialZoom: 16,
+                  markers: markers,
+                  color: color,
+                  listPoint: listPoint,
+                ),
+                // child: GGMap(initialPosition: Position(latitude: currentPosition.latitude, longitude: currentPosition.longitude),),
               ),
-              // child: GGMap(initialPosition: Position(latitude: currentPosition.latitude, longitude: currentPosition.longitude),),
             ),
-            BusInformation(
-              showBusPathState: this,
-              busRoute: widget.busRoute,
+            Positioned(
+              left: 0,
+              right: 0,
+              top: two,
+              height: height,
+              child: BusInformation(
+                showBusPathState: this,
+                busRoute: widget.busRoute,
+              ),
             ),
           ],
         ),

@@ -23,7 +23,11 @@ class InfoSuitableRouteState extends State<InfoSuitableRoute>
   void initState() {
     queue = widget.allList[widget.index];
     for (int i = 0; i + 1 < queue.length; i++) {
-      if (queue.elementAt(i + 1).routeId != queue.elementAt(i).routeId) {
+      if (queue
+          .elementAt(i + 1)
+          .routeId != queue
+          .elementAt(i)
+          .routeId) {
         list.add(queue.elementAt(i + 1));
       }
     }
@@ -171,96 +175,97 @@ class RouteDetail extends StatelessWidget {
       children: [
         (list.isNotEmpty)
             ? Expanded(
-                child: ListView.builder(
-                  itemCount: list.length,
-                  itemBuilder: (context, index) => Column(
-                    children: [
-                      (index == 0) ? ListTile(
-                        leading: Icon(
-                          Icons.location_on,
-                          color: Colors.green,
-                          size: 30,
-                        ),
-                        title: Text(
-                          queue.first.currentNode.name,
-                          style: TextStyle(color: Colors.green),
-                        ),
-                      ) : Container(),
-                      ListTile(
-                        leading: Icon(Icons.directions_bus),
-                        title:
-                            Text("Đi xe bus số ${list[index].parent.routeId}"),
+          child: ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (context, index) =>
+                Column(
+                  children: [
+                    (index == 0) ? ListTile(
+                      leading: Icon(
+                        Icons.location_on,
+                        color: Colors.green,
+                        size: 30,
                       ),
-                      ListTile(
-                        leading: Icon(
-                          Icons.location_on,
-                          color: Colors.blue,
-                          size: 30,
-                        ),
-                        title: Text(
-                          list[index].currentNode.name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.blue),
-                        ),
+                      title: Text(
+                        queue.first.currentNode.name,
+                        style: TextStyle(color: Colors.green),
                       ),
-                      (index == list.length - 1)
-                          ? Column(
-                              children: [
-                                ListTile(
-                                  leading: Icon(Icons.directions_bus),
-                                  title: Text(
-                                      "Đi xe bus số ${list[index].routeId}"),
-                                ),
-                                ListTile(
-                                  leading: Icon(
-                                    Icons.location_on,
-                                    color: Colors.orangeAccent,
-                                    size: 30,
-                                  ),
-                                  title: Text(
-                                    queue.last.currentNode.name,
-                                    style:
-                                        TextStyle(color: Colors.orangeAccent),
-                                  ),
-                                ),
-                              ],
-                            )
-                          : Container()
-                    ],
-                  ),
-                  // separatorBuilder: (context, index) => Divider()
+                    ) : Container(),
+                    ListTile(
+                      leading: Icon(Icons.directions_bus),
+                      title:
+                      Text("Đi xe bus số ${list[index].parent.routeId}"),
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.location_on,
+                        color: Colors.blue,
+                        size: 30,
+                      ),
+                      title: Text(
+                        list[index].currentNode.name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.blue),
+                      ),
+                    ),
+                    (index == list.length - 1)
+                        ? Column(
+                      children: [
+                        ListTile(
+                          leading: Icon(Icons.directions_bus),
+                          title: Text(
+                              "Đi xe bus số ${list[index].routeId}"),
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            Icons.location_on,
+                            color: Colors.orangeAccent,
+                            size: 30,
+                          ),
+                          title: Text(
+                            queue.last.currentNode.name,
+                            style:
+                            TextStyle(color: Colors.orangeAccent),
+                          ),
+                        ),
+                      ],
+                    )
+                        : Container()
+                  ],
                 ),
-              )
+            // separatorBuilder: (context, index) => Divider()
+          ),
+        )
             : Column(
-                children: [
-                  ListTile(
-                    leading: Icon(
-                      Icons.location_on,
-                      color: Colors.green,
-                      size: 30,
-                    ),
-                    title: Text(
-                      queue.first.currentNode.name,
-                      style: TextStyle(color: Colors.green),
-                    ),
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.directions_bus),
-                    title: Text("Đi xe bus số ${queue.first.routeId}"),
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.location_on,
-                      color: Colors.orangeAccent,
-                      size: 30,
-                    ),
-                    title: Text(
-                      queue.last.currentNode.name,
-                      style: TextStyle(color: Colors.orangeAccent),
-                    ),
-                  ),
-                ],
+          children: [
+            ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+                size: 30,
               ),
+              title: Text(
+                queue.first.currentNode.name,
+                style: TextStyle(color: Colors.green),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.directions_bus),
+              title: Text("Đi xe bus số ${queue.first.routeId}"),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.orangeAccent,
+                size: 30,
+              ),
+              title: Text(
+                queue.last.currentNode.name,
+                style: TextStyle(color: Colors.orangeAccent),
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -279,9 +284,14 @@ class BusStopPassed extends StatelessWidget {
     return length;
   }
 
-  bool checkChangeBusStop(int index){
+  bool checkChangeBusStop(int index) {
     if (index + 1 < getLength()) {
-      if (queue.elementAt(index+1).routeId != queue.elementAt(index+1).parent.routeId) {
+      if (queue
+          .elementAt(index + 1)
+          .routeId != queue
+          .elementAt(index + 1)
+          .parent
+          .routeId) {
         return true;
       }
     }
@@ -293,46 +303,78 @@ class BusStopPassed extends StatelessWidget {
     // TODO: implement build
     return ListView.builder(
       itemCount: getLength(),
-      itemBuilder: (context, index) => Container(
-        margin: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 5),
-        child: Row(
-          children: [
-            Card(
-              color: Colors.amber,
-              child: Container(
-                padding: EdgeInsets.all(2),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.directions_bus,
-                      color: Colors.green,
+      itemBuilder: (context, index) =>
+          Container(
+            margin: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 5),
+            child: Row(
+              children: [
+                Card(
+                  color: Colors.amber,
+                  child: Container(
+                    padding: EdgeInsets.all(2),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.directions_bus,
+                          color: Colors.green,
+                        ),
+                        Text(
+                          '${queue
+                              .elementAt(index)
+                              .routeId}',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )
+                      ],
                     ),
-                    Text(
-                        '${queue.elementAt(index).routeId}',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                margin: EdgeInsets.only(left: 15),
-                child: Text(
-                    (checkChangeBusStop(index))
-                        ? queue.elementAt(index).currentNode.name + " (chuyển sang tuyến số ${queue.elementAt(index+1).routeId})"
-                        : queue.elementAt(index).currentNode.name,
-                  style: TextStyle(
-                    color: (checkChangeBusStop(index)) ? Colors.green : Colors.black,
-                    fontWeight: (checkChangeBusStop(index)) ? FontWeight.bold : FontWeight.normal
                   ),
-                  textAlign: TextAlign.left,
                 ),
-              ),
-            )
-          ],
-        ),
-      ),
+                (checkChangeBusStop(index)) ? Row(
+                    children: [
+                      Icon(Icons.autorenew, size: 15,),
+                      Card(
+                        color: Colors.amber,
+                        child: Container(
+                          padding: EdgeInsets.all(2),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.directions_bus,
+                                color: Colors.green,
+                              ),
+                              Text(
+                                '${queue
+                                    .elementAt(index+1)
+                                    .routeId}',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ]
+                ) : Container(),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(left: 15),
+                    child: Text(
+                      queue
+                          .elementAt(index)
+                          .currentNode
+                          .name,
+                      style: TextStyle(
+                          color: (checkChangeBusStop(index))
+                              ? Colors.green
+                              : Colors.black,
+                          fontWeight: (checkChangeBusStop(index)) ? FontWeight
+                              .bold : FontWeight.normal
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
     );
   }
 }

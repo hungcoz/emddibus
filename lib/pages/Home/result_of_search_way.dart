@@ -18,7 +18,7 @@ class ResultSearch extends StatefulWidget {
   State<StatefulWidget> createState() => ResultSearchState();
 }
 
-class ResultSearchState extends State<ResultSearch> {
+class ResultSearchState extends State<ResultSearch> with SingleTickerProviderStateMixin{
   List<List<int>> allList = [];
   List<Widget> list = [];
 
@@ -36,10 +36,36 @@ class ResultSearchState extends State<ResultSearch> {
   Completer<GoogleMapController> controller;
   GoogleMapController mapController;
 
+  static double _height = 0, _two = 0;
+  double _twoFixed = 0;
+  Duration _duration = Duration(microseconds: 500);
+  bool _bottom = false;
+
+  void _toggleBottom() {
+    _bottom = !_bottom;
+    Timer.periodic(_duration, (timer) {
+      if (_bottom) _two -= 2;
+      else _two += 1;
+
+      if (_two <= 0) {
+        _two = 0;
+        timer.cancel();
+      }
+      if (_two >= _twoFixed) {
+        _two = _twoFixed;
+        timer.cancel();
+      }
+      setState(() {});
+    });
+  }
+
   @override
   void initState(){
     controller = Completer();
     getMapController(controller);
+    _height = CONTEXT_SIZE;
+    _two = _height;
+    _twoFixed = _height;
     // TODO: implement initState
     super.initState();
   }
@@ -58,162 +84,205 @@ class ResultSearchState extends State<ResultSearch> {
         centerTitle: true,
       ),
       body: Container(
-        color: Colors.amber,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        color: Colors.grey[200],
+        child: Stack(
           children: [
-            Container(
-              margin: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                // color: Colors.amber,
-              ),
-              child: SearchWay(
-                resultSearchState: this,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: FlatButton(
-                  minWidth: double.infinity,
-                  color: Colors.white,
-                  highlightColor: Colors.amber,
-                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                  onPressed: () async {
-                    listMarker.clear();
-                    if (addressFrom == "Điểm bắt đầu" ||
-                        addressTo == "Điểm kết thúc") {
-                      showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                              title: Center(
-                                child: Text(
-                                  "Vui lòng nhập địa chỉ còn thiếu",
-                                  style: TextStyle(
-                                      color: Colors.amber, fontSize: 15),
-                                ),
-                              ),
-                              content: Container(
-                                child: RaisedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text(
-                                    "OK",
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                ),
-                              )));
-                    } else {
-                      allList.clear();
-                      AStar a = AStar();
-                      queue =
-                          await a.findPath(tmpStart, tmpTarget);
-                      if (queue.isNotEmpty) {
-                        queue.forEach((element) {
-                          List<int> listRouteId = [];
-                          element.forEach((e) {
-                            if (!listRouteId.contains(e.routeId)) {
-                              listRouteId.add(e.routeId);
-                            }
-                          });
-                          allList.add(listRouteId);
-                        });
-                        for (int i=0; i+1 < allList.length; i++) {
-                          if (allList[i].length > allList[i+1].length) {
-                            List<int> tmp = allList[i];
-                            allList[i] = allList[i+1];
-                            allList[i+1] = tmp;
-                            Queue<Node> tmp1 = new Queue<Node>();
-                            tmp1.addAll(queue.elementAt(i));
-                            queue.elementAt(i).clear();
-                            queue.elementAt(i).addAll(queue.elementAt(i+1));
-                            queue.elementAt(i+1).clear();
-                            queue.elementAt(i+1).addAll(tmp1);
-                          }
-                        }
-                      } else {
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                title: Center(
-                                  child: Text(
-                                    (addressTo == addressFrom)
-                                        ?"Điểm muốn đến là điểm bắt đầu"
-                                        :"Không tìm thấy lộ trình phù hợp",
-                                    style: TextStyle(
-                                        color: Colors.amber, fontSize: 15),
-                                  ),
-                                ),
-                                content: Container(
-                                  child: RaisedButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: Container(
+                    child: GGMap(
+                      initialPosition: Position(
+                          latitude: currentPosition.latitude,
+                          longitude: currentPosition.longitude),
+                      controller: controller,
+                      listMarker: listMarker,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 10, right: 10, top: 5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    // color: Colors.amber,
+                  ),
+                  child: SearchWay(
+                    resultSearchState: this,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: FlatButton(
+                      minWidth: double.infinity,
+                      color: Colors.white,
+                      highlightColor: Colors.amber,
+                      padding: EdgeInsets.only(top: 15, bottom: 15),
+                      onPressed: () async {
+                        listMarker.clear();
+                        if (addressFrom == "Điểm bắt đầu" ||
+                            addressTo == "Điểm kết thúc") {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                  title: Center(
                                     child: Text(
-                                      "OK",
-                                      style: TextStyle(color: Colors.black),
+                                      "Vui lòng nhập địa chỉ còn thiếu",
+                                      style: TextStyle(
+                                          color: Colors.amber, fontSize: 15),
                                     ),
                                   ),
-                                )));
-                      }
-                      setState(() {});
-                    }
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Text(
-                    "TÌM ĐƯỜNG",
-                    style: TextStyle(
-                        color: Colors.blue, fontWeight: FontWeight.bold),
-                  )),
-            ),
-            (allList.isEmpty)
-                ? Expanded(
-                    child: Container(
-                      margin: EdgeInsets.only(top: 25),
-                      child: GGMap(
-                        initialPosition: Position(
-                            latitude: currentPosition.latitude,
-                            longitude: currentPosition.longitude),
-                        controller: controller,
-                        listMarker: listMarker,
+                                  content: Container(
+                                    child: RaisedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        "OK",
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ),
+                                  )));
+                        } else {
+                          allList.clear();
+                          AStar a = AStar();
+                          queue =
+                          await a.findPath(tmpStart, tmpTarget);
+                          if (queue.isNotEmpty) {
+                            queue.forEach((element) {
+                              List<int> listRouteId = [];
+                              element.forEach((e) {
+                                if (!listRouteId.contains(e.routeId)) {
+                                  listRouteId.add(e.routeId);
+                                }
+                              });
+                              allList.add(listRouteId);
+                            });
+                            for (int i=0; i+1 < allList.length; i++) {
+                              if (allList[i].length > allList[i+1].length) {
+                                List<int> tmp = allList[i];
+                                allList[i] = allList[i+1];
+                                allList[i+1] = tmp;
+                                Queue<Node> tmp1 = new Queue<Node>();
+                                tmp1.addAll(queue.elementAt(i));
+                                queue.elementAt(i).clear();
+                                queue.elementAt(i).addAll(queue.elementAt(i+1));
+                                queue.elementAt(i+1).clear();
+                                queue.elementAt(i+1).addAll(tmp1);
+                              }
+                            }
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                    title: Center(
+                                      child: Text(
+                                        (addressTo == addressFrom)
+                                            ?"Điểm muốn đến là điểm bắt đầu"
+                                            :"Không tìm thấy lộ trình phù hợp",
+                                        style: TextStyle(
+                                            color: Colors.amber, fontSize: 15),
+                                      ),
+                                    ),
+                                    content: Container(
+                                      child: RaisedButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(
+                                          "OK",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                      ),
+                                    )));
+                          }
+                          _toggleBottom();
+                          setState(() {
+
+                          });
+                        }
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                    ),
-                  )
-                : Expanded(
-                    child: Column(
-                      children: [
-                        Container(
-                            margin:
-                                EdgeInsets.only(left: 10, bottom: 10, top: 20),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Các lộ trình phù hợp",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            )),
-                        Expanded(
-                          child: GridView.count(
-                            scrollDirection: Axis.vertical,
-                            crossAxisCount: 1,
-                            childAspectRatio: 4,
-                            physics: ClampingScrollPhysics(),
-                            shrinkWrap: true,
-                            children: new List<Widget>.generate(
-                                allList.length, (index) {
-                              return new GridTile(
-                                child: _buildCard(allList, index),
-                              );
-                            }),
-                          ),
+                      child: Text(
+                        "TÌM ĐƯỜNG",
+                        style: TextStyle(
+                            color: Colors.blue, fontWeight: FontWeight.bold),
+                      )),
+                ),
+              ],
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              top: _two,
+              height: _height,
+              child: GestureDetector(
+                onTap: _toggleBottom,
+                onPanEnd: (details) => _toggleBottom(),
+                onPanUpdate: (details) {
+                  _two += details.delta.dy;
+                  if (_two <= 0) _two = 0;
+                  if (_two >= _twoFixed) _two = _twoFixed;
+                  setState(() {});
+                },
+                child: Container(
+                  color: Colors.grey[200],
+                  child: Column(
+                    children: [
+                      Container(
+                          margin:
+                          EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Các lộ trình phù hợp",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              GestureDetector(
+                                onTap: (){
+                                  setState(() {
+                                    allList.clear();
+                                  });
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(5),
+                                  margin: EdgeInsets.only(right: 10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: Colors.grey,
+                                  ),
+                                  child: Text("Hủy tìm đường"),
+                                ),
+                              ),
+                            ],
+                          )),
+                      Expanded(
+                        child: GridView.count(
+                          scrollDirection: Axis.vertical,
+                          crossAxisCount: 1,
+                          childAspectRatio: 4,
+                          physics: ClampingScrollPhysics(),
+                          shrinkWrap: true,
+                          children: new List<Widget>.generate(
+                              allList.length, (index) {
+                            return new GridTile(
+                              child: _buildCard(allList, index),
+                            );
+                          }),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
