@@ -1,9 +1,11 @@
 import 'package:emddibus/GGMap/geolocator_service.dart';
 import 'package:emddibus/constants.dart';
 import 'package:emddibus/models/location_model.dart';
+import 'package:emddibus/pages/Home/result_of_search_way.dart';
 import 'package:emddibus/pages/Home/stop_point_marker.dart';
 import 'package:emddibus/pages/Map/map.dart';
 import 'package:emddibus/pages/SearchLocation/search_location_screen.dart';
+import 'package:emddibus/services/http_foot_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
@@ -18,6 +20,7 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> {
   MapController mapController = MapController();
   List<Marker> markers = [];
+  //List<LatLng> polyline = [];
 
   FocusNode _textSearchFocusNode = FocusNode();
   TextEditingController searchController = TextEditingController();
@@ -71,6 +74,8 @@ class HomeState extends State<Home> {
               mapController: mapController,
               markers: markers,
               focusNode: _textSearchFocusNode,
+              //listPoint: polyline,
+              //color: Colors.lightBlueAccent,
               fMapState: this,
             ),
             Positioned(
@@ -105,6 +110,7 @@ class HomeState extends State<Home> {
                                 searchController.text = '';
                                 setState(() {
                                   markers[markers.length - 2] = Marker();
+                                  //polyline.clear();
                                 });
                               }),
                     ),
@@ -115,6 +121,8 @@ class HomeState extends State<Home> {
                           MaterialPageRoute(
                               builder: (context) => SearchLocation()));
                       if (dataSearch != null) {
+                        // mapController.fitBounds(LatLngBounds(currentPosition,
+                        //     LatLng(dataSearch.lat, dataSearch.long)));
                         mapController.move(
                             LatLng(dataSearch.lat, dataSearch.long), 16);
                         searchController.text = text(dataSearch);
@@ -128,12 +136,31 @@ class HomeState extends State<Home> {
                                     size: 50,
                                   ));
                         });
+                        SEARCH_HISTORY.remove(dataSearch);
+                        SEARCH_HISTORY.add(dataSearch);
                       }
                     },
                   ),
                 ]),
               ),
             ),
+            Positioned(
+              bottom: 20,
+              left: 20,
+              child: FloatingActionButton(
+                child: Icon(
+                  Icons.directions,
+                  size: 30,
+                  color: Colors.black,
+                ),
+                backgroundColor: Colors.amber,
+                heroTag: "search_route",
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ResultSearch()));
+                },
+              ),
+            )
           ],
         ),
       ),

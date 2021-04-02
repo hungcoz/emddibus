@@ -33,7 +33,7 @@ class _TrackingMapState extends State<TrackingMap> {
   BusPosition bus;
   Timer t;
 
-  void fechtData(BusPosition busPosition) {
+  void fetchData(BusPosition busPosition) {
     BUS_POSITION.forEach((element) async {
       if (busPosition.busId == element.busId &&
           busPosition.direction == element.direction &&
@@ -122,7 +122,7 @@ class _TrackingMapState extends State<TrackingMap> {
     getPointOfPath(
         (widget.busPosition.direction == 0) ? BUS_PATH_GO : BUS_PATH_RETURN);
     t = Timer.periodic(Duration(seconds: 1), (Timer t) {
-      fechtData(widget.busPosition);
+      fetchData(widget.busPosition);
       print(bus.heading);
     });
     super.initState();
@@ -145,14 +145,17 @@ class _TrackingMapState extends State<TrackingMap> {
         //mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.8,
+            height: MediaQuery.of(context).size.height * 0.7,
             child: Stack(
               children: [
                 Map(
                   mapController: mapController,
-                  initialCamera: LatLng(widget.busPosition.latitude,
-                      widget.busPosition.longitude),
-                  initialZoom: 16,
+                  // initialCamera: widget.busPosition.getPosition(),
+                  // initialZoom: 16,
+                  bounds: LatLngBounds(
+                      widget.busPosition.getPosition(),
+                      LatLng(widget.stopPoint.latitude,
+                          widget.stopPoint.longitude)),
                   markers: markers,
                   listPoint: listPoint,
                   color: Colors.blue,
@@ -166,8 +169,13 @@ class _TrackingMapState extends State<TrackingMap> {
                       Icons.directions_bus,
                       color: Colors.black,
                     ),
-                    onPressed: () => mapController.move(bus.getPosition(), 16),
-                    backgroundColor: Colors.white,
+                    onPressed: () => mapController.fitBounds(
+                        LatLngBounds(
+                            bus.getPosition(),
+                            LatLng(widget.stopPoint.latitude,
+                                widget.stopPoint.longitude)),
+                        options: FitBoundsOptions(padding: EdgeInsets.all(50))),
+                    backgroundColor: Colors.white70,
                   ),
                 )
               ],
@@ -176,9 +184,8 @@ class _TrackingMapState extends State<TrackingMap> {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.green[100],
-                border:
-                    Border(top: BorderSide(color: Color(0xffeeac24), width: 3)),
+                color: Colors.grey[200],
+                border: Border(top: BorderSide(color: Colors.black, width: 3)),
               ),
               child: Row(
                 children: [
