@@ -1,6 +1,7 @@
 import 'package:emddibus/GGMap/geolocator_service.dart';
 import 'package:emddibus/constants.dart';
 import 'package:emddibus/models/location_model.dart';
+import 'package:emddibus/pages/Home/result_of_search_way.dart';
 import 'package:emddibus/pages/Home/stop_point_marker.dart';
 import 'package:emddibus/pages/Map/map.dart';
 import 'package:emddibus/pages/SearchLocation/search_location_screen.dart';
@@ -143,6 +144,23 @@ class HomeState extends State<Home> {
                 ]),
               ),
             ),
+            Positioned(
+              bottom: 20,
+              left: 20,
+              child: FloatingActionButton(
+                child: Icon(
+                  Icons.directions,
+                  size: 30,
+                  color: Colors.black,
+                ),
+                backgroundColor: Colors.amber,
+                heroTag: "search_route",
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ResultSearch()));
+                },
+              ),
+            )
           ],
         ),
       ),
