@@ -141,60 +141,60 @@ class _TrackingMapState extends State<TrackingMap> {
         title: Text(widget.stopPoint.name),
         centerTitle: true,
       ),
-      body: Column(
-        //mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: Stack(
         children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.7,
-            child: Stack(
-              children: [
-                Map(
-                  mapController: mapController,
-                  // initialCamera: widget.busPosition.getPosition(),
-                  // initialZoom: 16,
-                  bounds: LatLngBounds(
-                      widget.busPosition.getPosition(),
+          Map(
+            mapController: mapController,
+            // initialCamera: widget.busPosition.getPosition(),
+            // initialZoom: 16,
+            bounds: LatLngBounds(widget.busPosition.getPosition(),
+                LatLng(widget.stopPoint.latitude, widget.stopPoint.longitude)),
+            markers: markers,
+            listPoint: listPoint,
+            color: Colors.blue,
+          ),
+          Positioned(
+            left: 20,
+            bottom: 20,
+            child: FloatingActionButton(
+              heroTag: null,
+              child: Icon(
+                Icons.directions_bus,
+                color: Colors.black,
+              ),
+              onPressed: () => mapController.fitBounds(
+                  LatLngBounds(
+                      bus.getPosition(),
                       LatLng(widget.stopPoint.latitude,
                           widget.stopPoint.longitude)),
-                  markers: markers,
-                  listPoint: listPoint,
-                  color: Colors.blue,
-                ),
-                Positioned(
-                  left: 20,
-                  bottom: 20,
-                  child: FloatingActionButton(
-                    heroTag: null,
-                    child: Icon(
-                      Icons.directions_bus,
-                      color: Colors.black,
-                    ),
-                    onPressed: () => mapController.fitBounds(
-                        LatLngBounds(
-                            bus.getPosition(),
-                            LatLng(widget.stopPoint.latitude,
-                                widget.stopPoint.longitude)),
-                        options: FitBoundsOptions(padding: EdgeInsets.all(50))),
-                    backgroundColor: Colors.white70,
-                  ),
-                )
-              ],
+                  options: FitBoundsOptions(padding: EdgeInsets.all(50))),
+              backgroundColor: Colors.white70,
             ),
           ),
-          Expanded(
+          Positioned(
+            top: 20,
+            right: 10,
+            left: 10,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.grey[200],
-                border: Border(top: BorderSide(color: Colors.black, width: 3)),
-              ),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3),
+                    )
+                  ]),
               child: Row(
                 children: [
                   Container(
                     width: 100,
                     child: Image.asset(
                       'assets/bus_icon.png',
-                      width: 70,
-                      height: 70,
+                      width: 50,
+                      height: 50,
                     ),
                   ),
                   Column(
