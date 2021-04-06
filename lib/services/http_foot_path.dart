@@ -15,7 +15,7 @@ Future<FootPath> directionFoot(LatLng start, LatLng end) async {
 }
 
 // directionFoot(currentPosition,
-//         LatLng(dataSearch.lat, dataSearch.long))
+//         LatLng(dataSearch.lat, dataSearch.long))988
 //     .then((value) {
 //   setState(() {
 //     //set list lat long polyline
