@@ -14,17 +14,16 @@ class SearchWay extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => SearchWayState();
+
 }
 
 class SearchWayState extends State<SearchWay> {
-  StopPoint oldStart;
-  StopPoint oldTarget;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -43,8 +42,7 @@ class SearchWayState extends State<SearchWay> {
                     Icons.location_on,
                     color: Colors.green,
                   ),
-                  title: Transform.translate(
-                    offset: Offset(-15, 0),
+                  title: Container(
                     // origin: Offset(0, 10.0),
                     child: Text(
                       widget.resultSearchState.addressFrom,
@@ -57,29 +55,25 @@ class SearchWayState extends State<SearchWay> {
                     widget.resultSearchState.start = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                AddressToOrFrom(title: "Chọn điểm bắt đầu")));
+                            builder: (context) => AddressToOrFrom(
+                                title: "Chọn điểm bắt đầu")));
                     widget.resultSearchState.setState(() {
                       if (widget.resultSearchState.start != null) {
-                        widget.resultSearchState.tmpStart =
-                            widget.resultSearchState.start;
-                        widget.resultSearchState.addressFrom =
-                            widget.resultSearchState.tmpStart.name;
+                        widget.resultSearchState.tmpStart = widget.resultSearchState.start;
+                        widget.resultSearchState.addressFrom = widget.resultSearchState.tmpStart.name;
                         widget.resultSearchState.mapController.animateCamera(
                             CameraUpdate.newCameraPosition(CameraPosition(
-                                zoom: 16,
-                                target: LatLng(
-                                    widget.resultSearchState.tmpStart.latitude,
-                                    widget.resultSearchState.tmpStart
-                                        .longitude))));
-                        widget.resultSearchState.listMarker.add(Marker(
-                          markerId: MarkerId(
-                              "${widget.resultSearchState.tmpStart.name}"),
-                          position: LatLng(
-                              widget.resultSearchState.tmpStart.latitude,
-                              widget.resultSearchState.tmpStart.longitude),
-                          icon: BitmapDescriptor.defaultMarker,
-                        ));
+                              zoom: 16,
+                                target: LatLng(widget.resultSearchState.tmpStart.latitude, widget.resultSearchState.tmpStart.longitude)
+                            ))
+                        );
+                        widget.resultSearchState.listMarker.add(
+                            Marker(
+                                markerId: MarkerId("${widget.resultSearchState.tmpStart.name}"),
+                                position: LatLng(widget.resultSearchState.tmpStart.latitude, widget.resultSearchState.tmpStart.longitude),
+                                icon: BitmapDescriptor.defaultMarker,
+                            )
+                        );
                       }
                     });
                   },
@@ -93,42 +87,35 @@ class SearchWayState extends State<SearchWay> {
                     Icons.location_on,
                     color: Colors.orangeAccent,
                   ),
-                  title: Transform.translate(
-                    offset: Offset(-15, 0),
-                    child: Text(
-                      widget.resultSearchState.addressTo,
-                      style: TextStyle(fontSize: 15),
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  title: Text(
+                    widget.resultSearchState.addressTo,
+                    style: TextStyle(fontSize: 15),
+                    overflow: TextOverflow.ellipsis,
                   ),
                   dense: true,
                   onTap: () async {
                     widget.resultSearchState.target = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                AddressToOrFrom(title: "Chọn điểm kết thúc")));
+                            builder: (context) => AddressToOrFrom(
+                                title: "Chọn điểm kết thúc")));
                     widget.resultSearchState.setState(() {
                       if (widget.resultSearchState.target != null) {
-                        widget.resultSearchState.tmpTarget =
-                            widget.resultSearchState.target;
-                        widget.resultSearchState.addressTo =
-                            widget.resultSearchState.tmpTarget.name;
+                        widget.resultSearchState.tmpTarget = widget.resultSearchState.target;
+                        widget.resultSearchState.addressTo = widget.resultSearchState.tmpTarget.name;
                         widget.resultSearchState.mapController.animateCamera(
                             CameraUpdate.newCameraPosition(CameraPosition(
                                 zoom: 16,
-                                target: LatLng(
-                                    widget.resultSearchState.tmpTarget.latitude,
-                                    widget.resultSearchState.tmpTarget
-                                        .longitude))));
-                        widget.resultSearchState.listMarker.add(Marker(
-                          markerId: MarkerId(
-                              '${widget.resultSearchState.tmpTarget.name}'),
-                          position: LatLng(
-                              widget.resultSearchState.tmpTarget.latitude,
-                              widget.resultSearchState.tmpTarget.longitude),
-                          icon: BitmapDescriptor.defaultMarker,
-                        ));
+                                target: LatLng(widget.resultSearchState.tmpTarget.latitude, widget.resultSearchState.tmpTarget.longitude)
+                            ))
+                        );
+                        widget.resultSearchState.listMarker.add(
+                            Marker(
+                              markerId: MarkerId('${widget.resultSearchState.tmpTarget.name}'),
+                              position: LatLng(widget.resultSearchState.tmpTarget.latitude, widget.resultSearchState.tmpTarget.longitude),
+                              icon: BitmapDescriptor.defaultMarker,
+                            )
+                        );
                       }
                     });
                   },
@@ -148,18 +135,14 @@ class SearchWayState extends State<SearchWay> {
                 size: 40,
               ),
               onPressed: () {
-                if (!widget.resultSearchState.addressFrom
-                        .contains("Điểm bắt đầu") &&
-                    !widget.resultSearchState.addressTo
-                        .contains("Điểm kết thúc")) {
+                if (!widget.resultSearchState.addressFrom.contains("Điểm bắt đầu") &&
+                    !widget.resultSearchState.addressTo.contains("Điểm kết thúc")) {
                   setState(() {
                     String tmp = widget.resultSearchState.addressTo;
-                    widget.resultSearchState.addressTo =
-                        widget.resultSearchState.addressFrom;
+                    widget.resultSearchState.addressTo = widget.resultSearchState.addressFrom;
                     widget.resultSearchState.addressFrom = tmp;
                     StopPoint tmp1 = widget.resultSearchState.tmpStart;
-                    widget.resultSearchState.tmpStart =
-                        widget.resultSearchState.tmpTarget;
+                    widget.resultSearchState.tmpStart = widget.resultSearchState.tmpTarget;
                     widget.resultSearchState.tmpTarget = tmp1;
                   });
                 }

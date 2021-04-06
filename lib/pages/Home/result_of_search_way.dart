@@ -18,8 +18,7 @@ class ResultSearch extends StatefulWidget {
   State<StatefulWidget> createState() => ResultSearchState();
 }
 
-class ResultSearchState extends State<ResultSearch>
-    with SingleTickerProviderStateMixin {
+class ResultSearchState extends State<ResultSearch> with SingleTickerProviderStateMixin{
   List<List<int>> allList = [];
   List<Widget> list = [];
 
@@ -45,10 +44,9 @@ class ResultSearchState extends State<ResultSearch>
   void _toggleBottom() {
     _bottom = !_bottom;
     Timer.periodic(_duration, (timer) {
-      if (_bottom)
-        _two -= 1;
-      else
-        _two += 1;
+      if (_bottom) _two -= 2;
+      else _two += 1;
+
       if (_two <= 0) {
         _two = 0;
         timer.cancel();
@@ -62,7 +60,7 @@ class ResultSearchState extends State<ResultSearch>
   }
 
   @override
-  void initState() {
+  void initState(){
     controller = Completer();
     getMapController(controller);
     _height = CONTEXT_SIZE;
@@ -72,31 +70,8 @@ class ResultSearchState extends State<ResultSearch>
     super.initState();
   }
 
-  getMapController(Completer<GoogleMapController> controller) async {
+  getMapController(Completer<GoogleMapController> controller)async{
     mapController = await controller.future;
-  }
-
-  void showAlertDialog(String text) {
-    showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-            title: Center(
-              child: Text(
-                text,
-                style: TextStyle(color: Colors.amber, fontSize: 15),
-              ),
-            ),
-            content: Container(
-              child: RaisedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  "OK",
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-            )));
   }
 
   @override
@@ -109,7 +84,7 @@ class ResultSearchState extends State<ResultSearch>
         centerTitle: true,
       ),
       body: Container(
-        color: Colors.black,
+        color: Colors.grey[200],
         child: Stack(
           children: [
             Column(
@@ -145,22 +120,86 @@ class ResultSearchState extends State<ResultSearch>
                       padding: EdgeInsets.only(top: 15, bottom: 15),
                       onPressed: () async {
                         listMarker.clear();
-                        if (addressFrom == "Điểm bắt đầu" || addressTo == "Điểm kết thúc") {
-                          showAlertDialog("Vui lòng nhập địa chỉ còn thiếu");
-                        }
-                        else if (addressTo == addressFrom) {
-                          showAlertDialog("Điểm muốn đến là điểm bắt đầu");
-                        }
-                        else {
+                        if (addressFrom == "Điểm bắt đầu" ||
+                            addressTo == "Điểm kết thúc") {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                  title: Center(
+                                    child: Text(
+                                      "Vui lòng nhập địa chỉ còn thiếu",
+                                      style: TextStyle(
+                                          color: Colors.amber, fontSize: 15),
+                                    ),
+                                  ),
+                                  content: Container(
+                                    child: RaisedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        "OK",
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ),
+                                  )));
+                        } else {
+                          allList.clear();
                           AStar a = AStar();
-                          queue = await a.findPath(tmpStart, tmpTarget);
-                          if (queue.isEmpty)
-                            showAlertDialog("Không tìm thấy lộ trình phù hợp");
-                          else {
-                            filterCrossingPath();
-                            filterSameRoute();
-                            sortRoute();
+                          queue =
+                          await a.findPath(tmpStart, tmpTarget);
+                          if (queue.isNotEmpty) {
+                            queue.forEach((element) {
+                              List<int> listRouteId = [];
+                              element.forEach((e) {
+                                if (!listRouteId.contains(e.routeId)) {
+                                  listRouteId.add(e.routeId);
+                                }
+                              });
+                              allList.add(listRouteId);
+                            });
+                            for (int i=0; i+1 < allList.length; i++) {
+                              if (allList[i].length > allList[i+1].length) {
+                                List<int> tmp = allList[i];
+                                allList[i] = allList[i+1];
+                                allList[i+1] = tmp;
+                                Queue<Node> tmp1 = new Queue<Node>();
+                                tmp1.addAll(queue.elementAt(i));
+                                queue.elementAt(i).clear();
+                                queue.elementAt(i).addAll(queue.elementAt(i+1));
+                                queue.elementAt(i+1).clear();
+                                queue.elementAt(i+1).addAll(tmp1);
+                              }
+                            }
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                    title: Center(
+                                      child: Text(
+                                        (addressTo == addressFrom)
+                                            ?"Điểm muốn đến là điểm bắt đầu"
+                                            :"Không tìm thấy lộ trình phù hợp",
+                                        style: TextStyle(
+                                            color: Colors.amber, fontSize: 15),
+                                      ),
+                                    ),
+                                    content: Container(
+                                      child: RaisedButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(
+                                          "OK",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                      ),
+                                    )));
                           }
+                          _toggleBottom();
+                          setState(() {
+
+                          });
                         }
                       },
                       shape: RoundedRectangleBorder(
@@ -180,7 +219,7 @@ class ResultSearchState extends State<ResultSearch>
               top: _two,
               height: _height,
               child: GestureDetector(
-                // onTap: _toggleBottom,
+                onTap: _toggleBottom,
                 onPanEnd: (details) => _toggleBottom(),
                 onPanUpdate: (details) {
                   _two += details.delta.dy;
@@ -194,7 +233,7 @@ class ResultSearchState extends State<ResultSearch>
                     children: [
                       Container(
                           margin:
-                              EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                          EdgeInsets.only(left: 10, bottom: 10, top: 10),
                           alignment: Alignment.centerLeft,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -207,7 +246,7 @@ class ResultSearchState extends State<ResultSearch>
                                     fontWeight: FontWeight.bold),
                               ),
                               GestureDetector(
-                                onTap: () {
+                                onTap: (){
                                   setState(() {
                                     allList.clear();
                                   });
@@ -231,8 +270,8 @@ class ResultSearchState extends State<ResultSearch>
                           childAspectRatio: 4,
                           physics: ClampingScrollPhysics(),
                           shrinkWrap: true,
-                          children: new List<Widget>.generate(allList.length,
-                              (index) {
+                          children: new List<Widget>.generate(
+                              allList.length, (index) {
                             return new GridTile(
                               child: _buildCard(allList, index),
                             );
@@ -252,14 +291,8 @@ class ResultSearchState extends State<ResultSearch>
 
   Widget _buildCard(List<List<int>> allList, int i) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => InfoSuitableRoute(
-                      allList: queue,
-                      index: i,
-                    )));
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => InfoSuitableRoute(allList: queue, index: i,)));
       },
       child: Card(
         margin: EdgeInsets.only(left: 10, bottom: 10, right: 10),
@@ -345,112 +378,4 @@ class ResultSearchState extends State<ResultSearch>
       ),
     );
   }
-
-  void filterSameRoute() {
-    List<List<int>> listRouteOfPath = [];
-    List<Queue<Node>> listPathToDelete = [];
-    queue.forEach((element) {
-      List<int> listRouteId = [];
-      element.forEach((e) {
-        if (!listRouteId.contains(e.routeId)) {
-          listRouteId.add(e.routeId);
-        }
-      });
-      listRouteOfPath.add(listRouteId);
-    });
-    for (int i=0; i < listRouteOfPath.length; i++) {
-      for (int j=i+1; j < listRouteOfPath.length; j++) {
-        if (listRouteOfPath[j].length == listRouteOfPath[i].length) {
-          int count = 0;
-          listRouteOfPath[j].forEach((route) {
-            if (listRouteOfPath[i].contains(route)) count++;
-          });
-          if (count == listRouteOfPath[i].length) {
-            if (queue[j].last.count > queue[i].last.count) {
-              if (!listPathToDelete.contains(queue[j]))
-                listPathToDelete.add(queue[j]);
-            } else if (queue[j].last.count < queue[i].last.count) {
-              if (!listPathToDelete.contains(queue[i]))
-                listPathToDelete.add(queue[i]);
-            }
-          }
-        }
-      }
-    }
-    listPathToDelete.forEach((element) {
-      queue.remove(element);
-    });
-  }
-
-  void filterCrossingPath() {
-    List<Queue<Node>> listPathCrossWay = [];
-    List<List<int>> listRouteOfPath = [];
-    List<int> listIndexCross = [];
-    queue.forEach((element) {
-      for (int i = 0; i < element.length; i++) {
-        if (element.elementAt(i).crossStreet == 1) {
-          listPathCrossWay.add(element);
-          listIndexCross.add(i);
-          break;
-        }
-      }
-    });
-    for (int i = 0; i < listPathCrossWay.length; i++) {
-      List<int> tmp = [];
-      listPathCrossWay[i].forEach((element) {
-        if (element.crossStreet == 1) tmp.add(element.routeId);
-      });
-      if (tmp.length > 1) queue.remove(listPathCrossWay[i]);
-      else if (tmp.length == 1) listRouteOfPath.add(tmp);
-    }
-    for (int i = 0; i < listRouteOfPath.length; i++) {
-      for (int j = i + 1; j < listRouteOfPath.length; j++) {
-        if (listRouteOfPath[j].length == listRouteOfPath[i].length) {
-          int count = 0;
-          listRouteOfPath[i].forEach((element) {
-            if (listRouteOfPath[j].contains(element)) count++;
-          });
-          if (count == listRouteOfPath[i].length) {
-            if (listIndexCross[j] < listIndexCross[i])
-              queue.remove(listPathCrossWay[i]);
-            else
-            if (listIndexCross[j] > listIndexCross[i])
-              queue.remove(listPathCrossWay[j]);
-          }
-        }
-      }
-    }
-  }
-
-  void sortRoute() {
-      allList.clear();
-      if (queue.isNotEmpty) {
-        queue.forEach((element) {
-          List<int> listRouteId = [];
-          element.forEach((e) {
-            if (!listRouteId.contains(e.routeId)) {
-              listRouteId.add(e.routeId);
-            }
-          });
-          allList.add(listRouteId);
-        });
-        for (int i = 0; i + 1 < allList.length; i++) {
-          for (int j = i + 1; j < allList.length; j++) {
-            if (allList[i].length > allList[j].length) {
-              List<int> tmp = allList[i];
-              allList[i] = allList[j];
-              allList[j] = tmp;
-              Queue<Node> tmp1 = new Queue<Node>();
-              tmp1.addAll(queue.elementAt(i));
-              queue[i].clear();
-              queue[i].addAll(queue[j]);
-              queue[j].clear();
-              queue[j].addAll(tmp1);
-            }
-          }
-        }
-      }
-      _toggleBottom();
-      setState(() {});
-    }
 }

@@ -19,7 +19,7 @@ class BusInformation extends StatefulWidget {
   BusInformation({this.showBusPathState, this.busRoute});
 }
 
-class BusInformationState extends State<BusInformation> with SingleTickerProviderStateMixin{
+class BusInformationState extends State<BusInformation> {
   Color _color = Colors.green;
   String _text = "Chiều đi";
 
@@ -29,48 +29,29 @@ class BusInformationState extends State<BusInformation> with SingleTickerProvide
   double _minChildSize = 0.08;
   double _maxChildSize = 0.5;
 
-  AnimationController animationController;
-  Animation<Color> colorTween;
-
   IconData _icon = Icons.arrow_downward_outlined;
-
-  int CHECK_UP_DOWN = 0;
-  void checkUpDown(){
-    if (CHECK_UP_DOWN == 0) {
-      CHECK_UP_DOWN = 1;
-      _icon = Icons.arrow_upward;
-      setState(() {
-
-      });
-    } else if (CHECK_UP_DOWN == 1) {
-      CHECK_UP_DOWN = 0;
-      _icon = Icons.arrow_downward;
-      setState(() {
-
-      });
-    }
-  }
 
   @override
   void initState() {
-    animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    colorTween = ColorTween(begin: _color,
-        end: (_color == Colors.deepOrange) ? Colors.green : Colors.deepOrange).animate(animationController);
-    super.initState();
-  }
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   widget.showBusPathState.setState(() {
+    //     widget.showBusPathState.contextSize = MediaQuery.of(context).size.height;
+    //     CONTEXT_SIZE = MediaQuery.of(context).size.height;
+    //     widget.showBusPathState.fabPosition = context.size.height * 0.5;
+    //     widget.showBusPathState.height = CONTEXT_SIZE;
+    //     print(MediaQuery.of(context).size.height);
+    //     widget.showBusPathState.two = CONTEXT_SIZE*0.5;
+    //     widget.showBusPathState.twoFixed = CONTEXT_SIZE;
+    //   });
+    // });
 
-  @override
-  void dispose() {
-    animationController.dispose();
-    // TODO: implement dispose
-    super.dispose();
+    super.initState();
   }
 
   void checkGoOrReturn() {
     selectedIndex = 0;
     if (CHECK_DEPARTER_RETURN == 0) {
       widget.showBusPathState.setState(() {
-        animationController.forward();
         CHECK_DEPARTER_RETURN = 1;
         _color = Colors.deepOrange;
         widget.showBusPathState.color = _color;
@@ -88,7 +69,6 @@ class BusInformationState extends State<BusInformation> with SingleTickerProvide
       });
     } else {
       widget.showBusPathState.setState(() {
-        animationController.reverse();
         CHECK_DEPARTER_RETURN = 0;
         _color = Colors.green;
         widget.showBusPathState.color = _color;
@@ -242,62 +222,48 @@ class BusInformationState extends State<BusInformation> with SingleTickerProvide
     //   ),
     // );
     return GestureDetector(
-      // onTap: (){
-      //   widget.showBusPathState.toggleBottom(_icon);
-      //   // widget.showBusPathState.toggleTop();
-      // },
-      // onPanEnd: (context) => widget.showBusPathState.toggleBottom(_icon),
+      onTap: (){
+        widget.showBusPathState.toggleBottom(_icon);
+        // widget.showBusPathState.toggleTop();
+      },
+      onPanEnd: (context) => widget.showBusPathState.toggleBottom(_icon),
       onPanUpdate: (details) {
         widget.showBusPathState.two += details.delta.dy;
         if (widget.showBusPathState.two <= CONTEXT_SIZE*0.5) widget.showBusPathState.two = CONTEXT_SIZE*0.5;
         if (widget.showBusPathState.two >= CONTEXT_SIZE*0.92) widget.showBusPathState.two = CONTEXT_SIZE*0.92;
-        if (details.delta.dy < CONTEXT_SIZE*0.75) _icon = Icons.arrow_downward;
-        if (widget.showBusPathState.two >= CONTEXT_SIZE*0.75) _icon = Icons.arrow_upward;
-        widget.showBusPathState.setState(() {
-
-        });
+        widget.showBusPathState.setState(() {});
       },
       child: Container(
         color: Colors.white,
         child: Column(children: [
-          GestureDetector(
-            onTap: (){
-              widget.showBusPathState.toggleBottom();
-              checkUpDown();
-            },
-            child: Container(
-              height: CONTEXT_SIZE * 0.08,
-              child: ListTile(
-                contentPadding: EdgeInsets.only(left: 5, right: 10),
-                leading: CircleAvatar(
-                    backgroundColor: Colors.black26,
-                    child: Icon(
-                      _icon,
-                      color: Colors.blue,
-                    )),
-                title: Text(
-                  widget.busRoute.name,
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
+          Container(
+            height: CONTEXT_SIZE * 0.08,
+            child: ListTile(
+              contentPadding: EdgeInsets.only(left: 5, right: 10),
+              leading: CircleAvatar(
+                  backgroundColor: Colors.black26,
+                  child: Icon(
+                    _icon,
+                    color: Colors.blue,
+                  )),
+              title: Text(
+                widget.busRoute.name,
+                style: TextStyle(
+                  fontSize: 18,
                 ),
-                trailing: AnimatedBuilder(
-                  animation: colorTween,
-                  builder: (context, child) => FlatButton(
-                    color: (colorTween  != null) ? colorTween.value : _color,
-                    onPressed: () {
-                      widget.showBusPathState.scrollController.jumpTo(0.0);
-                      checkGoOrReturn();
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    // borderSide: BorderSide(color: _color),
-                    child: Text(
-                      _text,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
+              ),
+              trailing: OutlineButton(
+                onPressed: () {
+                  widget.showBusPathState.scrollController.jumpTo(0.0);
+                  checkGoOrReturn();
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                borderSide: BorderSide(color: _color),
+                child: Text(
+                  _text,
+                  style: TextStyle(color: _color),
                 ),
               ),
             ),
@@ -311,7 +277,6 @@ class BusInformationState extends State<BusInformation> with SingleTickerProvide
                   height: CONTEXT_SIZE * 0.07,
                   color: Colors.amber,
                   child: TabBar(
-                    indicatorColor: _color,
                     tabs: [
                       Tab(
                         text: "Giờ xuất bến",
