@@ -51,8 +51,11 @@
 // }
 import 'dart:collection';
 
+import 'package:emddibus/algothrim/calculate_distance.dart';
 import 'package:emddibus/constants.dart';
 import 'package:emddibus/models/stop_point_model.dart';
+import 'package:flutter/material.dart';
+import 'package:latlong/latlong.dart';
 
 class Node extends Object {
   StopPoint currentNode;
@@ -61,6 +64,8 @@ class Node extends Object {
   int chosenId;
   int count = 0;
   int direction;
+  double distance = 0.5;
+  int crossStreet = 0;
   bool isInOpenSet = false; // Much faster than finding nodes in iterables.
   bool isInClosedSet = false;
 }
@@ -159,7 +164,8 @@ class AStar {
         lastClosed = currentNode;
         currentNode.isInClosedSet = true;
 
-        List<Node> listNeighbours = getNeighboursOf(currentNode, lastClosed);
+        List<Node> listNeighbours = getNeighboursOf(currentNode);
+        List<Node> listOpposites= getOppositeOf(currentNode);
 
         /*
         sau khi lấy đc các node con của node hiện tại thì thực hiện ktra
@@ -181,6 +187,22 @@ class AStar {
             candidate.isInOpenSet = true;
           }
         }
+        for (final opposite in listOpposites) {
+          if (opposite.isInOpenSet == false) {
+            opposite.parent = lastClosed;
+            tmpCandidate = new Node();
+            check = false;
+            checkIsInOpen(open, opposite);
+            if (check) {
+              open.remove(tmpCandidate);
+              continue;
+            }
+            if (opposite.count <= 2) {
+              open.add(opposite);
+            }
+            opposite.isInOpenSet = true;
+          }
+        }
       }
       if (allList.isNotEmpty)
         return allList;
@@ -197,17 +219,30 @@ class AStar {
     for (final element in open) {
       if (candidate.routeId == element.routeId &&
           candidate.currentNode.stopId == element.currentNode.stopId) {
-        if (candidate.routeId == candidate.parent.routeId &&
-            element.routeId != element.parent.routeId &&
-            candidate.count <= 2) {
-          tmpCandidate = element;
-          open.add(candidate);
-          check = true;
-          break;
-        } else if (candidate.routeId != candidate.parent.routeId &&
-            element.routeId == element.parent.routeId) {
-          check = true;
-          break;
+        if (candidate.crossStreet == element.crossStreet) {
+          if (candidate.routeId == candidate.parent.routeId &&
+              element.routeId != element.parent.routeId &&
+              candidate.count <= 2) {
+            tmpCandidate = element;
+            open.add(candidate);
+            check = true;
+            break;
+          } else if (candidate.routeId != candidate.parent.routeId &&
+              element.routeId == element.parent.routeId) {
+            check = true;
+            break;
+          }
+        }
+        else {
+          if (candidate.crossStreet == 1 && element.crossStreet == 0) {
+            tmpCandidate = element;
+            open.add(candidate);
+            check = true;
+            break;
+          } else if (candidate.crossStreet == 0 && element.crossStreet == 1) {
+            check = true;
+            break;
+          }
         }
       }
     }
@@ -216,16 +251,16 @@ class AStar {
   /*
   lấy danh sách các node con của điểm hiện tại đang xét
    */
-  List<Node> getNeighboursOf(Node currentNode, Node lastClosed) {
+  List<Node> getNeighboursOf(Node currentNode) {
     List<Node> listNeighbours = [];
     BUS_ROUTE.forEach((element) {
       if (element.listStopPointGo.contains(currentNode.currentNode.stopId)) {
         // ktra đổi chiều
-        if (currentNode.direction == 1 &&
-            element.listStopPointReturn
-                .contains(currentNode.currentNode.stopId)) {
-          currentNode.count += 1;
-        }
+        // if (currentNode.direction == 1 &&
+        //     element.listStopPointReturn
+        //         .contains(currentNode.currentNode.stopId)) {
+        //   currentNode.count += 1;
+        // }
         /*
         tìm các tuyến xe đi qua điểm hiện tại rồi lấy điểm ngay sau đó
         mà mỗi tuyến đi qua
@@ -240,6 +275,11 @@ class AStar {
                 child.currentNode = point;
                 child.routeId = element.routeId;
                 child.count = currentNode.count;
+                if (currentNode.direction == 1 &&
+                    element.listStopPointReturn
+                        .contains(currentNode.currentNode.stopId)) {
+                  child.count += 1;
+                }
                 child.direction = 0;
                 // ktra đổi tuyến
                 if (child.routeId != currentNode.routeId) child.count++;
@@ -254,10 +294,10 @@ class AStar {
       if (element.listStopPointReturn
           .contains(currentNode.currentNode.stopId)) {
         // ktra đổi chiều
-        if (currentNode.direction == 0 &&
-            element.listStopPointGo.contains(currentNode.currentNode.stopId)) {
-          currentNode.count += 1;
-        }
+        // if (currentNode.direction == 0 &&
+        //     element.listStopPointGo.contains(currentNode.currentNode.stopId)) {
+        //   currentNode.count += 1;
+        // }
         /*
         tìm các tuyến xe đi qua điểm hiện tại rồi lấy điểm ngay sau đó
         mà mỗi tuyến đi qua
@@ -273,6 +313,10 @@ class AStar {
                 child.currentNode = point;
                 child.routeId = element.routeId;
                 child.count = currentNode.count;
+                if (currentNode.direction == 0 &&
+                    element.listStopPointGo.contains(currentNode.currentNode.stopId)) {
+                  child.count += 1;
+                }
                 child.direction = 1;
                 // ktra đổi tuyến
                 if (child.routeId != currentNode.routeId) child.count++;
@@ -286,5 +330,87 @@ class AStar {
       }
     });
     return listNeighbours;
+  }
+  List<Node> getOppositeOf(Node currentNode){
+    List<Node> listOpposite = [];
+    List<Node> listNeighbour = getNeighboursOf(currentNode);
+    Node oppositeOf = new Node();
+    STOP_POINT.forEach((element) {
+      LatLng current = LatLng(currentNode.currentNode.latitude, currentNode.currentNode.longitude);
+      LatLng opposite = LatLng(element.latitude, element.longitude);
+      if (calculateDistance(current, opposite) <= 0.5 && calculateDistance(current, opposite) > 0 && calculateDistance(current, opposite) < oppositeOf.distance) {
+        oppositeOf.currentNode = element;
+        oppositeOf.distance = calculateDistance(current, opposite);
+      }
+    });
+    if (oppositeOf.currentNode != null) {
+      BUS_ROUTE.forEach((element) {
+        if (element.listStopPointGo.contains(oppositeOf.currentNode.stopId) &&
+            element.listStopPointReturn.contains(oppositeOf.currentNode.stopId)) {
+          Node node = new Node();
+          node.currentNode = oppositeOf.currentNode;
+          node.routeId = element.routeId;
+          node.direction = 0;
+          node.count = currentNode.count+1;
+          node.crossStreet = 1;
+          node.distance = oppositeOf.distance;
+          int count = 0;
+          listNeighbour.forEach((element) {
+            if (element.currentNode.stopId == node.currentNode.stopId)
+              count++;
+          });
+          if (count == 0) {
+            if (currentNode.parent != null) {
+              if (currentNode.parent.currentNode.stopId != node.currentNode.stopId)
+                listOpposite.add(node);
+            }
+            else if (currentNode.parent == null) listOpposite.add(node);
+          }
+        }
+        else if (element.listStopPointGo.contains(oppositeOf.currentNode.stopId)) {
+          Node node = new Node();
+          node.currentNode = oppositeOf.currentNode;
+          node.routeId = element.routeId;
+          node.direction = 0;
+          node.count = currentNode.count+1;
+          node.crossStreet = 1;
+          node.distance = oppositeOf.distance;
+          int count = 0;
+          listNeighbour.forEach((element) {
+            if (element.currentNode.stopId == node.currentNode.stopId)
+              count++;
+          });
+          if (count == 0) {
+            if (currentNode.parent != null) {
+              if (currentNode.parent.currentNode.stopId != node.currentNode.stopId)
+                listOpposite.add(node);
+            }
+            else if (currentNode.parent == null) listOpposite.add(node);
+          }
+        }
+        else if (element.listStopPointReturn.contains(oppositeOf.currentNode.stopId)) {
+          Node node = new Node();
+          node.currentNode = oppositeOf.currentNode;
+          node.routeId = element.routeId;
+          node.direction = 1;
+          node.count = currentNode.count+1;
+          node.crossStreet = 1;
+          node.distance = oppositeOf.distance;
+          int count = 0;
+          listNeighbour.forEach((element) {
+            if (element.currentNode.stopId == node.currentNode.stopId)
+              count++;
+          });
+          if (count == 0) {
+            if (currentNode.parent != null) {
+              if (currentNode.parent.currentNode.stopId != node.currentNode.stopId)
+                listOpposite.add(node);
+            }
+            else if (currentNode.parent == null) listOpposite.add(node);
+          }
+        }
+      });
+    }
+    return listOpposite;
   }
 }

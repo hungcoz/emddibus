@@ -49,34 +49,16 @@ class ShowBusPathState extends State<ShowBusPath> {
 
   final geoService = GeolocatorService();
 
-  double height = 0, two = 0, one = 0;
-  double twoFixed = 0, oneFixed = 0;
+  double height = 0, two = 0;
+  double twoFixed = 0;
   Duration _duration = Duration(milliseconds: 1);
   bool _bottom = false;
 
-  void toggleTop() {
+  void toggleBottom() {
     _bottom = !_bottom;
     Timer.periodic(_duration, (timer) {
-      if (_bottom) one -= 2;
-      else one += 2;
-
-      if (one >= 0) {
-        one = 0;
-        timer.cancel();
-      }
-      if (one <= oneFixed) {
-        one = oneFixed;
-        timer.cancel();
-      }
-      setState(() {});
-    });
-  }
-
-  void toggleBottom(IconData iconData) {
-    _bottom = !_bottom;
-    Timer.periodic(_duration, (timer) {
-      if (_bottom) two += 2;
-      else two -= 2;
+      if (_bottom) two += 1;
+      else two -= 1;
 
       if (two <= CONTEXT_SIZE*0.5) {
         two = CONTEXT_SIZE*0.5;
@@ -87,10 +69,7 @@ class ShowBusPathState extends State<ShowBusPath> {
         timer.cancel();
       }
       setState(() {
-        if (two >= CONTEXT_SIZE*0.75)
-          iconData = Icons.arrow_upward;
-        if (two <= CONTEXT_SIZE*0.75)
-          iconData = Icons.arrow_downward;
+
       });
     });
   }
@@ -127,9 +106,7 @@ class ShowBusPathState extends State<ShowBusPath> {
     getStopPoint(widget.busRoute.listStopPointGo);
     height = CONTEXT_SIZE*0.5;
     two = height;
-    one = - height;
     twoFixed = height;
-    oneFixed = height;
     super.initState();
   }
 
